@@ -1,0 +1,22 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    if title
+      title #{title} | Freedom Beacon
+    else
+      title Freedom Beacon
+    
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
+  body.container
+    .page-header
+      h1 Freedom Beacon 
+        span.small Let freedom ping!
+    
+    block content
+    
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
+    script(src='/javascripts/bootstrap.min.js')
