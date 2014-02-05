@@ -1,4 +1,13 @@
 extends layout
 
 block content
-  h2: a(href='#') Illuminate Beacon
+  .jumbotron
+      h1.main-heading Freedom Beacon 
+      button.btn.btn-lg.btn-primary#beacon toggle beacon
+  
+  h2 Friends
+  
+  ul.list-unstyled
+    each friend, index in friends
+      .project(id='project#{index}')
+        a.thumbnail(href='#')= friend

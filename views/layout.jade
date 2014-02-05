@@ -11,12 +11,17 @@ html(lang='en')
     
     link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
     link(rel='stylesheet', href='/stylesheets/bootstrap-theme.min.css')
-  body.container
-    .page-header
-      h1 Freedom Beacon 
-        span.small Let freedom ping!
+    link(rel='stylesheet', href='/stylesheets/beacon.css')
     
+    // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+    // WARNING: Respond.js doesn't work if you view the page via file://
+    // if lt IE 9
+      script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
+      script(src='https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js')
+
+  body.container
     block content
     
     script(src='//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
     script(src='/javascripts/bootstrap.min.js')
+    script(src='/javascripts/beacon.js')

@@ -17,8 +17,7 @@ body {
 }
 
 .jumbotron {
-	position: center;
-     text-align: center;
+	text-align: center;
 	background: none;
 }
 
@@ -29,4 +28,14 @@ body {
 .jumbotron p.active {
      color: #E82C0C;
      font-weight:bold;
+}
+
+.main-heading {
+	text-transform: uppercase;
+	color: #6e6e6e;
+}
+
+.main-heading {
+	color: #E82C0C;
+	font-weight:bold;
 }
