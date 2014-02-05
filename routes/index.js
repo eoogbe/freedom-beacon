@@ -4,14 +4,38 @@
 
 exports.index = function(req, res){
   var friends = [
-    'Carey Phelps 6m left',
-    'Kai Kuspa 21m left',
-    'Eva Ogbe 30m left',
-    'Jennifer 20m left',
-    'Nithya 6m left',
-    'Qudus 3m left',
-    'Andres 2m left',
-    'Jorge 10m left'
+    {
+      'name': 'Carey Phelps',
+      'time': 6
+    },
+    {
+      'name': 'Kai Kuspa',
+      'time': 21
+    },
+    {
+      'name': 'Eva Ogbe',
+      'time': 30
+    },
+    {
+      'name': 'Jennifer',
+      'time': 20
+    },
+    {
+      'name': 'Nithya',
+      'time': 6
+    },
+    {
+      'name': 'Qudus',
+      'time': 3
+    },
+    {
+      'name': 'Andres',
+      'time': 2
+    },
+    {
+      'name': 'Jorge',
+      'time': 10
+    }
   ];
   
   res.render('index', {'friends': friends});

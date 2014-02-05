@@ -1,33 +1,6 @@
-/* applies to anything of class "example-class-selector" */
-.example-class-selector {
-	margin-top: 2em;
-}
-
-/* applies to any <p> descendants of an element of class "example-class-selector" */
-.example-class-selector p {
-	/* Colors are in hexadecimal: http://www.colorpicker.com/ */	
-	color: #CC00AA;
-}
-
-/* this style exists to make it obvious that you've successfully linked
-   the CSS to the page. feel free to remove it once the link is working. */
-body {
-     border: 1px dotted gray;
-     padding: 20px;
-}
-
 .jumbotron {
 	text-align: center;
 	background: none;
-}
-
-.jumbotron p {
-     color: #6e6e6e;
-}
-
-.jumbotron p.active {
-     color: #E82C0C;
-     font-weight:bold;
 }
 
 .main-heading {
@@ -35,7 +8,7 @@ body {
 	color: #6e6e6e;
 }
 
-.main-heading {
+.active {
 	color: #E82C0C;
 	font-weight:bold;
 }

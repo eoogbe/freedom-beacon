@@ -1,0 +1,13 @@
+<header class="jumbotron">
+    <h1 class="main-heading">Freedom Beacon</h1>
+    <button class="btn btn-lg btn-primary" id="beacon">toggle beacon</button>
+</header>
+
+<h2>Friends</h2>
+<ul class="list-unstyled">
+    {{#each friends}}
+        <li class="project" id="#project{{@index}}">
+            <a class="thumbnail" href="#">{{name}} {{time}}m left</a>
+        </li>
+    {{/each}}
+</ul>
