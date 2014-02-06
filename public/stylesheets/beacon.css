@@ -1,14 +1,33 @@
-.jumbotron {
-	text-align: center;
+#main-header {
 	background: none;
 }
 
-.main-heading {
+#main-heading,
+.heading {
 	text-transform: uppercase;
 	color: #6e6e6e;
+	font-size: 1.1em;
+	text-align: center;
 }
 
-.active {
-	color: #E82C0C;
-	font-weight:bold;
+#beacon {
+	width: 100%;
+}
+
+#user-time-box {
+	margin-top: 0.5em;
+}
+
+#user-time {
+	width: 2em;
+}
+
+/*
+ * Turns off Chrome's spinners for the number input (#user-time).
+ * Taken from http://css-tricks.com/snippets/css/turn-off-number-input-spinners/
+ */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

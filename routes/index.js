@@ -3,7 +3,7 @@
  */
 
 exports.index = function(req, res){
-  var friends = [
+  var flock = [
     {
       'name': 'Carey Phelps',
       'time': 6
@@ -38,5 +38,5 @@ exports.index = function(req, res){
     }
   ];
   
-  res.render('index', {'friends': friends});
+  res.render('index', {'flock': flock});
 };

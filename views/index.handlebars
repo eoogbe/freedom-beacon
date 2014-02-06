@@ -1,13 +1,16 @@
-<header class="jumbotron">
-    <h1 class="main-heading">Freedom Beacon</h1>
-    <button class="btn btn-lg btn-primary" id="beacon">toggle beacon</button>
+<header class="jumbotron" id="main-header">
+    <h1 id="main-heading">Freedom Beacon</h1>
+    <button class="btn btn-lg btn-primary" id="beacon">illuminate beacon</button>
+    
+    <div id="user-time-box">
+        <input type="number" id="user-time" name="user-time" max="60" min="1" value="0" disabled>
+        m left
+    </div>
 </header>
 
-<h2>Friends</h2>
+<h2 class="heading">Your Flock</h2>
 <ul class="list-unstyled">
-    {{#each friends}}
-        <li class="project" id="#project{{@index}}">
-            <a class="thumbnail" href="#">{{name}} {{time}}m left</a>
-        </li>
+    {{#each flock}}
+        <li><a class="thumbnail" href="#">{{name}} {{time}}m left</a></li>
     {{/each}}
 </ul>
