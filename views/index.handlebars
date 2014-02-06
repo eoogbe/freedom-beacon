@@ -8,9 +8,20 @@
     </div>
 </header>
 
-<h2 class="heading">Your Flock</h2>
-<ul class="list-unstyled">
-    {{#each flock}}
-        <li><a class="thumbnail" href="#">{{name}} {{time}}m left</a></li>
-    {{/each}}
-</ul>
+<main role="main">
+    <h2 class="heading">Your Flock</h2>
+    <ul class="list-unstyled container" id="flock">
+        {{#each flock}}
+            {{#if free}}
+            <li class="free">
+                <a class="row" href="#"><span class="col-xs-6">{{name}}</span><span class="col-xs-6">free</span></a>
+                <a class="flyout" href="#">{{name}}'s Location</a>
+            {{else}}
+            <li class="unfree">
+                <a class="row" href="#"><span class="col-xs-6">{{name}}</span><span class="col-xs-6">{{time}}m left</span></a>
+                <div class="flyout">Sending your location... <a class="undo" href="#">Undo</a></div>
+            {{/if}}
+            </li>
+        {{/each}}
+    </ul>
+</main>

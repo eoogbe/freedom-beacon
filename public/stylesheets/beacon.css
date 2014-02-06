@@ -22,6 +22,46 @@
 	width: 2em;
 }
 
+#flock {
+	border: 1px solid #eee;
+	padding: 0;
+}
+
+#flock > .free {
+	padding-bottom: 20px;
+	padding-top: 0;
+	background-color: #fff;
+}
+
+#flock > .free > a {
+	background-color: #ff6e5f;
+	color: #fff;
+}
+
+#flock > .free > a:hover,
+#flock > .free > a:active {
+	color: #edd;
+}
+
+#flock > li {
+	padding-top: 20px;
+	background-color: #ff6e5f;
+}
+
+
+#flock > li > a {
+	display: block;
+	padding: 4px;
+	line-height: 1.428571429;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	margin: 0;
+}
+
+#flock > li > .flyout {
+	display: none;
+}
+
 /*
  * Turns off Chrome's spinners for the number input (#user-time).
  * Taken from http://css-tricks.com/snippets/css/turn-off-number-input-spinners/

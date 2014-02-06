@@ -10,7 +10,9 @@ $(document).ready(function() {
  */
 function initializePage() {
 	$("#beacon").click(beaconClicked);
-	$("a.thumbnail").click(friendClicked);
+	$("#flock > .free > a").click(freeClicked);
+	$("#flock > .unfree > a").click(meetRequested);
+	$(".undo").click(undo);
 }
 
 function beaconClicked(e) {
@@ -28,12 +30,17 @@ function beaconClicked(e) {
 	}
 }
 
-function friendClicked(e) {
-  // Cancel the default action, which prevents the page from reloading
-    e.preventDefault();
+function freeClicked(e) {
+	e.preventDefault();	
+	$(this).next().toggle();
+}
 
-    // In an event listener, $(this) is the element that fired the event
-    var friendInfo = $(this).text();
-    var jumbotronHeader = $(".jumbotron h1");
-    jumbotronHeader.text(friendInfo);
+function meetRequested(e) {
+	e.preventDefault();
+	$(this).next().toggle();
+}
+
+function undo(e) {
+	e.preventDefault();
+	$(this).parent().hide();
 }

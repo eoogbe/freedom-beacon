@@ -1,0 +1,36 @@
+{
+    "flock": [
+        {
+            "name": "Carey Phelps",
+            "free": true
+        },
+        {
+            "name": "Kai Kuspa",
+            "free": true
+        },
+        {
+            "name": "Eva Ogbe",
+            "free": true
+        },
+        {
+            "name": "Jennifer",
+            "time": 20
+        },
+        {
+            "name": "Nithya",
+            "time": 6
+        },
+        {
+            "name": "Qudus",
+            "time": 3
+        },
+        {
+            "name": "Andres",
+            "time": 2
+        },
+        {
+            "name": "Jorge",
+            "time": 10
+        }
+    ]
+}
