@@ -1,10 +1,10 @@
 <header class="jumbotron" id="main-header">
     <h1 id="main-heading">Freedom Beacon</h1>
-    <button class="btn btn-lg btn-primary" id="beacon">illuminate beacon</button>
+    <button class="btn btn-lg btn-primary beacon-btn" id="beacon">illuminate beacon</button>
     
     <div id="user-time-box">
         <input type="number" id="user-time" name="user-time" max="60" min="1" value="0" disabled>
-        m left
+        min left
     </div>
 </header>
 
@@ -14,12 +14,23 @@
         {{#each flock}}
             {{#if free}}
             <li class="free">
-                <a class="row" href="#"><span class="col-xs-6">{{name}}</span><span class="col-xs-6">free</span></a>
-                <a class="flyout" href="#">{{name}}'s Location</a>
+                <a class="row" href="/locations/{{@index}}">
+                    <span class="col-xs-5">{{name}}</span>
+                    <span class="col-xs-3">{{distance}} mi</span>
+                    <span class="col-xs-4">free</span>
+                </a>
             {{else}}
             <li class="unfree">
-                <a class="row" href="#"><span class="col-xs-6">{{name}}</span><span class="col-xs-6">{{time}}m left</span></a>
-                <div class="flyout">Sending your location... <a class="undo" href="#">Undo</a></div>
+                <a role="button" class="row" href="#">
+                    <span class="col-xs-5">{{name}}</span>
+                    <span class="col-xs-3">{{distance}} mi</span>
+                    <span class="status col-xs-4">{{time}} min left</span>
+                </a>
+                
+                <div class="flyout">Sending your location... <button class="undo" type="button">Stop</button></div>
+                
+                <!-- need to store time so that I can replace it once removed -->
+                <input type="hidden" name="time" value="{{time}}">
             {{/if}}
             </li>
         {{/each}}

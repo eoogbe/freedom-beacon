@@ -10,8 +10,9 @@ $(document).ready(function() {
  */
 function initializePage() {
 	$("#beacon").click(beaconClicked);
-	$("#flock > .free > a").click(freeClicked);
-	$("#flock > .unfree > a").click(meetRequested);
+	
+	// Need to use on() so I can remove it later with off()
+	$("#flock > .unfree").on("click", "a", meetRequested);
 	$(".undo").click(undo);
 }
 
@@ -30,17 +31,20 @@ function beaconClicked(e) {
 	}
 }
 
-function freeClicked(e) {
-	e.preventDefault();	
-	$(this).next().toggle();
-}
-
 function meetRequested(e) {
 	e.preventDefault();
-	$(this).next().toggle();
+	
+	$(this).find(".status").text("pending...");
+	$(this).next().show();
+	$(this).parent().off("click", "a");
 }
 
 function undo(e) {
-	e.preventDefault();
-	$(this).parent().hide();
+	var flyout = $(this).parent();
+	flyout.hide();
+	
+	var time = flyout.next().val();
+	flyout.prev().find(".status").text(time + "m left");
+	
+	flyout.parent().on("click", "a", meetRequested);
 }

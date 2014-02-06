@@ -2,34 +2,42 @@
     "flock": [
         {
             "name": "Carey Phelps",
+            "distance": 0.2,
             "free": true
         },
         {
             "name": "Kai Kuspa",
+            "distance": 0.1,
             "free": true
         },
         {
             "name": "Eva Ogbe",
+            "distance": 0.3,
             "free": true
         },
         {
             "name": "Jennifer",
+            "distance": 0.5,
             "time": 20
         },
         {
             "name": "Nithya",
+            "distance": 0.5,
             "time": 6
         },
         {
             "name": "Qudus",
+            "distance": 0.2,
             "time": 3
         },
         {
             "name": "Andres",
+            "distance": 0.3,
             "time": 2
         },
         {
             "name": "Jorge",
+            "distance": 0.1,
             "time": 10
         }
     ]

@@ -7,10 +7,9 @@
 	text-transform: uppercase;
 	color: #6e6e6e;
 	font-size: 1.1em;
-	text-align: center;
 }
 
-#beacon {
+.beacon-btn {
 	width: 100%;
 }
 
@@ -60,6 +59,10 @@
 
 #flock > li > .flyout {
 	display: none;
+}
+
+#message-link {
+	margin-top: 1em;
 }
 
 /*
