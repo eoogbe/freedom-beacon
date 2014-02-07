@@ -13,21 +13,21 @@
     <ul class="list-unstyled container" id="flock">
         {{#each flock}}
             {{#if free}}
-            <li class="free">
+            <li class="connecting">
                 <a class="row" href="/locations/{{@index}}">
                     <span class="col-xs-5">{{name}}</span>
                     <span class="col-xs-3">{{distance}} mi</span>
                     <span class="col-xs-4">free</span>
                 </a>
             {{else}}
-            <li class="unfree">
+            <li class="unconnected">
                 <a role="button" class="row" href="#">
                     <span class="col-xs-5">{{name}}</span>
                     <span class="col-xs-3">{{distance}} mi</span>
                     <span class="status col-xs-4">{{time}} min left</span>
                 </a>
                 
-                <div class="flyout" id="location-flyout">Sending your location... <button class="undo btn btn-xs btn-default" type="button">Stop</button></div>
+                <div class="flyout" id="location-flyout">Trying to connect... <button class="stop-conn btn btn-xs btn-default" type="button">Stop</button></div>
                 
                 <!-- need to store time so that I can replace it once removed -->
                 <input type="hidden" name="time" value="{{time}}">

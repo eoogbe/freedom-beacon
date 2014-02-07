@@ -12,8 +12,8 @@ function initializePage() {
 	$("#beacon").click(beaconClicked);
 	
 	// Need to use on() so I can remove it later with off()
-	$("#flock > .unfree").on("click", "a", meetRequested);
-	$(".undo").click(undo);
+	$("#flock > .unconnected").on("click", "a", meetRequested);
+	$(".stop-conn").click(stopConnection);
 	$("#message-form").submit(messageWritten);
 }
 
@@ -40,7 +40,7 @@ function meetRequested(e) {
 	$(this).parent().off("click", "a");
 }
 
-function undo(e) {
+function stopConnection(e) {
 	var flyout = $(this).parent();
 	flyout.hide();
 	
@@ -66,5 +66,5 @@ function messageWritten(e) {
 	$("input[name='message']").val("");
 	appendMessage(usrMsg, "user");
 	
-	setTimeout(appendMessage, 1000, "Friend's reply", "friend");
+	setTimeout(appendMessage, 3000, "Friend's reply", "friend");
 }

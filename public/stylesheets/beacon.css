@@ -1,5 +1,6 @@
 #main-header {
 	background: none;
+	padding-top: 40px;
 }
 
 #main-heading,
@@ -27,32 +28,16 @@
 	padding: 0;
 }
 
-#flock > .free {
-	padding-bottom: 20px;
-	padding-top: 0;
-	background-color: #fff;
-}
-
-#flock > .free > a {
-	background-color: #ff6e5f;
-	color: #fff;
-}
-
-#flock > .free > a:hover,
-#flock > .free > a:active {
-	color: #edd;
-}
-
 #flock > li {
 	padding-top: 20px;
-	background-color: #ff6e5f;
+	background-color: #f00;
 }
 
 
 #flock > li > a {
 	display: block;
 	padding: 4px;
-	line-height: 1.428571429;
+	line-height: 2.5;
 	background-color: #fff;
 	border: 1px solid #ddd;
 	margin: 0;
