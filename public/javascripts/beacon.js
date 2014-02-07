@@ -14,6 +14,7 @@ function initializePage() {
 	// Need to use on() so I can remove it later with off()
 	$("#flock > .unfree").on("click", "a", meetRequested);
 	$(".undo").click(undo);
+	$("#message-form").submit(messageWritten);
 }
 
 function beaconClicked(e) {
@@ -47,4 +48,23 @@ function undo(e) {
 	flyout.prev().find(".status").text(time + "m left");
 	
 	flyout.parent().on("click", "a", meetRequested);
+}
+
+function messageWritten(e) {
+	e.preventDefault();
+	
+	function appendMessage(message, type) {
+		$.get("/partials/conv-item", {
+			"message": message,
+			"type": type
+		}, function(data){
+			$("#messages-box").append(data);
+		});
+	}
+	
+	var usrMsg = $("input[name='message']").val();
+	$("input[name='message']").val("");
+	appendMessage(usrMsg, "user");
+	
+	setTimeout(appendMessage, 1000, "Friend's reply", "friend");
 }

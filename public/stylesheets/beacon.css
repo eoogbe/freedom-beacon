@@ -7,6 +7,7 @@
 	text-transform: uppercase;
 	color: #6e6e6e;
 	font-size: 1.1em;
+	margin-bottom: 0.9em;
 }
 
 .beacon-btn {
@@ -61,8 +62,41 @@
 	display: none;
 }
 
-#message-link {
+#location-flyout {
+	padding: 0.3em;
+	color: #fff;
+}
+
+.back-link {
 	margin-top: 1em;
+}
+
+#messages-box {
+	border: 0.3em solid #ccc;
+	margin-bottom: 0.5em;
+	height: 15em;
+	background-color: #626eff;
+	padding: 0.5em;
+}
+
+.msg {
+	border: 0.1em solid #ddd;
+	border-radius: 0.5em;
+	background-color: #fff;
+	width: 12em;
+	padding: 0.1em;
+	margin: 0.3em 0;
+}
+
+.user-msg {
+	float: right;
+}
+
+/* Taken from http://css-tricks.com/snippets/css/clear-fix/ */
+.group:after {
+	content: "";
+	display: table;
+	clear: both;
 }
 
 /*
