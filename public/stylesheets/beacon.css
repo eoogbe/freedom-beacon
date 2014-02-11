@@ -3,14 +3,6 @@
 	padding-top: 40px;
 }
 
-#main-heading,
-.heading {
-	text-transform: uppercase;
-	color: #6e6e6e;
-	font-size: 1.1em;
-	margin-bottom: 0.9em;
-}
-
 .beacon-btn {
 	width: 100%;
 }
@@ -23,31 +15,28 @@
 	width: 2em;
 }
 
-#flock {
-	border: 1px solid #eee;
+.friends {
+	border: 0.1em solid #ddd;
 	padding: 0;
 }
 
-#flock > li {
-	padding-top: 20px;
-	background-color: #f00;
-}
 
-
-#flock > li > a {
-	display: block;
-	padding: 4px;
-	line-height: 2.5;
-	background-color: #fff;
-	border: 1px solid #ddd;
+.friends > li {
+	padding: 0.3em;
+	line-height: 1.4;
+	border-bottom: 0.1em solid #ddd;
 	margin: 0;
 }
 
-#flock > li > .flyout {
+.friends > li:last-child {
+	border-bottom: none;
+}
+
+.flyout {
 	display: none;
 }
 
-#location-flyout {
+.location-flyout {
 	padding: 0.3em;
 	color: #fff;
 }

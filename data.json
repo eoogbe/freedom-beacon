@@ -1,44 +1,62 @@
 {
-    "flock": [
+    "friends":
+    [
         {
             "name": "Carey Phelps",
-            "distance": 0.2,
-            "free": true
+            "distance-id": 1,
+            "status-id": 0
         },
         {
             "name": "Kai Kuspa",
-            "distance": 0.1,
-            "free": true
+            "distance-id": 0,
+            "status-id": 0
         },
         {
             "name": "Eva Ogbe",
-            "distance": 0.3,
-            "free": true
+            "distance-id": 2,
+            "status-id": 0
         },
         {
             "name": "Jennifer",
-            "distance": 0.5,
-            "time": 20
+            "distance-id": 3,
+            "time": 20,
+            "status-id": 1
         },
         {
             "name": "Nithya",
-            "distance": 0.5,
-            "time": 6
+            "distance-id": 3,
+            "time": 6,
+            "status-id": 1
         },
         {
             "name": "Qudus",
-            "distance": 0.2,
-            "time": 3
+            "distance-id": 1,
+            "time": 3,
+            "status-id": 1
         },
         {
             "name": "Andres",
-            "distance": 0.3,
-            "time": 2
+            "distance-id": 2,
+            "time": 2,
+            "status-id": 1
         },
         {
             "name": "Jorge",
-            "distance": 0.1,
-            "time": 10
+            "distance-id": 0,
+            "status-id": 2
         }
+    ],
+    
+    "distances": [
+        "talking",
+        "walking",
+        "driving",
+        "texting"
+    ],
+    
+    "statuses": [
+        "pinging",
+        "free",
+        "offline"
     ]
 }

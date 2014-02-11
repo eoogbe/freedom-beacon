@@ -1,11 +1,11 @@
 /*
- * the routes for the messages resource.
+ * the routes for the conversations resource.
  */
 
 var data = require('../data.json');
 
 exports.show = function(req, res) {
-    var friend = data['flock'][req.params.id];
+    var friend = data['friends'][req.params.id];
     friend['id'] = req.params.id;
     
     res.render('conversation', {'friend': friend});
