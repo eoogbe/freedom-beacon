@@ -51,7 +51,7 @@ function initializePage() {
 	}
 	
 	function makeUserTimeInvisible() {
-		$('.user-time > input').css('border', '1px solid #fff');
+		$('.user-time > input').css('visibility', 'hidden');
 	}
 	
 	function headerBeaconClicked(e) {
@@ -64,10 +64,22 @@ function initializePage() {
 		if ($('#beacon').is(':checked')) {
 			$('.beacon-btn').text('deactivate beacon');
 			
+			$('.beacon-btn').removeClass('btn-primary');
+			$('.beacon-btn').addClass('btn-default');
+			
+			$('.user-time-label > input').prop('readonly', true);
+			$('.user-time-label > input').addClass('readonly');
+			
 			beaconTimerId = countdown($('.user-time-label > input'), function(){
 				$('.beacon-btn').text('illuminate beacon');
 			});
 		} else {
+			$('.user-time-label > input').prop('readonly', null);
+			$('.user-time-label > input').removeClass('readonly');
+			
+			$('.beacon-btn').addClass('btn-primary');
+			$('.beacon-btn').removeClass('btn-default');
+			
 			$('.beacon-btn').text('illuminate beacon');
 			clearInterval(beaconTimerId);
 		}

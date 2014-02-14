@@ -27,6 +27,10 @@ h3 {
 	margin-top: 0;
 }
 
+.readonly {
+	border: none;
+}
+
 .user-time > input {
 	font-size: 1.7em;
 	margin-left: auto;
