@@ -1,73 +1,21 @@
-<header class="jumbotron" id="main-header">
-    <h1>Freedom Beacon</h1>
-    <button class="btn btn-lg btn-primary beacon-btn" id="beacon">illuminate beacon</button>
-    
-    <div id="user-time-box">
-        <input type="number" id="user-time" name="user-time" max="60" min="1" value="0" disabled>
-        min left
-    </div>
-</header>
+<label class="user-time-label group-end">
+    I am free for
+    <input type="number" max="60" min="1" value="30" name="user-time" autofocus>
+    minutes
+</label>
+<input type="checkbox" id="beacon">
+<label for="beacon" class="btn btn-primary btn-lg beacon-btn group-end">illuminate beacon</label>
 
-<main role="main">
-    <!-- FB Javascript SDK -->
-        <div id="fb-root"></div>
-        <script>(function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
-          js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=1389788214618486";
-          fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-        </script>
+<h2>Friends who've pinged you</h2>
+<ul class="friends list-unstyled">
+    {{#each pingingFriends}}
+    <li class="pinging">
+        <a class="row" href="/conversations/{{id}}">
+            <span class="col-xs-6">{{name}}</span>
+            <span class="col-xs-6">{{distance}} distance</span>
+        </a>
+    </li>
+    {{/each}}
+</ul>
 
-        <div class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false"></div>
-
-    <h2>Your Flock</h2>
-    
-    {{#with friends}}
-    <h3>Friends who've pinged you</h3>
-    <ul class="friends list-unstyled">
-        {{#each pinging}}
-        <li class="pinging">
-            <a class="row" href="/locations/{{@index}}">
-                <span class="col-xs-5">{{name}}</span>
-                <span class="col-xs-3">{{distance}} distance</span>
-            </a>
-        </li>
-        {{/each}}
-    </ul>
-    
-    <h3>Free friends</h3>
-    <ul class="friends list-unstyled">
-        {{#each free}}
-        <li class="free">
-            <a role="button" class="row" href="#">
-                <span class="col-xs-5">{{name}}</span>
-                <span class="col-xs-3">{{distance}} distance</span>
-                <span class="status col-xs-4">{{time}} min left</span>
-            </a>
-            
-            <div class="flyout location-flyout">Trying to connect... <button class="stop-conn btn btn-xs btn-default" type="button">Stop</button></div>
-            
-            <!-- need to store time so that I can replace it once removed -->
-            <input type="hidden" name="time" value="{{time}}">
-        </li>
-        {{/each}}
-    </ul>
-    
-    <h3>Offline friends</h3>
-    <ul class="friends list-unstyled">
-        {{#each offline}}
-        <li class="offline">
-            <a role="button" class="row" href="#">
-                <span class="col-xs-5">{{name}}</span>
-                <span class="col-xs-3">{{distance}} distance</span>
-                <span class="status col-xs-4"></span>
-            </a>
-            
-            <div class="flyout location-flyout">Trying to connect... <button class="stop-conn btn btn-xs btn-default" type="button">Stop</button></div>
-        </li>
-        {{/each}}
-    </ul>
-    {{/with}}
-</main>
+<div><a href="/friends">View more friends</a></div>

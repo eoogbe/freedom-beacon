@@ -1,48 +1,49 @@
-#main-header {
-	background: none;
-	padding-top: 40px;
+header {
+	border-bottom: 0.1em solid #ddd;
+	margin-bottom: 1.5em;
+}
+
+h1 {
+	font-size: 1.5em;
+}
+
+h2 {
+	font-size: 1.3em;
+}
+
+h3 {
+	font-size: 1.1em;
+}
+
+.group-end {
+	margin-bottom: 0.3em;
+}
+
+.header-text {
+	text-align: center;
+}
+
+.brand {
+	margin-top: 0;
+}
+
+.user-time > input {
+	font-size: 1.7em;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+.user-time-label {
+	font-size: 3em;
 }
 
 .beacon-btn {
 	width: 100%;
 }
 
-#user-time-box {
-	margin-top: 0.5em;
-}
-
-#user-time {
-	width: 2em;
-}
-
-.friends {
-	border: 0.1em solid #ddd;
-	padding: 0;
-}
-
-
 .friends > li {
-	padding: 0.3em;
-	line-height: 1.4;
 	border-bottom: 0.1em solid #ddd;
-	margin: 0;
-}
-
-.friends > li:last-child {
-	border-bottom: none;
-}
-
-.flyout {
-	display: none;
-}
-
-.location-flyout {
-	padding: 0.3em;
-	color: #fff;
-}
-
-.back-link {
-	margin-top: 1em;
 }
 
 #messages-box {
@@ -66,15 +67,8 @@
 	float: right;
 }
 
-/* Taken from http://css-tricks.com/snippets/css/clear-fix/ */
-.group:after {
-	content: "";
-	display: table;
-	clear: both;
-}
-
 /*
- * Turns off Chrome's spinners for the number input (#user-time).
+ * Turns off Chrome's spinners for the number input.
  * Taken from http://css-tricks.com/snippets/css/turn-off-number-input-spinners/
  */
 input[type="number"]::-webkit-outer-spin-button,

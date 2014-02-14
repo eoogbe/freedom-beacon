@@ -17,8 +17,17 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-<body class="container">
-    {{{body}}}
+<body>
+    <header class="clearfix">
+        <a href="{{backLink}}" class="pull-left btn btn-default">Back</a>
+        <form class="pull-right"><button class="btn btn-default" type="submit">logout</button></form>
+        <h1 class="brand header-text">Freedom Beacon</h1>
+        <div class="user-time group-end"><input type="number" max="60" min="1" value="{{userTime}}" name="user-time"></div>
+    </header>
+    
+    <main role="main" class="container">
+        {{{body}}}
+    </main>
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
