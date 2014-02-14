@@ -38,6 +38,10 @@ h3 {
 	font-size: 3em;
 }
 
+#beacon {
+	display: none;
+}
+
 .beacon-btn {
 	width: 100%;
 }

@@ -3,5 +3,5 @@
  */
 
 exports.create = function(req, res) {
-    res.render('login');
+    res.render('login', {'layout': 'homepage'});
 };
