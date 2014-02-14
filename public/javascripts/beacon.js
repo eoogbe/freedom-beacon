@@ -68,8 +68,9 @@ function initializePage() {
     });
   }
 	
-	// Need to use on() so I can remove it later with off()
-	$("#flock > .unconnected").on("click", "a", meetRequested);
+	$(".free > a").click(meetRequested);
+	$(".offline > a").click(meetRequested);
+	
 	$(".stop-conn").click(stopConnection);
 	$("#message-form").submit(messageWritten);
 }
@@ -92,9 +93,10 @@ function beaconClicked(e) {
 function meetRequested(e) {
 	e.preventDefault();
 	
-	$(this).find(".status").text("pending...");
-	$(this).next().show();
-	$(this).parent().off("click", "a");
+	if (!$(this).next().is(":visible")) {
+		$(this).find(".status").text("pending...");
+		$(this).next().show();
+	}
 }
 
 function stopConnection(e) {
@@ -102,7 +104,12 @@ function stopConnection(e) {
 	flyout.hide();
 	
 	var time = flyout.next().val();
-	flyout.prev().find(".status").text(time + "m left");
+	
+	if (time) {
+		flyout.prev().find(".status").text(time + " min left");
+	} else {
+		flyout.prev().find(".status").text("");
+	}
 	
 	flyout.parent().on("click", "a", meetRequested);
 }
