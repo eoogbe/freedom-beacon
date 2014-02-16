@@ -92,5 +92,10 @@ describe('beacons', function(){
             expect(pingingFriends[3].distance.name).toBe('driving');
             expect(pingingFriends[4].distance.name).toBe('calling');
         });
+        
+        it('should not use the back button', function(){
+            beacons.create({}, res);
+            expect(res.data.isFirst).toBeTruthy();
+        });
     });
 });

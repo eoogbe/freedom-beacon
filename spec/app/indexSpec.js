@@ -14,7 +14,7 @@ describe('index', function(){
         });
         
         it('should not use the header', function(){
-            expect(res.data.splash).toBeDefined();
+            expect(res.data.isSplash).toBeTruthy();
         });
     });
 });

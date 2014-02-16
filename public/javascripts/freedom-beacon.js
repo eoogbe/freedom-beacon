@@ -20,6 +20,12 @@ function initializePage() {
 		facebook.initFacebook();
 	}
 	
+	function initBackButton() {
+		var backButton = FREE.BackButton;
+		backButton.init();
+		backButton.registerEventHandlers();
+	}
+	
 	function initHeaderTimer() {
 		var headerTimer = FREE.HeaderTimer;
 		headerTimer.init($('input[name="header-timer"'));
@@ -39,12 +45,13 @@ function initializePage() {
 	}
 	
 	function initMessagesForm() {
-		var messagesForm = FREE.MessagesForm;
-		messagesForm.init();
-		messagesForm.registerEventHandlers();
+		var messageForm = FREE.MessageForm;
+		messageForm.init();
+		messageForm.registerEventHandlers();
 	}
 	
 	initFacebook();
+	initBackButton();
 	initHeaderTimer();
 	initMainBeacon();
 	initFriendsList();

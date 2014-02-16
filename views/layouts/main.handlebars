@@ -18,9 +18,11 @@
   <![endif]-->
 </head>
 <body>
-  {{#unless splash}}
+  {{#unless isSplash}}
   <header class="clearfix">
-    <a href="{{backLink}}" class="pull-left btn btn-default">Back</a>
+    {{#unless isFirst}}
+    <a href="#" class="pull-left back-btn">Back</a>
+    {{/unless}}
     <button name="logout" class="pull-right btn btn-default" type="button">logout</button>
     <h1 class="brand header-text">Freedom Beacon</h1>
     <div class="user-time group-end"><input type="number" max="60" min="1" value="{{userTime}}" name="header-timer"></div>

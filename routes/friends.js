@@ -30,7 +30,6 @@ exports.index = function(req, res) {
   
   res.render('friends-index', {
     'friends': friends,
-    'userTime': 30,
-    'backLink': '/beacons/create'
+    'userTime': 30
   });
 };

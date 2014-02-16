@@ -9,9 +9,14 @@ FREE.Url = (function(){
         return window.location.pathname;
     }
     
+    function goBack() {
+        history.back(-1);
+    }
+    
     return {
         'init': function(){},
         'redirect': redirect,
-        'getPathname': getPathname
+        'getPathname': getPathname,
+        'goBack': goBack
     };
 })();

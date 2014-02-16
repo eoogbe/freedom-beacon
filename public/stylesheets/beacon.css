@@ -15,12 +15,61 @@ h3 {
 	font-size: 1.1em;
 }
 
+header {
+	padding: 0.3em;
+}
+
 .group-end {
 	margin-bottom: 0.3em;
 }
 
 .header-text {
 	text-align: center;
+}
+
+.back-btn {
+	background-color: #5471ad;
+	color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	text-shadow: 0.05em -0.07em #3e4957;
+	position: relative;
+	display: inline-block;
+	left: 1em;
+	height: 2em;
+	width: 3.5em;
+	padding: 0.3em 0.4em;
+	border-radius: 0.1em 0.3em 0.3em 0.1em;
+	-moz-border-radius: 0.1em 0.3em 0.3em 0.1em;
+	-webkit-border-radius: 0.1em 0.3em 0.3em 0.1em;
+}
+
+.back-btn:hover,
+.back-btn:active {
+	text-decoration: none;
+	color: #fff;
+	background-color: #4d679e;
+	text-shadow: 0.05em -0.07em #5c5c5c;
+}
+
+/*
+ * The arrow is made by creating a thick border and only showing the right side.
+ * For more explanation, see http://www.yuiblog.com/blog/2010/11/22/css-quick-tip-css-arrows-and-shapes-without-markup/
+ */
+.back-btn:before {
+	content: "";
+	height: 0;
+	width: 0;
+	position: absolute;
+	border: 1em solid transparent;
+	border-right-color: #5471ad;
+	left: -2em;
+	top: 0;
+}
+
+.back-btn:hover:before,
+.back-btn:active:before {
+	border-right-color: #4d679e;
 }
 
 .brand {

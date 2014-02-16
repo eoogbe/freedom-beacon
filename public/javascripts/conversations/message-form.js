@@ -14,7 +14,7 @@ FREE.MessageForm = (function(){
         });
     }
     
-    function messageWrittern(e) {
+    function messageWritten(e) {
 		e.prevenDefault();
 		
         var usrMsg = $("input[name='message']").val();
