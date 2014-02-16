@@ -1,56 +1,74 @@
 {
-    "friends":
-    [
+    "friends": [
         {
             "name": "Carey Phelps",
-            "distance-id": 1,
-            "status-id": 0
+            "distanceId": 1,
+            "time": 24,
+            "statusId": 0
         },
         {
             "name": "Kai Kuspa",
-            "distance-id": 0,
-            "status-id": 0
+            "distanceId": 0,
+            "time": 10,
+            "statusId": 0
         },
         {
             "name": "Eva Ogbe",
-            "distance-id": 2,
-            "status-id": 0
+            "distanceId": 2,
+            "time": 16,
+            "statusId": 0
         },
         {
             "name": "Jennifer",
-            "distance-id": 3,
+            "distanceId": 3,
             "time": 20,
-            "status-id": 1
+            "statusId": 1
         },
         {
             "name": "Nithya",
-            "distance-id": 3,
+            "distanceId": 3,
             "time": 6,
-            "status-id": 1
+            "statusId": 1
         },
         {
             "name": "Qudus",
-            "distance-id": 1,
+            "distanceId": 1,
             "time": 3,
-            "status-id": 1
+            "statusId": 1
         },
         {
             "name": "Andres",
-            "distance-id": 2,
+            "distanceId": 2,
             "time": 2,
-            "status-id": 1
+            "statusId": 1
         },
         {
             "name": "Jorge",
-            "status-id": 2
+            "statusId": 2
         }
     ],
     
     "distances": [
-        "talking",
-        "walking",
-        "driving",
-        "texting"
+        {
+            "name": "shouting",
+            "description": "Shouting distance is less than 0.1 miles away."
+        },
+        {
+            "name": "walking",
+            "description": "Walking distance is between 1.0 and 0.1 miles away."
+        },
+        {
+            "name": "biking",
+            "description": "Biking distance is between 5.0 and 1.0 miles away."
+        },
+        {
+            "name": "driving",
+            "description": "Driving distance is between 25 and 5.0 miles away."
+        },
+        {
+            "name": "calling",
+            "description": "Calling distance is greater than 25 miles away."
+        }
     ],
     
     "statuses": [

@@ -3,10 +3,11 @@
  */
 
 var data = require('../data.json');
+var PINGING_STATUS = 0;
 
 exports.index = function(req, res) {
-  var distances = data['distances'];
-  var statuses = data['statuses'];
+  var distances = data.distances;
+  var statuses = data.statuses;
   
   var friends =
   {
@@ -15,19 +16,21 @@ exports.index = function(req, res) {
     'offline': []
   };
   
-  for (var i = 0; i < data['friends'].length; ++i) {
-    var friend = data['friends'][i];
+  for (var i = 0; i < data.friends.length; ++i) {
+    var friend = data.friends[i];
     
-    friend['id'] = i;
-    friend['distance'] = distances[friend['distance-id']];
+    friend.url = friend.statusId == PINGING_STATUS ? '/conversations/' + i : '#';
+    friend.distance = distances[friend.distanceId];
     
-    var status = statuses[friend['status-id']];
+    var status = statuses[friend.statusId];
+    friend.status = status;
+    
     friends[status].push(friend);
   }
   
-  res.render('friends', {
+  res.render('friends-index', {
     'friends': friends,
     'userTime': 30,
-    'backLink': '/'
+    'backLink': '/beacons/create'
   });
 };

@@ -1,21 +1,7 @@
-<label class="user-time-label group-end">
-    I am free for
-    <input type="number" max="60" min="1" value="30" name="user-time" autofocus>
-    minutes
-</label>
-<input type="checkbox" id="beacon">
-<label for="beacon" class="btn btn-primary btn-lg beacon-btn group-end">illuminate beacon</label>
+<h1>Freedom Beacon</h1>
+<div id="fb-root"></div>
+<!--
+  Below we include the Login Button social plugin. This button uses the JavaScript SDK to
+  present a graphical Login button that triggers the FB.login() function when clicked. -->
 
-<h2>Friends who've pinged you</h2>
-<ul class="friends list-unstyled">
-    {{#each pingingFriends}}
-    <li class="pinging">
-        <a class="row" href="/conversations/{{id}}">
-            <span class="col-xs-6">{{name}}</span>
-            <span class="col-xs-6">{{distance}} distance</span>
-        </a>
-    </li>
-    {{/each}}
-</ul>
-
-<div><a href="/friends">View more friends</a></div>
+<fb:login-button class="fbButton" show-faces="false" width="200" max-rows="1" data-size="xlarge"></fb:login-button>

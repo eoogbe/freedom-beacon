@@ -1,0 +1,28 @@
+<h2>Friends</h2>
+
+{{#with friends}}
+<h3>Friends who've pinged you</h3>
+<ul class="friends list-unstyled">
+    {{#each pinging}}
+        {{> friend this}}
+    {{/each}}
+</ul>
+
+<h3>Free friends</h3>
+<ul class="friends list-unstyled">
+    {{#each free}}
+        {{> friend this}}
+    {{/each}}
+</ul>
+
+<h3>Offline friends</h3>
+<ul class="friends list-unstyled">
+    {{#each offline}}
+    <li class="offline">
+        <a role="button" class="row col-xs-4" href="#">{{name}}</a>
+        <span class="col-xs-4"></span>
+        <span class="status col-xs-4"></span>
+    </li>
+    {{/each}}
+</ul>
+{{/with}}

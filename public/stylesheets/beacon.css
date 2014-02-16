@@ -31,14 +31,14 @@ h3 {
 	border: none;
 }
 
-.user-time > input {
+input[name="header-timer"] {
 	font-size: 1.7em;
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
 }
 
-.user-time-label {
+.timer-label {
 	font-size: 3em;
 }
 
@@ -48,6 +48,26 @@ h3 {
 
 .beacon-btn {
 	width: 100%;
+}
+
+.flyout {
+	display: none;
+	position: absolute;
+	left: 50%;
+	background-color: #fff;
+	border: 0.1em solid #000;
+	z-index: 1;
+}
+
+.distance-flyout {
+	width: 30em;
+	height: 3em;
+	margin-left: -15em;
+	padding: 0.5em;
+}
+
+button[name="close"] {
+	float: right;
 }
 
 .friends > li {
@@ -63,10 +83,7 @@ h3 {
 }
 
 .fbButton {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 50px;
-	margin-bottom: auto;
+	margin: auto auto;
 }
 
 .msg {

@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>Freedom Beacon</title>
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
-    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/stylesheets/beacon.css">
-    
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
+  <meta charset="utf-8">
+  <title>Freedom Beacon</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="/stylesheets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/vendor/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="/stylesheets/beacon.css">
+  
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
 </head>
 <body>
-    <header class="clearfix">
-        <a href="{{backLink}}" class="pull-left btn btn-default">Back</a>
-        <button class="pull-right btn btn-default logout" type="submit">logout</button>
-        <h1 class="brand header-text">Freedom Beacon</h1>
-        <div class="user-time group-end"><input type="number" max="60" min="1" value="{{userTime}}" name="user-time"></div>
-    </header>
-    
-    <main role="main" class="container">
-        {{{body}}}
-    </main>
-    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/javascripts/bootstrap.min.js"></script>
-    <script src="/javascripts/beacon.js"></script>
+  {{#unless splash}}
+  <header class="clearfix">
+    <a href="{{backLink}}" class="pull-left btn btn-default">Back</a>
+    <button name="logout" class="pull-right btn btn-default" type="button">logout</button>
+    <h1 class="brand header-text">Freedom Beacon</h1>
+    <div class="user-time group-end"><input type="number" max="60" min="1" value="{{userTime}}" name="header-timer"></div>
+  </header>
+  {{/unless}}
+  
+  <main role="main" class="container">
+    {{{body}}}
+  </main>
+  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="/javascripts/vendor/bootstrap.min.js"></script>
+  <script src="/javascripts/freedom-beacon.min.js"></script>
 </body>
 </html>
