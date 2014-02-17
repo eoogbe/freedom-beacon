@@ -1,10 +1,10 @@
 describe('friends', function(){
-    var copy = require('../../lib/copy').copy;
+    var copy = require('../../../lib/copy').copy;
     
     var helper = require('./spec-helper');
     var response;
     
-    var friends = require('../../routes/friends');
+    var friends = require('../../../routes/friends');
     
     beforeEach(function(){
         response = copy(helper.response);
@@ -14,7 +14,7 @@ describe('friends', function(){
         var data;
         
         beforeEach(function(){
-            data = require('../../data.json');
+            data = require('../../../data.json');
         });
         
         it('should render the friends-index view', function(){
@@ -221,7 +221,7 @@ describe('friends', function(){
         
         describe('when search value', function(){
             it('should render the search results', function(){
-                var data = require('../../data.json');
+                var data = require('../../../data.json');
                 data.friends = [
                     {
                         'name': 'friend'
@@ -242,7 +242,7 @@ describe('friends', function(){
         
         describe('when search value not found', function(){
             it('should render the message', function(){
-                var data = require('../../data.json');
+                var data = require('../../../data.json');
                 data.friends = [
                     {
                         'name': 'friend'

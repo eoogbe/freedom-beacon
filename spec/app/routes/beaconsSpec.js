@@ -1,16 +1,15 @@
 describe('beacons', function(){
     describe('create()', function(){
-        var copy = require('../../lib/copy').copy;
+        var copy = require('../../../lib/copy').copy;
         
         var helper = require('./spec-helper');
         var response;
         
-        var beacons = require('../../routes/beacons');
-        var data;
+        var data = require('../../../data.json');
+        var beacons = require('../../../routes/beacons');
         
         beforeEach(function(){
             response = copy(helper.response);
-            data = require('../../data.json');
         });
         
         it('should render the beacons-create view', function(){
@@ -22,12 +21,10 @@ describe('beacons', function(){
             data.friends = [
                 {
                     'name': 'friend1',
-                    'distanceId': 0,
                     'statusId': 0
                 },
                 {
                     'name': 'friend2',
-                    'distanceId': 0,
                     'statusId': 1
                 }
             ];

@@ -1,5 +1,9 @@
-<h2 class="heading">{{friend.name}}</h2>
-<div id="messages-box"></div>
+<h2 class="heading">{{friend}}</h2>
+<div id="messages-box">
+    {{#each messages}}
+        {{> conv-item}}
+    {{/each}}
+</div>
 <form name="message-form">
     <input type="text" name="message" aria-label="Write a message" placeholder="Write a message">
 </form>
