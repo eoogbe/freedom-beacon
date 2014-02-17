@@ -7,10 +7,6 @@
 <label for="beacon" class="btn btn-primary btn-lg beacon-btn group-end">illuminate beacon</label>
 
 <h2>Friends who've pinged you</h2>
-<ul class="friends list-unstyled">
-    {{#each pingingFriends}}
-        {{> friend this}}
-    {{/each}}
-</ul>
+{{> friends pingingFriends}}
 
 <a href="/friends">View more friends</a>

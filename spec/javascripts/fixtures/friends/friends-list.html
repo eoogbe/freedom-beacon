@@ -6,33 +6,41 @@
 </head>
 <body>
   <div id="friends-list-fixture">
-    <div class="pinging">
-      <a href="#">name</a>
-      <button type="button" name="distance-btn">distance</button>
-      <span class="status">min left</span>
-      
-      <div class="distance-flyout flyout">
-          <button type="button" name="close">close</button>
-          description
-      </div>
-    </div>
+    <table>
+      <tr class="pinging">
+        <td><a href="#">name</a></td>
+        <td>
+          <button name="distance-btn" type="button">distance</button>
+          <div class="flyout distance-flyout">
+              <button name="close-btn" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+              description
+          </div>
+        </td>
+        <td class="status">time min left</td>
+      </tr>
+    </table>
     
-    <div class="free">
-      <a href="#">name</a>
-      <button type="button" name="distance-btn">distance</button>
-      <span class="status">min left</span>
-      
-      <div class="distance-flyout flyout">
-          <button type="button" name="close">close</button>
-          description
-      </div>
-    </div>
+    <table>
+      <tr class="free">
+        <td><a href="#">name</a></td>
+        <td>
+          <button name="distance-btn" type="button">distance</button>
+          <div class="flyout distance-flyout">
+              <button name="close-btn" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+              description
+          </div>
+        </td>
+        <td class="status">time min left</td>
+      </tr>
+    </table>
     
-    <div class="offline">
-      <a href="#">name</a>
-      <span></span>
-      <span class="status"></span>
-    </div>
+    <table>
+      <tr class="offline">
+        <td><a href="#">name</a></td>
+        <td></td>
+        <td class="status"></td>
+      </tr>
+    </table>
   </div>
 </body>
 </html>

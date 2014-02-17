@@ -14,6 +14,10 @@ h3 {
 	margin-bottom: 0.3em;
 }
 
+.no-back {
+	visibility: hidden;
+}
+
 .back-btn {
 	background-color: #5471ad;
 	color: #fff;
@@ -60,8 +64,8 @@ h3 {
 }
 
 .header-text {
-	margin-top: 0;
-	margin-left: 0.7em;
+	margin-top: 0.5em;
+	margin-left: 1em;
 	display: inline;
 }
 
@@ -85,10 +89,24 @@ input[name="header-timer"] {
 	width: 100%;
 }
 
+.friends tr {
+	border-bottom: 0.1em solid #ddd;
+}
+
+.friends td {
+	padding: 1em 0;
+	width: 15em;
+}
+
+button[name="distance-btn"] {
+	width: 75%;
+}
+
 .flyout {
 	display: none;
 	position: absolute;
 	left: 50%;
+	top: 50%;
 	background-color: #fff;
 	border: 0.1em solid #000;
 	z-index: 1;
@@ -96,12 +114,13 @@ input[name="header-timer"] {
 
 .distance-flyout {
 	width: 30em;
-	height: 3em;
+	height: 4em;
 	margin-left: -15em;
+	margin-top: -2em;
 	padding: 0.5em;
 }
 
-button[name="close"] {
+button[name="close-btn"] {
 	float: right;
 }
 
@@ -113,7 +132,6 @@ button[name="close"] {
 	border: 0.3em solid #ccc;
 	margin-bottom: 0.5em;
 	height: 15em;
-	background-color: #626eff;
 	padding: 0.5em;
 }
 

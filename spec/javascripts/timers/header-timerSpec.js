@@ -13,7 +13,7 @@ describe('HeaderTimer', function(){
                 headerTimer.init();
                 headerTimer.run();
                 
-                expect($('input[name="header-timer"]')).toHaveCss({'visibility': 'hidden'});
+                expect($('input[name="header-timer-btn"]')).toHaveCss({'visibility': 'hidden'});
             });
         });
         
@@ -39,8 +39,22 @@ describe('HeaderTimer', function(){
                 headerTimer.init();
                 headerTimer.run();
                 
-                $('input[name="header-timer"]').click();
-                expect($('input[type="number"][name="header-timer"]')).toExist();
+                $('input[name="header-timer-btn"]').click();
+                
+                expect($('input[name="header-timer"]')).toExist();
+            });
+            
+            describe('when clicked', function(){
+                it('should create an editable timer input', function(){
+                    headerTimer.init();
+                    headerTimer.run();
+                    
+                    $('input[name="header-timer-btn"]').click();
+                    $('input[name="header-timer"]').val('5');
+                    $('form[name="header-timer-form"]').submit();
+                    
+                    expect($('input[name="header-timer-btn"]')).toHaveValue('5:00');
+                });
             });
         });
     });

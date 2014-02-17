@@ -2,10 +2,10 @@
  * the routes for partials.
  */
 
-exports.show = function(req, res) {
+exports.show = function(request, response) {
     var copy = require('../lib/copy').copy;
-    var data = copy(req.query);
-    data["layout"] = false;
+    var data = copy(request.query);
+    data.layout = false;
     
-    res.render('partials/' + req.params.id, data);
+    response.render('partials/' + request.params.id, data);
 };

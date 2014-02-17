@@ -3,21 +3,21 @@ describe('index', function(){
         var copy = require('../../lib/copy').copy;
         
         var helper = require('./spec-helper');
-        var res;
+        var response;
         
         var index = require('../../routes');
         
         beforeEach(function(){
-            res = copy(helper.res);
-            index.index({}, res);
+            response = copy(helper.response);
+            index.index({}, response);
         });
         
         it('should render the index view', function(){
-            expect(res.view).toBe('index');
+            expect(response.view).toBe('index');
         });
         
         it('should not use the header', function(){
-            expect(res.data.isSplash).toBeTruthy();
+            expect(response.data.isSplash).toBeTruthy();
         });
     });
 });

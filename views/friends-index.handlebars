@@ -2,27 +2,11 @@
 
 {{#with friends}}
 <h3>Friends who've pinged you</h3>
-<ul class="friends list-unstyled">
-    {{#each pinging}}
-        {{> friend this}}
-    {{/each}}
-</ul>
+{{> friends pinging}}
 
 <h3>Free friends</h3>
-<ul class="friends list-unstyled">
-    {{#each free}}
-        {{> friend this}}
-    {{/each}}
-</ul>
+{{> friends free}}
 
 <h3>Offline friends</h3>
-<ul class="friends list-unstyled">
-    {{#each offline}}
-    <li class="offline row">
-        <a role="button" class="col-xs-4" href="#">{{name}}</a>
-        <span class="col-xs-4"></span>
-        <span class="status col-xs-4"></span>
-    </li>
-    {{/each}}
-</ul>
+{{> friends offline}}
 {{/with}}

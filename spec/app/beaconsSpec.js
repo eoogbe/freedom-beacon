@@ -3,18 +3,19 @@ describe('beacons', function(){
         var copy = require('../../lib/copy').copy;
         
         var helper = require('./spec-helper');
-        var res;
+        var response;
         
         var beacons = require('../../routes/beacons');
-        var data = require('../../data.json');
+        var data;
         
         beforeEach(function(){
-            res = copy(helper.res);
+            response = copy(helper.response);
+            data = require('../../data.json');
         });
         
         it('should render the beacons-create view', function(){
-            beacons.create({}, res);
-            expect(res.view).toBe('beacons-create');
+            beacons.create({}, response);
+            expect(response.view).toBe('beacons-create');
         });
         
         it('should filter out non-pinging friends', function(){
@@ -31,9 +32,9 @@ describe('beacons', function(){
                 }
             ];
             
-            beacons.create({}, res);
+            beacons.create({}, response);
             
-            var pingingFriends = res.data.pingingFriends;
+            var pingingFriends = response.data.pingingFriends;
             expect(pingingFriends.length).toBe(1);
         });
         
@@ -51,9 +52,9 @@ describe('beacons', function(){
                 }
             ];
             
-            beacons.create({}, res);
+            beacons.create({}, response);
             
-            var pingingFriends = res.data.pingingFriends;
+            var pingingFriends = response.data.pingingFriends;
             
             expect(pingingFriends[0].url).toBe('/conversations/0');
             expect(pingingFriends[1].url).toBe('/conversations/1');
@@ -88,20 +89,20 @@ describe('beacons', function(){
                 }
             ];
             
-            beacons.create({}, res);
+            beacons.create({}, response);
             
-            var pingingFriends = res.data.pingingFriends;
+            var pingingFriends = response.data.pingingFriends;
             
-            expect(pingingFriends[0].distance.name).toBe('shouting');
-            expect(pingingFriends[1].distance.name).toBe('walking');
-            expect(pingingFriends[2].distance.name).toBe('biking');
-            expect(pingingFriends[3].distance.name).toBe('driving');
-            expect(pingingFriends[4].distance.name).toBe('calling');
+            expect(pingingFriends[0].distance.name).toBe('shouting distance');
+            expect(pingingFriends[1].distance.name).toBe('walking distance');
+            expect(pingingFriends[2].distance.name).toBe('biking distance');
+            expect(pingingFriends[3].distance.name).toBe('driving distance');
+            expect(pingingFriends[4].distance.name).toBe('calling distance');
         });
         
         it('should not use the back button', function(){
-            beacons.create({}, res);
-            expect(res.data.isFirst).toBeTruthy();
+            beacons.create({}, response);
+            expect(response.data.noBack).toBe('no-back');
         });
     });
 });

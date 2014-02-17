@@ -2,10 +2,19 @@
  * the routes for the friends resource.
  */
 
-var data = require('../data.json');
-var PINGING_STATUS = 0;
+var copy = require('../lib/copy').copy;
 
-exports.index = function(req, res) {
+var PINGING_STATUS = 0;
+var OFFLINE_STATUS = 2;
+
+function getData() {
+  var data = require('../data.json');
+  return copy(data);
+}
+
+exports.index = function(request, response) {
+  var data = getData();
+  
   var distances = data.distances;
   var statuses = data.statuses;
   
@@ -17,10 +26,16 @@ exports.index = function(req, res) {
   };
   
   for (var i = 0; i < data.friends.length; ++i) {
-    var friend = data.friends[i];
+    var friend = copy(data.friends[i]);
     
     friend.url = friend.statusId == PINGING_STATUS ? '/conversations/' + i : '#';
-    friend.distance = distances[friend.distanceId];
+    
+    if (friend.statusId !== OFFLINE_STATUS) {
+      friend.distance = copy(distances[friend.distanceId]);
+      friend.distance.name += ' distance';
+      
+      friend.time += ' min left';
+    }
     
     var status = statuses[friend.statusId];
     friend.status = status;
@@ -28,15 +43,16 @@ exports.index = function(req, res) {
     friends[status].push(friend);
   }
   
-  res.render('friends-index', {
+  response.render('friends-index', {
     'friends': friends,
     'userTime': 30
   });
 };
 
-exports.search = function(req, res) {
+exports.search = function(request, response) {
+  var data = getData();
   var searchResults = [];
-  var searchEntry = req.query['friends-search'];
+  var searchEntry = request.query['friends-search'];
   var hasSearched = false;
   
   if (typeof searchEntry !== 'undefined') {
@@ -49,7 +65,7 @@ exports.search = function(req, res) {
     }
   }
   
-  res.render('friends-search', {
+  response.render('friends-search', {
     'searchResults': searchResults,
     'hasSearched': hasSearched,
     'userTime': 30

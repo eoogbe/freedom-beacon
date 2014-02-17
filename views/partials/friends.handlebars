@@ -1,0 +1,17 @@
+<table class="friends">
+    {{#each this}}
+    <tr class="{{status}}">
+        <td><a href="{{url}}">{{name}}</a></td>
+        {{#with distance}}
+        <td>
+            <button name="distance-btn" type="button">{{name}}</button>
+            <div class="flyout distance-flyout">
+                <button name="close-btn" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+                {{description}}
+            </div>
+        </td>
+        {{/with}}
+        <td class="status">{{time}}</td>
+    </tr>
+    {{/each}}
+</table>

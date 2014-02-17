@@ -4,7 +4,7 @@ FREE.FriendsList = (function(){
     function meetRequested(e) {
 		e.preventDefault();
 		
-		var status = $(this).siblings(".status");
+		var status = $(this).parent().parent().find(".status");
 		status.text("pinged");
 	}
 	
@@ -17,11 +17,11 @@ FREE.FriendsList = (function(){
 	}
     
     function registerEventHandlers() {
-        $('.free > a').click(meetRequested);
-        $('.offline > a').click(meetRequested);
+        $('.free > td > a').click(meetRequested);
+        $('.offline > td > a').click(meetRequested);
 		
 		$('button[name="distance-btn"]').click(distanceClicked);
-		$('button[name="close"]').click(closeClicked);
+		$('button[name="close-btn"]').click(closeClicked);
     }
     
     return {

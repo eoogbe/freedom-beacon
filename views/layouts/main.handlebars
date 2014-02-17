@@ -23,9 +23,7 @@
     <div class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                {{#unless isFirst}}
-                <a href="#" class="navbar-left navbar-btn back-btn">Back</a>
-                {{/unless}}
+                <a href="#" class="navbar-left navbar-btn back-btn {{noBack}}">Back</a>
                 <h1 class="navbar-left header-text"><a href="/beacons/create">Freedom Beacon</a></h1>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                   <span class="sr-only">Toggle navigation</span>
@@ -44,7 +42,7 @@
         </div>
     </div>
     <form name="header-timer-form">
-        <input type="button" class="btn btn-default" data-min="{{userTime}}" data-sec="0" name="header-timer" value="{{userTime}}:00">
+        <input type="button" class="btn btn-default" data-min="{{userTime}}" data-sec="0" name="header-timer-btn" value="{{userTime}}:00">
     </form>
   </header>
   {{/unless}}
