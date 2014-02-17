@@ -25,7 +25,7 @@ FREE.MessageForm = (function(){
     }
     
     function registerEventHandlers() {
-        $("#message-form").submit(messageWritten);
+        $('form[name="message-form"]').submit(messageWritten);
     }
     
     return {

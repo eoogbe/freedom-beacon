@@ -1,0 +1,18 @@
+<h2 class="heading">Find Friends</h2>
+<form name="friends-search-form" action="/friends/search">
+    <input type="search" role="search" name="friends-search" aria-label="Find your friends" placeholder="Find your friends">
+</form>
+{{#if searchResults}}
+<table>
+    {{#each searchResults}}
+    <tr>
+        <td>{{this}}</td>
+        <td><button name="add-friend-btn" type="button"><span class="glyphicon glyphicon-plus"></span>Add</button></td>
+    </tr>
+    {{/each}}
+</table>
+{{else}}
+    {{#if hasSearched}}
+    <p>No matches found</p>
+    {{/if}}
+{{/if}}

@@ -10,7 +10,7 @@ describe('HeaderTimer', function(){
             it('should make the timer invisible', function(){
                 loadFixtures('timers/no-header-timer.html');
                 
-                headerTimer.init($('input[name="header-timer"]'));
+                headerTimer.init();
                 headerTimer.run();
                 
                 expect($('input[name="header-timer"]')).toHaveCss({'visibility': 'hidden'});
@@ -18,19 +18,29 @@ describe('HeaderTimer', function(){
         });
         
         describe('when time value', function(){
-            it('should start a countdown', function(){
+            beforeEach(function(){
                 loadFixtures('timers/header-timer.html');
-                
+            });
+            
+            it('should start a countdown', function(){
                 spyOn(FREE.Countdowner, 'countdown').and.callFake(function($timer, countdownFn){
                     countdownFn();
                 });
                 
                 spyOn(FREE.HeaderBeacon, 'init');
                 
-                headerTimer.init($('input[name="header-timer"]'));
+                headerTimer.init();
                 headerTimer.run();
                 
                 expect(FREE.HeaderBeacon.init).toHaveBeenCalled();
+            });
+            
+            it('should register a click handler', function(){
+                headerTimer.init();
+                headerTimer.run();
+                
+                $('input[name="header-timer"]').click();
+                expect($('input[type="number"][name="header-timer"]')).toExist();
             });
         });
     });

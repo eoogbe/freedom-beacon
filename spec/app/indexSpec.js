@@ -1,11 +1,14 @@
 describe('index', function(){
     describe('index()', function(){
+        var copy = require('../../lib/copy').copy;
+        
         var helper = require('./spec-helper');
-        var res = helper.res;
+        var res;
         
         var index = require('../../routes');
         
         beforeEach(function(){
+            res = copy(helper.res);
             index.index({}, res);
         });
         

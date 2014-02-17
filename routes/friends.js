@@ -33,3 +33,25 @@ exports.index = function(req, res) {
     'userTime': 30
   });
 };
+
+exports.search = function(req, res) {
+  var searchResults = [];
+  var searchEntry = req.query['friends-search'];
+  var hasSearched = false;
+  
+  if (typeof searchEntry !== 'undefined') {
+    hasSearched = true;
+    for (var i=0; i<data.friends.length; ++i) {
+      var friendName = data.friends[i].name;
+      if (friendName === searchEntry) {
+        searchResults.push(friendName);
+      }
+    }
+  }
+  
+  res.render('friends-search', {
+    'searchResults': searchResults,
+    'hasSearched': hasSearched,
+    'userTime': 30
+  });
+};

@@ -1,10 +1,16 @@
 describe('beacons', function(){
     describe('create()', function(){
+        var copy = require('../../lib/copy').copy;
+        
         var helper = require('./spec-helper');
-        var res = helper.res;
+        var res;
         
         var beacons = require('../../routes/beacons');
         var data = require('../../data.json');
+        
+        beforeEach(function(){
+            res = copy(helper.res);
+        });
         
         it('should render the beacons-create view', function(){
             beacons.create({}, res);

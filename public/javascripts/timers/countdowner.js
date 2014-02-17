@@ -1,16 +1,28 @@
 var FREE = FREE || {};
 
 FREE.Countdowner = (function(){
-    var DELAY = 60000;
+    var DELAY = 1000;
     var interval;
     
     function tick($timer, done) {
-        var min = parseInt($timer.val());
+        var min = parseInt($timer.data('min'));
+        var sec = parseInt($timer.data('sec'));
         
-        if (min > 0) {
-            $timer.val(min - 1);
-        } else if (min === 0) {
+        if (sec === 0 && min === 0) {
             done();
+        } else {
+            if (sec === 0) {
+                --min;
+                sec = 59;
+            } else {
+                --sec;
+            }
+            
+            $timer.data('min', min);
+            $timer.data('sec', sec);
+            
+            if (sec < 10) sec = '0' + sec;
+            $timer.val(min + ':' + sec);
         }
     };
     

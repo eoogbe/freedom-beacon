@@ -1,8 +1,3 @@
-header {
-	border-bottom: 0.1em solid #ddd;
-	margin-bottom: 1.5em;
-}
-
 h1 {
 	font-size: 1.5em;
 }
@@ -15,16 +10,8 @@ h3 {
 	font-size: 1.1em;
 }
 
-header {
-	padding: 0.3em;
-}
-
 .group-end {
 	margin-bottom: 0.3em;
-}
-
-.header-text {
-	text-align: center;
 }
 
 .back-btn {
@@ -72,8 +59,10 @@ header {
 	border-right-color: #4d679e;
 }
 
-.brand {
+.header-text {
 	margin-top: 0;
+	margin-left: 0.7em;
+	display: inline;
 }
 
 .readonly {
@@ -82,9 +71,6 @@ header {
 
 input[name="header-timer"] {
 	font-size: 1.7em;
-	margin-left: auto;
-	margin-right: auto;
-	display: block;
 }
 
 .timer-label {

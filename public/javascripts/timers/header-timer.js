@@ -5,7 +5,7 @@ FREE.HeaderTimer = (function(){
 	  , $container;
     
     function hasTimer() {
-		return !isNaN(parseInt($timer.val()));
+		return !isNaN(parseInt($timer.data('min')));
 	}
 	
 	function makeTimerInvisible() {
@@ -16,8 +16,12 @@ FREE.HeaderTimer = (function(){
 		FREE.HeaderBeacon.init();
 	}
 	
-	function init(timerElem) {
-		$timer = timerElem;
+	function timerClicked() {
+		// TODO: fill-in
+	}
+	
+	function init() {
+		$timer = $('input[name="header-timer"]');
 		$container = $timer.parent();
 	}
     
@@ -26,6 +30,8 @@ FREE.HeaderTimer = (function(){
             var countdowner = FREE.Countdowner;
 			countdowner.init();
 			countdowner.countdown($timer, replaceWithButton);
+			
+			$timer.click(timerClicked);
         } else {
             makeTimerInvisible();
         }

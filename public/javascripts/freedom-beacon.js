@@ -9,7 +9,7 @@ $(document).ready(function() {
  * Function that is called when the document is ready.
  */
 function initializePage() {
-	function initFacebook() {
+	(function() {
 		var facebook = FREE.Facebook;
 		
 		window.fbAsyncInit = function() {
@@ -18,42 +18,41 @@ function initializePage() {
 		}
 		
 		facebook.initFacebook();
-	}
+	})();
 	
-	function initBackButton() {
+	(function() {
 		var backButton = FREE.BackButton;
 		backButton.init();
 		backButton.registerEventHandlers();
-	}
+	})();
 	
-	function initHeaderTimer() {
+	(function() {
 		var headerTimer = FREE.HeaderTimer;
-		headerTimer.init($('input[name="header-timer"'));
+		headerTimer.init();
 		headerTimer.run();
-	}
+	})();
 	
-	function initMainBeacon() {
+	(function() {
 		var mainBeacon = FREE.MainBeacon;
 		mainBeacon.init();
 		mainBeacon.registerEventHandlers();
-	}
+	})();
 	
-	function initFriendsList() {
+	(function() {
 		var friendsList = FREE.FriendsList;
 		friendsList.init();
 		friendsList.registerEventHandlers();
-	}
+	})();
 	
-	function initMessagesForm() {
+	(function() {
+		var requestButton = FREE.RequestButton;
+		requestButton.init();
+		requestButton.registerEventHandlers();
+	})();
+	
+	(function() {
 		var messageForm = FREE.MessageForm;
 		messageForm.init();
 		messageForm.registerEventHandlers();
-	}
-	
-	initFacebook();
-	initBackButton();
-	initHeaderTimer();
-	initMainBeacon();
-	initFriendsList();
-	initMessagesForm();
+	})();
 }
