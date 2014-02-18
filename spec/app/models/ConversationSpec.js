@@ -1,6 +1,12 @@
+var mongoose = require('mongoose');
+var ObjectId = mongoose.Types.ObjectId;
+
+require('../../../models/Conversation');
+
+var helper = require('../spec-helper');
+
 describe('Conversation', function(){
-    var Conversation = require('../../../models/Conversation');
-    var ObjectId = require('mongoose').Schema.Types.ObjectId;
+    var Conversation = mongoose.model('Conversation');
     
     describe('findMessages()', function(){
         it('should find all the messages', function(){
@@ -8,18 +14,16 @@ describe('Conversation', function(){
                 'messages': [
                     {
                         'text': 'message text',
-                        'sender': new ObjectId('user0')
+                        'sender': new ObjectId(helper.ids.user0)
                     },
                     {
                         'text': 'message text 2',
-                        'sender': new ObjectId('user1')
+                        'sender': new ObjectId(helper.ids.user1)
                     }
                 ]
             });
             
-            var messages = conversation.findMessages('user0');
-            
-            var expected = [
+            var messages = [
                 {
                     'text': 'message text',
                     'sender': 'user'
@@ -30,17 +34,19 @@ describe('Conversation', function(){
                 }
             ];
             
-            expect(messages).toEqual(expected);
+            expect(conversation.findMessages(helper.ids.user0)).toEqual(messages);
         });
     });
     
     describe('getFriendId()', function(){
         it('should get the friend id', function(){
-            var conversation = new Conversation({
-                'users': [new ObjectId('user0'), new ObjectId('user1')]
-            });
+            users = {};
+            users[helper.ids.user0] = true;
+            users[helper.ids.user1] = true;
             
-            expect(conversation.getFriendId('user0')).toEqual(new ObjectId('user1'));
+            var conversation = new Conversation({ 'users': users });
+            
+            expect(conversation.getFriendId(helper.ids.user0)).toEqual(new ObjectId(helper.ids.user1));
         });
     });
 });

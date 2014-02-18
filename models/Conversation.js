@@ -2,8 +2,7 @@ var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var ConversationSchema = new mongoose.Schema({
-    'users': [{'type': ObjectId, 'ref': 'User'}],
-    
+    'users': Object,
     'messages': [
         {
             'text': String,
@@ -16,8 +15,7 @@ ConversationSchema.methods.findMessages = function(userId) {
     var messages = [];
     
     for (var i = 0; i < this.messages.length; ++i) {
-        var sender = new ObjectId(userId) === this.messages[i].sender
-            ? 'user' : 'friend';
+        var sender = this.messages[i].sender.equals(userId) ? 'user' : 'friend';
         var message = { 'text': this.messages[i].text, 'sender': sender };
         
         messages.push(message);
@@ -27,10 +25,11 @@ ConversationSchema.methods.findMessages = function(userId) {
 };
 
 ConversationSchema.methods.getFriendId = function(userId) {
-    return this.users;
-    //return this.users[0] === new ObjectId(userId)
-    //    ? this.users[1] : this.users[0];
+    for (var u in this.users) {
+        if (u !== userId) return new mongoose.Types.ObjectId(u);
+    }
+    
+    return null;
 };
 
-var Conversation = mongoose.model('Conversation', ConversationSchema);
-module.exports = Conversation;
+mongoose.model('Conversation', ConversationSchema);

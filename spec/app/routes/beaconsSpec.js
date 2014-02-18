@@ -2,7 +2,7 @@ describe('beacons', function(){
     describe('create()', function(){
         var copy = require('../../../lib/copy').copy;
         
-        var helper = require('./spec-helper');
+        var helper = require('../spec-helper');
         var response;
         
         var data = require('../../../data.json');

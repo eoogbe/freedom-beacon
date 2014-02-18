@@ -5,5 +5,4 @@ var DistanceSchema = new mongoose.Schema({
     'description': String
 });
 
-var Distance = mongoose.model('Distance', DistanceSchema);
-module.exports = Distance;
+mongoose.model('Distance', DistanceSchema);

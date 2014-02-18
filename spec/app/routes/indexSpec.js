@@ -2,7 +2,7 @@ describe('index', function(){
     describe('index()', function(){
         var copy = require('../../../lib/copy').copy;
         
-        var helper = require('./spec-helper');
+        var helper = require('../spec-helper');
         var response;
         
         var index = require('../../../routes');

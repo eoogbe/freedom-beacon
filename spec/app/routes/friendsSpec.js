@@ -1,7 +1,7 @@
 describe('friends', function(){
     var copy = require('../../../lib/copy').copy;
     
-    var helper = require('./spec-helper');
+    var helper = require('../spec-helper');
     var response;
     
     var friends = require('../../../routes/friends');
