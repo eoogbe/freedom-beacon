@@ -1,12 +1,11 @@
-var mongoose = require('mongoose');
-var ObjectId = mongoose.Types.ObjectId;
-
-require('../../../models/Conversation');
-
-var helper = require('../spec-helper');
-
 describe('Conversation', function(){
+    var mongoose = require('mongoose');
+    var ObjectId = mongoose.Types.ObjectId;
+    
+    require('../../../models/Conversation');
     var Conversation = mongoose.model('Conversation');
+    
+    var helper = require('../spec-helper');
     
     describe('findMessages()', function(){
         it('should find all the messages', function(){

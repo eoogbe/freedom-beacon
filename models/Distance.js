@@ -1,3 +1,7 @@
+/*
+ * the Distance model definition.
+ */
+
 var mongoose = require('mongoose');
 
 var DistanceSchema = new mongoose.Schema({

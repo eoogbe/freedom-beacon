@@ -1,12 +1,12 @@
-var mongoose = require('mongoose');
-var ObjectId = mongoose.Types.ObjectId;
-
-require('../../../models/User');
-
-var helper = require('../spec-helper');
-
 describe('User', function(){
     describe('addConversation()', function(){
+        var mongoose = require('mongoose');
+        var ObjectId = mongoose.Types.ObjectId;
+        
+        require('../../../models/User');
+        
+        var helper = require('../spec-helper');
+        
         var User = mongoose.model('User');        
         var user;
         

@@ -1,8 +1,12 @@
+/*
+ * the Conversation model definition.
+ */
+
 var mongoose = require('mongoose');
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var ConversationSchema = new mongoose.Schema({
-    'users': Object,
+    'users': Object,  // A set
     'messages': [
         {
             'text': String,
