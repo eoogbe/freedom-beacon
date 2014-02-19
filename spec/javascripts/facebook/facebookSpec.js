@@ -5,17 +5,21 @@ describe('Facebook', function(){
         beforeEach(function(){
             FB = jasmine.createSpyObj('FB', ['init', 'login', 'logout']);
             FB.Event = jasmine.createSpyObj('FB.Event', ['subscribe']);
+            
             spyOn(FREE.Url, 'redirect');
+            spyOn(jQuery, 'getScript').and.callFake(function(url, done){
+                expect(url).toBe('//connect.facebook.net/en_US/all.js');
+                done();
+            });
             
             facebook = FREE.Facebook;
-            facebook.init(FB);
         });
         
         describe('authResponseChangeHandler', function(){
             describe('when not on homepage', function(){
                 it('should do nothing', function(){
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/beacons/create');
-                    facebook.registerEventHandlers();
+                    facebook.init();
                     expect(FREE.Url.redirect).not.toHaveBeenCalled();
                 });
             });
@@ -27,7 +31,7 @@ describe('Facebook', function(){
                     });
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/');
                     
-                    facebook.registerEventHandlers();
+                    facebook.init();
                     
                     expect(FREE.Url.redirect).toHaveBeenCalled();
                 });
@@ -40,7 +44,7 @@ describe('Facebook', function(){
                     });
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/');
                     
-                    facebook.registerEventHandlers();
+                    facebook.init();
                     
                     expect(FB.login).toHaveBeenCalled();
                 });
@@ -55,7 +59,7 @@ describe('Facebook', function(){
                     });
                     
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/');
-                    facebook.registerEventHandlers();
+                    facebook.init();
                     expect(FREE.Url.redirect).toHaveBeenCalled();
                 });
             });
@@ -64,8 +68,7 @@ describe('Facebook', function(){
         describe('logoutHandler', function(){
             beforeEach(function(){
                 loadFixtures('facebook/logout.html');
-                
-                facebook.registerEventHandlers();
+                facebook.init();
                 $('button[name="logout"]').click();
             });
             

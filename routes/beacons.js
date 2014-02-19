@@ -31,6 +31,6 @@ exports.create = function(request, response) {
   
   response.render('beacons-create', {
     'pingingFriends': pingingFriends,
-    'noBack': 'no-back'
+    'mainBeaconVisibility': 'invisible'
   });
 };

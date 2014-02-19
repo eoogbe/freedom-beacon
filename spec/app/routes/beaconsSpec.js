@@ -97,9 +97,9 @@ describe('beacons', function(){
             expect(pingingFriends[4].distance.name).toBe('calling distance');
         });
         
-        it('should not use the back button', function(){
+        it('should make the back button and header timer invisibile', function(){
             beacons.create({}, response);
-            expect(response.data.noBack).toBe('no-back');
+            expect(response.data.mainBeaconVisibility).toBe('invisible');
         });
     });
 });

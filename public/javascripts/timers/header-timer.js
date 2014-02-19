@@ -2,14 +2,6 @@ var FREE = FREE || {};
 
 FREE.HeaderTimer = (function(){
     var $timerBtn;
-    
-    function hasTimer() {
-		return !isNaN(parseInt($timerBtn.data('min')));
-	}
-	
-	function makeTimerInvisible() {
-		$timerBtn.css('visibility', 'hidden');
-	}
 	
 	function replaceWithButton() {
 		FREE.HeaderBeacon.init();
@@ -57,11 +49,7 @@ FREE.HeaderTimer = (function(){
 	}
     
     function run(){
-        if (hasTimer()) {
-            setupTimer();
-        } else {
-            makeTimerInvisible();
-        }
+        setupTimer();
     };
     
     return {

@@ -10,14 +10,7 @@ $(document).ready(function() {
  */
 function initializePage() {
 	(function() {
-		var facebook = FREE.Facebook;
-		
-		window.fbAsyncInit = function() {
-			facebook.init(FB);
-			facebook.registerEventHandlers();
-		}
-		
-		facebook.initFacebook();
+		var facebook = FREE.Facebook.init();
 	})();
 	
 	(function() {
