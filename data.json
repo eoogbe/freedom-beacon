@@ -3,48 +3,42 @@
         {
             "name": "Carey Phelps",
             "distanceId": 1,
-            "time": 24,
-            "statusId": 0
+            "time": 24
         },
         {
             "name": "Kai Kuspa",
             "distanceId": 0,
-            "time": 10,
-            "statusId": 0
+            "time": 10
         },
         {
             "name": "Eva Ogbe",
             "distanceId": 2,
-            "time": 16,
-            "statusId": 0
+            "time": 16
         },
         {
             "name": "Jennifer",
             "distanceId": 4,
-            "time": 20,
-            "statusId": 1
+            "time": 20
         },
         {
             "name": "Nithya",
             "distanceId": 3,
-            "time": 6,
-            "statusId": 1
+            "time": 6
         },
         {
             "name": "Qudus",
             "distanceId": 1,
-            "time": 3,
-            "statusId": 1
+            "time": 3
         },
         {
             "name": "Andres",
             "distanceId": 2,
-            "time": 2,
-            "statusId": 1
+            "time": 2
         },
         {
             "name": "Jorge",
-            "statusId": 2
+            "distanceId": 2,
+            "time": 15
         }
     ],
     
@@ -69,11 +63,5 @@
             "name": "calling",
             "description": "Calling distance is greater than 25 miles away."
         }
-    ],
-    
-    "statuses": [
-        "pinging",
-        "free",
-        "offline"
     ]
 }

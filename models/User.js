@@ -7,16 +7,10 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var UserSchema = new mongoose.Schema({
     'name': String,
+    'username': String,
     'friends': [{'type': ObjectId, 'ref': 'User'}],
-    'conversations': [{'type': ObjectId, 'ref': 'Conversation'}],
-    'time': Number,
-    'distance': {'type': ObjectId, 'ref': 'Distance'},
-    'status': Number
+    'beacon': {'timeSet': Date, 'duration': Number},
+    'distance': {'type': ObjectId, 'ref': 'Distance'}
 });
-
-UserSchema.methods.addConversation = function(conversationId) {
-    this.conversations.push(conversationId);
-    this.save();
-};
 
 mongoose.model('User', UserSchema);

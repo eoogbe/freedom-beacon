@@ -3,7 +3,7 @@ describe('Facebook', function(){
         var facebook;
         
         beforeEach(function(){
-            FB = jasmine.createSpyObj('FB', ['init', 'login', 'logout']);
+            FB = jasmine.createSpyObj('FB', ['init', 'api', 'login', 'logout']);
             FB.Event = jasmine.createSpyObj('FB.Event', ['subscribe']);
             
             spyOn(FREE.Url, 'redirect');
@@ -29,11 +29,10 @@ describe('Facebook', function(){
                     FB.Event.subscribe.and.callFake(function(eventName, fn){
                         fn({'status': 'connected'});
                     });
+                    
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/');
-                    
                     facebook.init();
-                    
-                    expect(FREE.Url.redirect).toHaveBeenCalled();
+                    expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
                 });
             });
             
@@ -42,25 +41,39 @@ describe('Facebook', function(){
                     FB.Event.subscribe.and.callFake(function(eventName, fn){
                         fn({});
                     });
+                    
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/');
-                    
                     facebook.init();
-                    
                     expect(FB.login).toHaveBeenCalled();
                 });
                 
-                it('should redirect to /beacons/create after logging in', function(){
+                it('should post to the /sessions route after logging in', function(){
                     FB.Event.subscribe.and.callFake(function(eventName, fn){
                         fn({});
                     });
                     
                     FB.login.and.callFake(function(fn){
+                        fn({'authResponse': true});
+                    });
+                    
+                    FB.api.and.callFake(function(path, fn){
+                        expect(path).toBe('/me');
+                        fn({'username': 'uname', 'name': 'thename'});
+                    });
+                    
+                    spyOn(jQuery, 'post').and.callFake(function(path, data, fn){
+                        expect(path).toBe('/sessions');
+                        
+                        expect(data.username).toBe('uname');
+                        expect(data.name).toBe('thename');
+                        
                         fn();
                     });
                     
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/');
+                    
                     facebook.init();
-                    expect(FREE.Url.redirect).toHaveBeenCalled();
+                    expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
                 });
             });
         });

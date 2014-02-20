@@ -4,9 +4,6 @@
 
 var copy = require('../lib/copy').copy;
 
-var PINGING_STATUS = 0;
-var OFFLINE_STATUS = 2;
-
 function getData() {
   var data = require('../data.json');
   return copy(data);
@@ -14,37 +11,17 @@ function getData() {
 
 exports.index = function(request, response) {
   var data = getData();
-  
   var distances = data.distances;
-  var statuses = data.statuses;
-  
-  var friends =
-  {
-    'pinging': [],
-    'free': [],
-    'offline': []
-  };
+  var freeFriends = [];
   
   for (var i = 0; i < data.friends.length; ++i) {
     var friend = copy(data.friends[i]);
-    
-    friend.url = friend.statusId == PINGING_STATUS ? '/conversations/' + i : '#';
-    
-    if (friend.statusId !== OFFLINE_STATUS) {
-      friend.distance = copy(distances[friend.distanceId]);
-      friend.distance.name += ' distance';
-      
-      friend.time += ' min left';
-    }
-    
-    var status = statuses[friend.statusId];
-    friend.status = status;
-    
-    friends[status].push(friend);
+    friend.distance = copy(distances[friend.distanceId]);
+    freeFriends.push(friend);
   }
   
   response.render('friends-index', {
-    'friends': friends,
+    'freeFriends': freeFriends,
     'userTime': 30
   });
 };

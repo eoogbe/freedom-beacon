@@ -22,182 +22,39 @@ describe('friends', function(){
             expect(response.view).toBe('friends-index');
         });
         
-        it('should split the friends into 3 categories: pinging, free, and offline', function(){
+        xit('should add the friends\' distance', function(){  // call populate
             data.friends = [
                 {
                     'name': 'friend1',
-                    'distanceId': 0,
-                    'statusId': 0
+                    'distanceId': 0
                 },
                 {
                     'name': 'friend2',
-                    'distanceId': 0,
-                    'statusId': 1
+                    'distanceId': 1
                 },
                 {
                     'name': 'friend3',
-                    'distanceId': 0,
-                    'statusId': 2
-                }
-            ];
-            
-            friends.index({}, response);
-            
-            var friendsData = response.data.friends;
-            
-            expect(friendsData.pinging.length).toBe(1);
-            expect(friendsData.free.length).toBe(1);
-            expect(friendsData.offline.length).toBe(1);
-        });
-        
-        it('should add the friends\' statuses', function(){
-            data.friends = [
-                {
-                    'name': 'friend1',
-                    'distanceId': 0,
-                    'statusId': 0
-                },
-                {
-                    'name': 'friend2',
-                    'distanceId': 0,
-                    'statusId': 1
-                },
-                {
-                    'name': 'friend3',
-                    'distanceId': 0,
-                    'statusId': 2
-                }
-            ];
-            
-            friends.index({}, response);
-            
-            var friendsData = response.data.friends;
-            
-            expect(friendsData.pinging[0].status).toBe('pinging');
-            expect(friendsData.free[0].status).toBe('free');
-            expect(friendsData.offline[0].status).toBe('offline');
-        });
-        
-        it('should add a friend url', function(){
-            data.friends = [
-                {
-                    'name': 'friend1',
-                    'distanceId': 0,
-                    'statusId': 0
-                },
-                {
-                    'name': 'friend2',
-                    'distanceId': 0,
-                    'statusId': 0
-                },
-                {
-                    'name': 'friend3',
-                    'distanceId': 0,
-                    'statusId': 1
+                    'distanceId': 2
                 },
                 {
                     'name': 'friend4',
-                    'distanceId': 0,
-                    'statusId': 2
-                }
-            ];
-            
-            friends.index({}, response);
-            
-            var friendsData = response.data.friends;
-            
-            expect(friendsData.pinging[0].url).toBe('/conversations/0');
-            expect(friendsData.pinging[1].url).toBe('/conversations/1');
-            expect(friendsData.free[0].url).toBe('#');
-            expect(friendsData.offline[0].url).toBe('#');
-        });
-        
-        it('should add the friends\' distance', function(){
-            data.friends = [
-                {
-                    'name': 'friend1',
-                    'distanceId': 0,
-                    'statusId': 0
-                },
-                {
-                    'name': 'friend2',
-                    'distanceId': 1,
-                    'statusId': 0
-                },
-                {
-                    'name': 'friend3',
-                    'distanceId': 2,
-                    'statusId': 0
-                },
-                {
-                    'name': 'friend4',
-                    'distanceId': 3,
-                    'statusId': 1
+                    'distanceId': 3
                 },
                 {
                     'name': 'friend5',
-                    'distanceId': 4,
-                    'statusId': 1
+                    'distanceId': 4
                 }
             ];
             
             friends.index({}, response);
             
-            var friendsData = response.data.friends;
+            var friendsData = response.data.freeFriends;
             
-            expect(friendsData.pinging[0].distance.name).toBe('shouting distance');
-            expect(friendsData.pinging[1].distance.name).toBe('walking distance');
-            expect(friendsData.pinging[2].distance.name).toBe('biking distance');
-            expect(friendsData.free[0].distance.name).toBe('driving distance');
-            expect(friendsData.free[1].distance.name).toBe('calling distance');
-        });
-        
-        it('should not add the friends\' distances to the offline friends', function(){
-            data.friends = [
-                {
-                    'name': 'friend1',
-                    'statusId': 2
-                }
-            ];
-            
-            friends.index({}, response);
-            var offlineFriends = response.data.friends.offline;
-            expect(offlineFriends[0].distance).toBeUndefined();
-        });
-        
-        it('should add the friends\' times', function(){
-            data.friends = [
-                {
-                    'name': 'friend1',
-                    'time': 10,
-                    'statusId': 0
-                },
-                {
-                    'name': 'friend2',
-                    'time': 21,
-                    'statusId': 1
-                }
-            ];
-            
-            friends.index({}, response);
-            
-            var friendsData = response.data.friends;
-            
-            expect(friendsData.pinging[0].time).toBe('10 min left');
-            expect(friendsData.free[0].time).toBe('21 min left');
-        });
-        
-        it('should not add the friends\' times to the offline friends', function(){
-            data.friends = [
-                {
-                    'name': 'friend1',
-                    'statusId': 2
-                }
-            ];
-            
-            friends.index({}, response);
-            var offlineFriends = response.data.friends.offline;
-            expect(offlineFriends[0].time).toBeUndefined();
+            expect(friendsData[0].distance.name).toBe('shouting distance');
+            expect(friendsData[1].distance.name).toBe('walking distance');
+            expect(friendsData[2].distance.name).toBe('biking distance');
+            expect(friendsData[3].distance.name).toBe('driving distance');
+            expect(friendsData[4].distance.name).toBe('calling distance');
         });
     });
     
