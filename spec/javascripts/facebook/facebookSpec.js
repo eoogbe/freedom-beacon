@@ -25,12 +25,27 @@ describe('Facebook', function(){
             });
             
             describe('when logged in', function(){
-                it('should redirect to /beacons/create', function(){
+                it('should post to the /sessions route', function(){
                     FB.Event.subscribe.and.callFake(function(eventName, fn){
                         fn({'status': 'connected'});
                     });
                     
+                    FB.api.and.callFake(function(path, fn){
+                        expect(path).toBe('/me');
+                        fn({'username': 'uname', 'name': 'thename'});
+                    });
+                    
+                    spyOn(jQuery, 'post').and.callFake(function(path, data, fn){
+                        expect(path).toBe('/sessions');
+                        
+                        expect(data.username).toBe('uname');
+                        expect(data.name).toBe('thename');
+                        
+                        fn();
+                    });
+                    
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/');
+                    
                     facebook.init();
                     expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
                 });

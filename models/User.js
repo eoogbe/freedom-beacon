@@ -13,4 +13,15 @@ var UserSchema = new mongoose.Schema({
     'distance': {'type': ObjectId, 'ref': 'Distance'}
 });
 
+var MINUTES_PER_MILLISECOND = 60000;
+
+function addMinutes(date, min) {
+    return new Date(date.getTime() + min * MINUTES_PER_MILLISECOND);
+}
+
+UserSchema.methods.isFree = function() {
+    var end = addMinutes(this.beacon.timeSet, this.beacon.duration);
+    return end.getTime() > Date.now();
+};
+
 mongoose.model('User', UserSchema);

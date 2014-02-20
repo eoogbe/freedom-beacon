@@ -3,28 +3,32 @@ var FREE = FREE || {};
 FREE.Facebook = (function(){
     var url;
     
-    function afterConnecting() {
+    function afterPost() {
         url.redirect('/beacons/create');
+    }
+    
+    function addSessionData() {
+        FB.api('/me', function(response){
+            var data =
+            {
+                'username': response.username,
+                'name': response.name
+            };
+            
+            $.post('/sessions', data, afterPost);
+        });
     }
     
     function loggedIn(response) {
         if (response.authResponse) {
-            FB.api('/me', function(response){
-                var data =
-                {
-                    'username': response.username,
-                    'name': response.name
-                };
-                
-                $.post('/sessions', data, afterConnecting);
-            });
+            addSessionData();
         }
     }
     
-    function authResponseChanged(response) {
+    function authLoggedIn(response) {
         if (url.getPathname() === '/') {
             if (response.status === 'connected') {
-                afterConnecting();
+                addSessionData();
             } else {
                 FB.login(loggedIn);
             }
