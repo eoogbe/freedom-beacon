@@ -25,7 +25,7 @@ FREE.Facebook = (function(){
         }
     }
     
-    function authLoggedIn(response) {
+    function authResponseChanged(response) {
         if (url.getPathname() === '/') {
             if (response.status === 'connected') {
                 addSessionData();
@@ -38,6 +38,16 @@ FREE.Facebook = (function(){
     function logoutClicked() {
         FB.logout();
 		url.redirect('/');
+    }
+    
+    function messageClicked(e) {
+        e.preventDefault();
+        
+        FB.ui({
+            'method': 'send',
+            'link': url.getOrigin(),
+            'to': $(this).data('username')
+        });
     }
     
     function init(facebook) {
@@ -57,6 +67,7 @@ FREE.Facebook = (function(){
             FB.Event.subscribe('auth.authResponseChange', authResponseChanged);
             
             $('button[name="logout"]').click(logoutClicked);
+            $('.message-link').click(messageClicked);
         });
         
         url = FREE.Url;
