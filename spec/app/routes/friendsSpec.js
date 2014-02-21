@@ -138,18 +138,25 @@ describe('friends', function(){
                         done(null, []);
                     }
                 });
+
+                spyOn(User, 'findById').andReturn({
+                    'exec': function(done) {
+                        var userFound = {'friends': [helper.ids.user1]}
+                        done(null, userFound);
+                    }
+                });
                 
                 request = { 'query': { 'friends-search': 'friend1' } };
             });
             
-            xit('should render the message', function(){
+            it('should render the message', function(){
                 friends.search(request, response);
                 
                 expect(response.data.searchResults).toEqual([]);
                 expect(response.data.hasSearched).toBe(true);
             });
             
-            xit('should render the friends-search view', function(){
+            it('should render the friends-search view', function(){
                 friends.search(request, response);
                 expect(response.view).toBe('friends-search');
             });
