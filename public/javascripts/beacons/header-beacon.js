@@ -7,10 +7,15 @@ FREE.HeaderBeacon = (function(){
         $('.header-beacon').click(function(){
             var timerHtml = '<input type="number" max="60" min="1" value="30" name="header-timer" class="group-end" autofocus>';
             $parent.html(timerHtml);
-            
-            var countdowner = FREE.Countdowner;
-			countdowner.init();
-			countdowner.countdown($(timerHtml), init);
+            $parent.submit(function(){
+                $headerTimer = $('[name="header-timer"]');
+                $.post('/beacons', {'mainTimer': $headerTimer.val()}, function(){
+                    $parent.html('<input type="button" class="btn btn-default" data-min="' + $headerTimer.val() + '" data-sec="0" name="header-timer-btn" value="' + $headerTimer.val() + ':00">');
+                    var freeTimerHeader = FREE.HeaderTimer;
+                    freeTimerHeader.init();
+                    freeTimerHeader.run();
+                });
+            });
         });
     }
     

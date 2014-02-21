@@ -133,11 +133,14 @@ describe('friends', function(){
             var request;
             
             beforeEach(function(){
-                spyOn(User, 'find').andReturn({
-                    'exec': function(done) {
-                        done(null, []);
-                    }
+                var query = jasmine.createSpyObj('query', ['populate', 'exec']);
+
+                query.populate.andReturn(query);
+                query.exec.andCallFake(function(fn){
+                    fn(null, [])
                 });
+
+                spyOn(User, 'find').andReturn(query);
 
                 spyOn(User, 'findById').andReturn({
                     'exec': function(done) {
@@ -146,13 +149,17 @@ describe('friends', function(){
                     }
                 });
                 
-                request = { 'query': { 'friends-search': 'friend1' } };
+                    request = { 
+                    'query': { 'friends-search': 'friend' },
+                    'session': {'userId':helper.ids.user0}
+                     };
             });
             
             it('should render the message', function(){
                 friends.search(request, response);
                 
-                expect(response.data.searchResults).toEqual([]);
+                expect(response.data.haveNotRequested).toEqual([]);
+                expect(response.data.haveRequested).toEqual([]);
                 expect(response.data.hasSearched).toBe(true);
             });
             
