@@ -50,21 +50,34 @@ exports.search = function(request, response) {
   var searchEntry = request.query['friends-search'];
   
   if (typeof searchEntry !== 'undefined') {
-    User.find({'name': new RegExp(searchEntry.replace(SPECIAL_CHARS_REGEXP, ''), 'i')})
+    User.find({'name': new RegExp(searchEntry.replace(SPECIAL_CHARS_REGEXP, ''), 'i')}).populate('friendRequests')
       .exec(afterQuery);
   } else {
-    renderResponse([], false);
+    renderResponse([],[],false);
   }
   
-  function renderResponse(searchResults, hasSearched) {
+  function renderResponse(haveRequested, haveNotRequested, hasSearched) {
     response.render('friends-search', {
-      'searchResults': searchResults,
+      'haveRequested': haveRequested,
+      'haveNotRequested': haveNotRequested,
       'hasSearched': hasSearched,
-      'userTime': 30
+      'hasSearchResults': haveRequested.length + haveNotRequested.length > 0
     });
   }
   
   function afterQuery(err, users) {
-    renderResponse(users, true);
+    var haveRequested = [];
+    var haveNotRequested = [];
+    for(var i = 0; i < users.length; ++i) {
+      var searchResult = users[i];
+      if(searchResult.friendRequests.indexOf(request.session.userId) == -1) {
+        haveNotRequested.push(searchResult);
+      }
+      else {
+        haveRequested.push(searchResult);
+      }
+    }
+
+    renderResponse(haveRequested, haveNotRequested, true);
   }
 };
