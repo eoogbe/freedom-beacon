@@ -1,15 +1,27 @@
-<!-- Form: old main beacon, user time input -->
-<!-- change from checkbox to submit button -->
-<!-- submit form to beacons.post -->
-
 <form action="/beacons" method="post">
-	<!-- Old Main Beacon -->
     <label class="timer-label group-end">
 	    I am free for
 	    <input type="number" max="60" min="1" value="30" name="main-timer" autofocus>
 	    minutes
 	</label>
-<!-- <input type="checkbox" id="beacon">
-     <label for="beacon" class="btn btn-primary btn-lg beacon-btn group-end">illuminate beacon</label> -->
-    <button type="submit" class="btn btn-default">Illuminate Beacon</button>
-  </form>
+    <button type="submit" class="btn btn-primary btn-lg beacon-btn">Illuminate Beacon</button>
+</form>
+<h2>Free friends</h2>
+<table class="friends">
+    {{#each freeFriends}}
+    <tr>
+        <td><a href="https://facebook.com/messages/{{username}}">{{name}}</a></td>
+        {{#with distance}}
+        <td>
+            <a class="distance-link" href="#">{{name}} distance</a>
+            <div class="flyout distance-flyout">
+                <button name="close-btn" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+                {{description}}
+            </div>
+        </td>
+        {{/with}}
+        <td>{{time}} min left</td>
+        <td><button name="free-button" type="button" class="btn btn-default">Say &#8220;I&#8217;m Free&#8221;</button></td>
+    </tr>
+    {{/each}}
+</table>

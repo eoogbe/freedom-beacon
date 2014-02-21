@@ -16,6 +16,11 @@ exports.response =
     'sent': null,
     'send': function(sent) {
         this.sent = sent;
+    },
+    
+    'path': '',
+    'redirect': function(path) {
+        this.path = path;
     }
 };
 

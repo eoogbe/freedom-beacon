@@ -8,7 +8,7 @@ FREE.Countdowner = (function(){
         var min = parseInt($timer.data('min'));
         var sec = parseInt($timer.data('sec'));
         
-        if (sec === 0 && min === 0) {
+        if (sec <= 0 && min <= 0) {
             done();
         } else {
             if (sec === 0) {
