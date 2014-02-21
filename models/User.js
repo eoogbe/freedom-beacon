@@ -11,6 +11,7 @@ var UserSchema = new mongoose.Schema({
     'friends': [{'type': ObjectId, 'ref': 'User'}],
     'beacon': {'timeSet': Date, 'duration': Number},
     'distance': {'type': ObjectId, 'ref': 'Distance'}
+    'friendRequests': [{'type': ObjectId, 'ref': 'User'}]
 });
 
 var MILLISECONDS_PER_MINUTE = 60000;
