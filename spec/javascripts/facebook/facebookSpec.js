@@ -3,7 +3,7 @@ describe('Facebook', function(){
         var facebook;
         
         beforeEach(function(){
-            FB = jasmine.createSpyObj('FB', ['init', 'api', 'login', 'logout', 'ui']);
+            FB = jasmine.createSpyObj('FB', ['init', 'api', 'login', 'logout']);
             FB.Event = jasmine.createSpyObj('FB.Event', ['subscribe']);
             
             spyOn(FREE.Url, 'redirect');
@@ -15,7 +15,7 @@ describe('Facebook', function(){
             facebook = FREE.Facebook;
         });
         
-        describe('authResponseChange handler', function(){
+        describe('authResponseChangeHandler', function(){
             describe('when not on homepage', function(){
                 it('should do nothing', function(){
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/beacons/create');
@@ -93,7 +93,7 @@ describe('Facebook', function(){
             });
         });
         
-        describe('logout handler', function(){
+        describe('logoutHandler', function(){
             beforeEach(function(){
                 loadFixtures('facebook/logout.html');
                 facebook.init();
@@ -106,25 +106,6 @@ describe('Facebook', function(){
             
             it('redirects to the homepage', function(){
                 expect(FREE.Url.redirect).toHaveBeenCalled();
-            });
-        });
-        
-        describe('message link handler', function(){
-            it('opens the send message dialog', function(){
-                loadFixtures('facebook/message-link.html');
-                spyOn(FREE.Url, 'getOrigin').and.returnValue('http://localhost:3000');
-                facebook.init();
-                
-                $('.message-link').click();
-                
-                var sendParams =
-                {
-                    'method': 'send',
-                    'link': 'http://localhost:3000',
-                    'to': 'uname'
-                };
-                
-                expect(FB.ui).toHaveBeenCalledWith(sendParams);
             });
         });
     });

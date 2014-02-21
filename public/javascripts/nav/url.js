@@ -9,10 +9,6 @@ FREE.Url = (function(){
         return window.location.pathname;
     }
     
-    function getOrigin() {
-        return window.location.origin;
-    }
-    
     function goBack() {
         history.back(-1);
     }
@@ -21,7 +17,6 @@ FREE.Url = (function(){
         'init': function(){},
         'redirect': redirect,
         'getPathname': getPathname,
-        'getOrigin': getOrigin,
         'goBack': goBack
     };
 })();
