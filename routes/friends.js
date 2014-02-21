@@ -105,7 +105,7 @@ exports.search = function(request, response) {
     response.render('friends-search', {
       'haveRequested': haveRequested,
       'haveNotRequested': haveNotRequested,
-      'hasSearched': hasSearched
+      'hasSearched': hasSearched,
       'hasSearchResults': haveRequested.length + haveNotRequested.length > 0
     });
   }
