@@ -68,11 +68,6 @@ exports.create = function(request, response) {
       'id': friend._id  
     }
   }
-
-  /*function acceptRequest(user, potentialFriend) {
-    user.friends.push(potentialFriend);
-    user.save();
-  }*/
 }
 
 exports.search = function(request, response) {
@@ -110,7 +105,7 @@ exports.search = function(request, response) {
     response.render('friends-search', {
       'haveRequested': haveRequested,
       'haveNotRequested': haveNotRequested,
-      'hasSearched': hasSearched,
+      'hasSearched': hasSearched
       'hasSearchResults': haveRequested.length + haveNotRequested.length > 0
     });
   }

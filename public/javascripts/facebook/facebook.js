@@ -19,19 +19,13 @@ FREE.Facebook = (function(){
         });
     }
     
-    function loggedIn(response) {
-        if (response.authResponse) {
+    function loginClicked() {
+        if (FB.getLoginStatus() === 'connected') {
             addSessionData();
-        }
-    }
-    
-    function authResponseChanged(response) {
-        if (url.getPathname() === '/') {
-            if (response.status === 'connected') {
-                addSessionData();
-            } else {
-                FB.login(loggedIn);
-            }
+        } else {
+            FB.login(function(response){
+                if (response.authResponse) addSessionData();
+            });
         }
     }
     
@@ -49,14 +43,9 @@ FREE.Facebook = (function(){
                 cookie     : true, // enable cookies to allow the server to access the session
                 xfbml      : true  // parse XFBML
             });
-                
-            // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
-            // for any authentication related change, such as login, logout or session refresh. This means that
-            // whenever someone who was previously logged out tries to log in again, the correct case below 
-            // will be handled. 
-            FB.Event.subscribe('auth.authResponseChange', authResponseChanged);
             
             $('button[name="logout"]').click(logoutClicked);
+            $('button[name="login"]').click(loginClicked);
         });
         
         url = FREE.Url;

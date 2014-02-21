@@ -60,6 +60,7 @@ exports.show = function(request, response, next) {
 
 	function afterQuery(err, user) {
 		response.locals.userTime = user.getTimeLeft();
+        console.log(user.beacon);
 		next();
 	}
 };

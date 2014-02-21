@@ -3,7 +3,7 @@ describe('Facebook', function(){
         var facebook;
         
         beforeEach(function(){
-            FB = jasmine.createSpyObj('FB', ['init', 'api', 'login', 'logout']);
+            FB = jasmine.createSpyObj('FB', ['init', 'api', 'login', 'logout', 'getLoginStatus']);
             FB.Event = jasmine.createSpyObj('FB.Event', ['subscribe']);
             
             spyOn(FREE.Url, 'redirect');
@@ -15,79 +15,63 @@ describe('Facebook', function(){
             facebook = FREE.Facebook;
         });
         
-        describe('authResponseChangeHandler', function(){
-            describe('when not on homepage', function(){
-                it('should do nothing', function(){
-                    spyOn(FREE.Url, 'getPathname').and.returnValue('/beacons/create');
-                    facebook.init();
-                    expect(FREE.Url.redirect).not.toHaveBeenCalled();
-                });
+        describe('loginHandler', function(){
+            beforeEach(function(){
+                loadFixtures('facebook/login.html');
             });
             
             describe('when logged in', function(){
                 it('should post to the /sessions route', function(){
-                    FB.Event.subscribe.and.callFake(function(eventName, fn){
-                        fn({'status': 'connected'});
-                    });
+                    var response = {'username': 'uname', 'name': 'thename'};
                     
                     FB.api.and.callFake(function(path, fn){
-                        expect(path).toBe('/me');
-                        fn({'username': 'uname', 'name': 'thename'});
+                        fn(response);
                     });
+                    
+                    FB.getLoginStatus.and.returnValue('connected');
                     
                     spyOn(jQuery, 'post').and.callFake(function(path, data, fn){
                         expect(path).toBe('/sessions');
-                        
-                        expect(data.username).toBe('uname');
-                        expect(data.name).toBe('thename');
+                        expect(data).toEqual(response);
                         
                         fn();
                     });
                     
-                    spyOn(FREE.Url, 'getPathname').and.returnValue('/');
-                    
                     facebook.init();
+                    $('button[name="login"]').click();
                     expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
                 });
             });
             
             describe('when not logged in', function(){
-                it('should login', function(){
-                    FB.Event.subscribe.and.callFake(function(eventName, fn){
-                        fn({});
-                    });
-                    
-                    spyOn(FREE.Url, 'getPathname').and.returnValue('/');
+                it('should log in', function(){
                     facebook.init();
+                    $('button[name="login"]').click();
                     expect(FB.login).toHaveBeenCalled();
                 });
                 
-                it('should post to the /sessions route after logging in', function(){
-                    FB.Event.subscribe.and.callFake(function(eventName, fn){
-                        fn({});
-                    });
+                it('should post to the /sessions route', function(){
+                    var response = {'username': 'uname', 'name': 'thename'};
                     
                     FB.login.and.callFake(function(fn){
                         fn({'authResponse': true});
                     });
                     
                     FB.api.and.callFake(function(path, fn){
-                        expect(path).toBe('/me');
-                        fn({'username': 'uname', 'name': 'thename'});
+                        fn(response);
                     });
+                    
+                    FB.getLoginStatus.and.returnValue('not_authorized');
                     
                     spyOn(jQuery, 'post').and.callFake(function(path, data, fn){
                         expect(path).toBe('/sessions');
-                        
-                        expect(data.username).toBe('uname');
-                        expect(data.name).toBe('thename');
+                        expect(data).toEqual(response);
                         
                         fn();
                     });
                     
-                    spyOn(FREE.Url, 'getPathname').and.returnValue('/');
-                    
                     facebook.init();
+                    $('button[name="login"]').click();
                     expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
                 });
             });

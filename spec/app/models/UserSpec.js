@@ -30,5 +30,10 @@ describe('User', function(){
             spyOn(Date, 'now').andReturn(4 * 60000);
             expect(user.getTimeLeft()).toBe(1);
         });
+        
+        it('should return no time left if the beacon deactivates now', function(){
+            spyOn(Date, 'now').andReturn(5 * 60000);
+            expect(user.getTimeLeft()).toBe(0);
+        });
     });
 });

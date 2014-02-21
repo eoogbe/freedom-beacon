@@ -132,7 +132,7 @@ button[name="close-btn"] {
 	padding: 0.5em;
 }
 
-.fbButton {
+button[name="login"] {
 	margin: auto auto;
 }
 
