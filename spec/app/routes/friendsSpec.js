@@ -14,6 +14,41 @@ describe('friends', function(){
     beforeEach(function(){
         response = copy(helper.response);
     });
+
+    describe('create', function() {
+        var friendRequests;
+        var potentialFriend;
+
+        beforeEach(function() {
+            request = {'session': {'userId': helper.ids.user0}};
+            
+            friend = {
+                'name': 'friend1',
+                'id': '24'
+            };
+        });
+
+    
+        it('should render friends create view', function(){
+            var query = jasmine.createSpyObj('query', ['populate', 'exec']);
+            query.populate.andReturn(query);
+            query.exec.andCallFake(function(done){
+                var user = {
+                    'friendRequests': []
+                };
+                done(null, user);
+            });
+            spyOn(User, 'findById').andReturn(query);
+            friends.create(request, response);
+
+
+
+
+            expect(response.view).toBe('friends-create');
+        });
+
+
+    });
     
     describe('index()', function(){
         var request;

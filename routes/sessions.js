@@ -21,7 +21,8 @@ exports.post = function(request, response) {
         {
             'username': request.body.username,
             'name': request.body.name,
-            'friends': []
+            'friends': [],
+            'friendRequests': []
         };
         
         User.create(userData, function(err, user){
