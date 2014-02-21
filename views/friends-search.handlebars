@@ -2,15 +2,25 @@
 <form name="friends-search-form" action="/friends/search">
     <input type="search" role="search" name="friends-search" aria-label="Find your friends" placeholder="Find your friends">
 </form>
-{{#if searchResults}}
+{{#if hasSearchResults}}
 <table>
-    {{#each searchResults}}
+    {{#each haveNotRequested}}
     <tr>
         <td>{{name}}</td>
         <td><button name="add-friend-btn" type="button"><span class="glyphicon glyphicon-plus" data-id="{{_id}}"></span>Add</button></td>
     </tr>
     {{/each}}
 </table>
+
+<table>
+    {{#each haveRequested}}
+    <tr>
+        <td>{{name}}</td>
+        <td><span class="glyphicon glyphicon-transfer"></span> pending</td>
+    </tr>
+    {{/each}}
+</table>
+
 {{else}}
     {{#if hasSearched}}
     <p>No matches found</p>
