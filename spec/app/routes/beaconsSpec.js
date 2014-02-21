@@ -21,4 +21,8 @@ describe('beacons', function(){
             expect(response.data.mainBeaconVisibility).toBe('invisible');
         });
     });
+    
+    describe('post()', function(){
+        
+    });
 });

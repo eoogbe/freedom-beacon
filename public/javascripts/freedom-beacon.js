@@ -42,10 +42,4 @@ function initializePage() {
 		requestButton.init();
 		requestButton.registerEventHandlers();
 	})();
-	
-	(function() {
-		var messageForm = FREE.MessageForm;
-		messageForm.init();
-		messageForm.registerEventHandlers();
-	})();
 }
