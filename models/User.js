@@ -13,15 +13,20 @@ var UserSchema = new mongoose.Schema({
     'distance': {'type': ObjectId, 'ref': 'Distance'}
 });
 
-var MINUTES_PER_MILLISECOND = 60000;
+var MILLISECONDS_PER_MINUTE = 60000;
 
 function addMinutes(date, min) {
-    return new Date(date.getTime() + min * MINUTES_PER_MILLISECOND);
+    return new Date(date.getTime() + min * MILLISECONDS_PER_MINUTE);
 }
 
 UserSchema.methods.isFree = function() {
     var end = addMinutes(this.beacon.timeSet, this.beacon.duration);
     return end.getTime() > Date.now();
 };
+
+UserSchema.methods.getTimeLeft = function() {
+	var timeLeft = (Date.now() - this.beacons.timeSet.getTime()) / MILLISECONDS_PER_MINUTE;
+	return timeLeft;
+}
 
 mongoose.model('User', UserSchema);
