@@ -10,6 +10,35 @@ var User = mongoose.model('User');
 
 var SPECIAL_CHARS_REGEXP = /[\\\.\[\^\$\(\)\?\:\*\=\!\|\{\}\/\,]/g
 
+
+// Add Friend Button
+exports.post = function(request, response) {
+  var currentUserId = request.session.userId;
+  var friendId = request.body.thisFriend;
+
+  // Update Friend's Friend Property with current user id
+  User.findById(friendId)
+    .exec(afterQuery1);
+
+  function afterQuery1(err, friend) {
+    // update friends property with current user's id
+    friend.friends.push(currentUserId);
+    response.send(200);
+  }
+
+  // Update Curent User's Friend Property with friend's id
+  User.findById(currentUserId)
+    .exec(afterQuery2);
+
+  function afterQuery2(err, user) {
+    // update friends property with friend's id
+    user.friends.push(friendId);
+    // remove from requests property
+    user.friendRequests.remove(friendId);
+    response.send(200);
+  }
+};
+
 exports.create = function(request, response) {
   var copy = require('../lib/copy').copy;
   
