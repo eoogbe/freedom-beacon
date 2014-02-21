@@ -2,72 +2,68 @@
  * the routes for the friends resource.
  */
 
-var copy = require('../lib/copy').copy;
+var mongoose = require('mongoose');
 
-var PINGING_STATUS = 0;
-var OFFLINE_STATUS = 2;
+require('../models/User');
+require('../models/Distance'); // needed for populate('distance') to work
+var User = mongoose.model('User');
 
-function getData() {
-  var data = require('../data.json');
-  return copy(data);
-}
+var SPECIAL_CHARS_REGEXP = /[\\\.\[\^\$\(\)\?\:\*\=\!\|\{\}\/\,]/g
 
 exports.index = function(request, response) {
-  var data = getData();
+  var copy = require('../lib/copy').copy;
   
-  var distances = data.distances;
-  var statuses = data.statuses;
+  User.findById(request.session.userId)
+    .populate('friends')
+    .populate('distance')
+    .exec(afterQuery);
   
-  var friends =
-  {
-    'pinging': [],
-    'free': [],
-    'offline': []
-  };
-  
-  for (var i = 0; i < data.friends.length; ++i) {
-    var friend = copy(data.friends[i]);
+  function afterQuery(err, user) {
+    var freeFriends = [];
     
-    friend.url = friend.statusId == PINGING_STATUS ? '/conversations/' + i : '#';
-    
-    if (friend.statusId !== OFFLINE_STATUS) {
-      friend.distance = copy(distances[friend.distanceId]);
-      friend.distance.name += ' distance';
+    for (var i = 0; i < user.friends.length; ++i) {
+      var friend = user.friends[i];
       
-      friend.time += ' min left';
+      if (friend.isFree()) {
+        freeFriends.push(getFreeFriend(friend));
+      }
     }
     
-    var status = statuses[friend.statusId];
-    friend.status = status;
-    
-    friends[status].push(friend);
+    response.render('friends-index', {
+      'freeFriends': freeFriends,
+      'userTime': 30
+    });
   }
   
-  response.render('friends-index', {
-    'friends': friends,
-    'userTime': 30
-  });
+  function getFreeFriend(friend) {
+    return {
+      'name': friend.name,
+      'username': friend.username,
+      'distance': copy(friend.distance),
+      'time': friend.beacon.duration
+    };
+  }
 };
 
 exports.search = function(request, response) {
-  var data = getData();
-  var searchResults = [];
   var searchEntry = request.query['friends-search'];
-  var hasSearched = false;
   
   if (typeof searchEntry !== 'undefined') {
-    hasSearched = true;
-    for (var i=0; i<data.friends.length; ++i) {
-      var friendName = data.friends[i].name;
-      if (friendName === searchEntry) {
-        searchResults.push(friendName);
-      }
-    }
+    User.find({'name': new RegExp(searchEntry.replace(SPECIAL_CHARS_REGEXP, ''), 'i')})
+      .exec(afterQuery);
+  } else {
+    renderResponse([], false);
   }
   
-  response.render('friends-search', {
-    'searchResults': searchResults,
-    'hasSearched': hasSearched,
-    'userTime': 30
-  });
+  function renderResponse(searchResults, hasSearched) {
+    response.render('friends-search', {
+      'searchResults': searchResults,
+      'hasSearched': hasSearched,
+      'userTime': 30
+    });
+  }
+  
+  function afterQuery(err, users) {
+    renderResponse(users, true);
+  }
 };

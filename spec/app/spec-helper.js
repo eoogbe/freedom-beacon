@@ -11,6 +11,11 @@ exports.response =
     'render': function(view, data) {
         this.view = view;
         this.data = data;
+    },
+    
+    'sent': null,
+    'send': function(sent) {
+        this.sent = sent;
     }
 };
 

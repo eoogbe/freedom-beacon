@@ -4,6 +4,7 @@ h1 {
 
 h2 {
 	font-size: 1.3em;
+	color: #888;
 }
 
 h3 {
@@ -12,10 +13,6 @@ h3 {
 
 .group-end {
 	margin-bottom: 0.3em;
-}
-
-.no-back {
-	visibility: hidden;
 }
 
 .back-btn {

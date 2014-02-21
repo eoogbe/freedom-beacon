@@ -3,33 +3,51 @@ describe('Facebook', function(){
         var facebook;
         
         beforeEach(function(){
-            FB = jasmine.createSpyObj('FB', ['init', 'login', 'logout']);
+            FB = jasmine.createSpyObj('FB', ['init', 'api', 'login', 'logout', 'ui']);
             FB.Event = jasmine.createSpyObj('FB.Event', ['subscribe']);
+            
             spyOn(FREE.Url, 'redirect');
+            spyOn(jQuery, 'getScript').and.callFake(function(url, done){
+                expect(url).toBe('//connect.facebook.net/en_US/all.js');
+                done();
+            });
             
             facebook = FREE.Facebook;
-            facebook.init(FB);
         });
         
-        describe('authResponseChangeHandler', function(){
+        describe('authResponseChange handler', function(){
             describe('when not on homepage', function(){
                 it('should do nothing', function(){
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/beacons/create');
-                    facebook.registerEventHandlers();
+                    facebook.init();
                     expect(FREE.Url.redirect).not.toHaveBeenCalled();
                 });
             });
             
             describe('when logged in', function(){
-                it('should redirect to /beacons/create', function(){
+                it('should post to the /sessions route', function(){
                     FB.Event.subscribe.and.callFake(function(eventName, fn){
                         fn({'status': 'connected'});
                     });
+                    
+                    FB.api.and.callFake(function(path, fn){
+                        expect(path).toBe('/me');
+                        fn({'username': 'uname', 'name': 'thename'});
+                    });
+                    
+                    spyOn(jQuery, 'post').and.callFake(function(path, data, fn){
+                        expect(path).toBe('/sessions');
+                        
+                        expect(data.username).toBe('uname');
+                        expect(data.name).toBe('thename');
+                        
+                        fn();
+                    });
+                    
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/');
                     
-                    facebook.registerEventHandlers();
-                    
-                    expect(FREE.Url.redirect).toHaveBeenCalled();
+                    facebook.init();
+                    expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
                 });
             });
             
@@ -38,34 +56,47 @@ describe('Facebook', function(){
                     FB.Event.subscribe.and.callFake(function(eventName, fn){
                         fn({});
                     });
+                    
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/');
-                    
-                    facebook.registerEventHandlers();
-                    
+                    facebook.init();
                     expect(FB.login).toHaveBeenCalled();
                 });
                 
-                it('should redirect to /beacons/create after logging in', function(){
+                it('should post to the /sessions route after logging in', function(){
                     FB.Event.subscribe.and.callFake(function(eventName, fn){
                         fn({});
                     });
                     
                     FB.login.and.callFake(function(fn){
+                        fn({'authResponse': true});
+                    });
+                    
+                    FB.api.and.callFake(function(path, fn){
+                        expect(path).toBe('/me');
+                        fn({'username': 'uname', 'name': 'thename'});
+                    });
+                    
+                    spyOn(jQuery, 'post').and.callFake(function(path, data, fn){
+                        expect(path).toBe('/sessions');
+                        
+                        expect(data.username).toBe('uname');
+                        expect(data.name).toBe('thename');
+                        
                         fn();
                     });
                     
                     spyOn(FREE.Url, 'getPathname').and.returnValue('/');
-                    facebook.registerEventHandlers();
-                    expect(FREE.Url.redirect).toHaveBeenCalled();
+                    
+                    facebook.init();
+                    expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
                 });
             });
         });
         
-        describe('logoutHandler', function(){
+        describe('logout handler', function(){
             beforeEach(function(){
                 loadFixtures('facebook/logout.html');
-                
-                facebook.registerEventHandlers();
+                facebook.init();
                 $('button[name="logout"]').click();
             });
             
@@ -75,6 +106,25 @@ describe('Facebook', function(){
             
             it('redirects to the homepage', function(){
                 expect(FREE.Url.redirect).toHaveBeenCalled();
+            });
+        });
+        
+        describe('message link handler', function(){
+            it('opens the send message dialog', function(){
+                loadFixtures('facebook/message-link.html');
+                spyOn(FREE.Url, 'getOrigin').and.returnValue('http://localhost:3000');
+                facebook.init();
+                
+                $('.message-link').click();
+                
+                var sendParams =
+                {
+                    'method': 'send',
+                    'link': 'http://localhost:3000',
+                    'to': 'uname'
+                };
+                
+                expect(FB.ui).toHaveBeenCalledWith(sendParams);
             });
         });
     });

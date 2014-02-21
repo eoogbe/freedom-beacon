@@ -1,27 +1,27 @@
 describe('User', function(){
-    describe('addConversation()', function(){
-        var mongoose = require('mongoose');
-        var ObjectId = mongoose.Types.ObjectId;
-        
-        require('../../../models/User');
-        
-        var helper = require('../spec-helper');
-        
-        var User = mongoose.model('User');        
+    var helper = require('../spec-helper');
+    var mongoose = require('mongoose');
+    
+    require('../../../models/User');
+    var User = mongoose.model('User');
+    
+    describe('isFree()', function(){
         var user;
         
         beforeEach(function(){
-            user = new User({'conversations' : []});
-            spyOn(user, 'save');
-            user.addConversation(new ObjectId(helper.ids.conv0));
+            user = new User({
+                'beacon': {'timeSet': new Date(1000), 'duration': 5}
+            });
         });
         
-        it('should add the conversation', function(){
-            expect(user.conversations).toContain(new ObjectId(helper.ids.conv0));
+        it('should return true when the timeSet and duration has not passed', function(){
+            spyOn(Date, 'now').andReturn(2000);
+            expect(user.isFree()).toBe(true);
         });
         
-        it('should save the changes', function(){
-            expect(user.save).toHaveBeenCalled();
+        it('should return false when the timeSet and duration has passed', function(){
+            spyOn(Date, 'now').andReturn(10 * 60000);
+            expect(user.isFree()).toBe(false);
         });
     });
 });
