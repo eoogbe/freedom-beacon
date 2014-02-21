@@ -10,3 +10,19 @@
 {{> friends pingingFriends}}
 
 <a href="/friends">View more friends</a>
+
+<!-- Form: old main beacon, user time input -->
+<!-- change from checkbox to submit button -->
+<!-- submit form to beacons.post -->
+
+<form id="new-project-form" role="form" action="beacons.post" method="get">
+	<!-- Old Main Beacon -->
+    <label class="timer-label group-end">
+	    I am free for
+	    <input type="number" max="60" min="1" value="30" name="main-timer" autofocus>
+	    minutes
+	</label>
+<!-- <input type="checkbox" id="beacon">
+     <label for="beacon" class="btn btn-primary btn-lg beacon-btn group-end">illuminate beacon</label> -->
+    <button id="timer-submit-button" type="button" class="btn btn-default">Illuminate Beacon</button>
+  </form>
