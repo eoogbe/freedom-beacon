@@ -15,7 +15,7 @@ describe('friends', function(){
         response = copy(helper.response);
     });
 
-    describe('create', function() {
+    describe('create()', function() {
         var friendRequests;
         var potentialFriend;
 
@@ -48,68 +48,6 @@ describe('friends', function(){
         });
 
 
-    });
-    
-    describe('index()', function(){
-        var request;
-        var friend;
-        var query;
-        
-        beforeEach(function(){
-            request = {'session': {'userId': helper.ids.user0}};
-            
-            friend =
-            {
-                'name': 'friend1',
-                'username': 'uname',
-                'beacon': {'duration': 5},
-                'distance': {'name': 'dist', 'description': 'desc'}
-            };
-            
-            query = jasmine.createSpyObj('query', ['populate', 'exec']);
-            query.populate.andReturn(query);
-            query.exec.andCallFake(function(fn){
-                fn(null, {'friends': [friend]});
-            });
-            
-            spyOn(User, 'findById').andReturn(query);
-        });
-        
-        it('should render the friends-index view', function(){
-            friend.isFree = function(){return true;};
-            friends.index(request, response);
-            expect(response.view).toBe('friends-index');
-        });
-        
-        it('should populate the friends\' distances', function(){
-            friend.isFree = function(){return true;};
-            friends.index(request, response);
-            expect(query.populate).toHaveBeenCalledWith('distance');
-        });
-        
-        it('should retrieve the free friends', function(){
-            friend.isFree = function(){return true;};
-            
-            friends.index(request, response);
-            
-            var freeFriends = [
-                {
-                    'name': 'friend1',
-                    'username': 'uname',
-                    'distance': {'name': 'dist', 'description': 'desc'},
-                    'time': 5
-                }
-            ];
-            
-            expect(query.populate).toHaveBeenCalledWith('friends');
-            expect(response.data.freeFriends).toEqual(freeFriends);
-        });
-        
-        it('should ignore offline friends', function(){
-            friend.isFree = function(){return false;};
-            friends.index(request, response);
-            expect(response.data.freeFriends.length).toBe(0);
-        });
     });
     
     describe('search()', function(){

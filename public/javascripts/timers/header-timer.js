@@ -4,7 +4,7 @@ FREE.HeaderTimer = (function(){
     var $timerBtn;
 	
 	function replaceWithButton() {
-		FREE.HeaderBeacon.init();
+		FREE.HeaderBeacon.init($timerBtn.parent());
 	}
 	
 	function startCountdown() {

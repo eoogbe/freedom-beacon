@@ -22,7 +22,8 @@ exports.post = function(request, response) {
             'username': request.body.username,
             'name': request.body.name,
             'friends': [],
-            'friendRequests': []
+            'friendRequests': [],
+            'beacon': {'timeSet': new Date(), 'duration': 0}
         };
         
         User.create(userData, function(err, user){

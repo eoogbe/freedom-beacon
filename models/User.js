@@ -10,7 +10,7 @@ var UserSchema = new mongoose.Schema({
     'username': String,
     'friends': [{'type': ObjectId, 'ref': 'User'}],
     'beacon': {'timeSet': Date, 'duration': Number},
-    'distance': {'type': ObjectId, 'ref': 'Distance'}
+    'distance': {'type': ObjectId, 'ref': 'Distance'},
     'friendRequests': [{'type': ObjectId, 'ref': 'User'}]
 });
 
@@ -26,8 +26,8 @@ UserSchema.methods.isFree = function() {
 };
 
 UserSchema.methods.getTimeLeft = function() {
-	var timeLeft = (Date.now() - this.beacons.timeSet.getTime()) / MILLISECONDS_PER_MINUTE;
-	return timeLeft;
+	var timeLeft = Date.now() - this.beacon.timeSet.getTime();
+	return this.beacon.duration - Math.ceil(timeLeft / MILLISECONDS_PER_MINUTE);
 }
 
 mongoose.model('User', UserSchema);
