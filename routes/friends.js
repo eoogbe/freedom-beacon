@@ -50,8 +50,29 @@ exports.search = function(request, response) {
   var searchEntry = request.query['friends-search'];
   
   if (typeof searchEntry !== 'undefined') {
-    User.find({'name': new RegExp(searchEntry.replace(SPECIAL_CHARS_REGEXP, ''), 'i')}).populate('friendRequests')
-      .exec(afterQuery);
+
+    User.findById(request.session.userId).exec(function(err, user) {
+          User.find({'name': new RegExp(searchEntry.replace(SPECIAL_CHARS_REGEXP, ''), 'i')}).populate('friendRequests')
+      .exec(function (err, users) {
+        var haveRequested = [];
+        var haveNotRequested = [];
+          for(var i = 0; i < users.length; ++i) {
+            var searchResult = users[i];
+            if(searchResult._id.equals(request.session.userId) || user.friends.indexOf(searchResult._id) != -1) {
+              continue;
+            }
+            if(searchResult.friendRequests.indexOf(request.session.userId) == -1) {
+               haveNotRequested.push(searchResult);
+             }
+            else {
+               haveRequested.push(searchResult);
+            }
+         }
+
+        renderResponse(haveRequested, haveNotRequested, true);
+      });
+    });
+
   } else {
     renderResponse([],[],false);
   }
@@ -65,19 +86,5 @@ exports.search = function(request, response) {
     });
   }
   
-  function afterQuery(err, users) {
-    var haveRequested = [];
-    var haveNotRequested = [];
-    for(var i = 0; i < users.length; ++i) {
-      var searchResult = users[i];
-      if(searchResult.friendRequests.indexOf(request.session.userId) == -1) {
-        haveNotRequested.push(searchResult);
-      }
-      else {
-        haveRequested.push(searchResult);
-      }
-    }
 
-    renderResponse(haveRequested, haveNotRequested, true);
-  }
 };
