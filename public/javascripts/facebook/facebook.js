@@ -25,7 +25,7 @@ FREE.Facebook = (function(){
         }
     }
     
-    function authLoggedIn(response) {
+    function authResponseChanged(response) {
         if (url.getPathname() === '/') {
             if (response.status === 'connected') {
                 addSessionData();
