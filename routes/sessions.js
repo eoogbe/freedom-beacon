@@ -8,7 +8,7 @@ exports.post = function(request, response) {
     require('../models/User');
     var User = mongoose.model('User');
     
-    User.find({'username': request.body.username})
+    User.find({'fbId': request.body.fbId})
         .exec(afterQuery);
     
     function setUserId(user) {
@@ -19,10 +19,8 @@ exports.post = function(request, response) {
     function createUser() {
         var userData =
         {
-            'username': request.body.username,
+            'fbId': request.body.fbId,
             'name': request.body.name,
-            'friends': [],
-            'friendRequests': [],
             'beacon': {'timeSet': new Date(), 'duration': 0}
         };
         
@@ -37,5 +35,13 @@ exports.post = function(request, response) {
         } else {
             createUser();
         }
+    }
+};
+
+exports.show = function(request, response, next) {
+    if (request.session.userId) {
+        next();
+    } else {
+        response.redirect('/');
     }
 };

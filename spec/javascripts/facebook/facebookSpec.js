@@ -22,7 +22,7 @@ describe('Facebook', function(){
             
             describe('when logged in', function(){
                 it('should post to the /sessions route', function(){
-                    var response = {'username': 'uname', 'name': 'thename'};
+                    var response = {'id': 0, 'name': 'thename'};
                     
                     FB.api.and.callFake(function(path, fn){
                         fn(response);
@@ -32,7 +32,7 @@ describe('Facebook', function(){
                     
                     spyOn(jQuery, 'post').and.callFake(function(path, data, fn){
                         expect(path).toBe('/sessions');
-                        expect(data).toEqual(response);
+                        expect(data).toEqual({'fbId': 0, 'name': 'thename'});
                         
                         fn();
                     });
@@ -45,13 +45,17 @@ describe('Facebook', function(){
             
             describe('when not logged in', function(){
                 it('should log in', function(){
+                    spyOn(jQuery, 'post').and.callFake(function(path, data, fn){    
+                        fn();
+                    });
+                    
                     facebook.init();
                     $('button[name="login"]').click();
                     expect(FB.login).toHaveBeenCalled();
                 });
                 
                 it('should post to the /sessions route', function(){
-                    var response = {'username': 'uname', 'name': 'thename'};
+                    var response = {'id': 0, 'name': 'thename'};
                     
                     FB.login.and.callFake(function(fn){
                         fn({'authResponse': true});
@@ -65,7 +69,7 @@ describe('Facebook', function(){
                     
                     spyOn(jQuery, 'post').and.callFake(function(path, data, fn){
                         expect(path).toBe('/sessions');
-                        expect(data).toEqual(response);
+                        expect(data).toEqual({'fbId': 0, 'name': 'thename'});
                         
                         fn();
                     });

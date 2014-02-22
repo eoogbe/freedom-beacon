@@ -16,67 +16,37 @@ describe('beacons', function(){
     });
     
     describe('create()', function(){
-        var friend;
-        var query;
-        
         beforeEach(function(){    
-            friend =
-            {
-                'name': 'friend1',
-                'username': 'uname',
-                'beacon': {'duration': 5},
-                'distance': {'name': 'dist', 'description': 'desc'}
-            };
-            
-            query = jasmine.createSpyObj('query', ['populate', 'exec']);
-            query.populate.andReturn(query);
-            query.exec.andCallFake(function(fn){
-                fn(null, {'friends': [friend]});
+            spyOn(User, 'findById').andReturn({
+                'exec': function(done) {
+                    done(null, {'fbId': 0});
+                }
+            });
+        });
+        
+        it('should find the current user', function(){
+            User.findById.andCallFake(function(userId){
+                expect(userId).toBe(helper.ids.user0);
+                
+                return {
+                    'exec': function(done) {
+                        done(null, {'fbId': 0});
+                    }
+                };
             });
             
-            spyOn(User, 'findById').andReturn(query);
+            beacons.create(request, response);
+            expect(User.findById).toHaveBeenCalled();
         });
         
         it('should render the beacons-create view', function(){
-            friend.isFree = function(){return false;};
             beacons.create(request, response);
             expect(response.view).toBe('beacons-create');
         });
         
-        it('should make the back button and header timer invisibile', function(){
-            friend.isFree = function(){return false;};
+        it('should add the current user\'s Facebook id', function(){
             beacons.create(request, response);
-            expect(response.data.mainBeaconVisibility).toBe('invisible');
-        });
-        
-        it('should populate the friends\' distances', function(){
-            friend.isFree = function(){return true;};
-            beacons.create(request, response);
-            expect(query.populate).toHaveBeenCalledWith('distance');
-        });
-        
-        it('should retrieve the free friends', function(){
-            friend.isFree = function(){return true;};
-            
-            beacons.create(request, response);
-            
-            var freeFriends = [
-                {
-                    'name': 'friend1',
-                    'username': 'uname',
-                    'distance': {'name': 'dist', 'description': 'desc'},
-                    'time': 5
-                }
-            ];
-            
-            expect(query.populate).toHaveBeenCalledWith('friends');
-            expect(response.data.freeFriends).toEqual(freeFriends);
-        });
-        
-        it('should ignore offline friends', function(){
-            friend.isFree = function(){return false;};
-            beacons.create(request, response);
-            expect(response.data.freeFriends.length).toBe(0);
+            expect(response.data.userFbId).toBe(0);
         });
     });
     
@@ -105,13 +75,36 @@ describe('beacons', function(){
             beacons.post(request, response);
             
             expect(user.save).toHaveBeenCalled();
-            expect(user.beacon.timeSet).toEqual(new Date(5));
-            expect(user.beacon.duration).toBe(15);
+            expect(user.beacon).toEqual({'timeSet': new Date(5), 'duration': 15});
         });
         
         it('should redirect back to the beacons-create page', function(){
             beacons.post(request, response);
             expect(response.path).toBe('back');
+        });
+    });
+    
+    describe('show()', function(){
+        var next;
+        
+        beforeEach(function(){
+            next = jasmine.createSpy('next');
+            spyOn(User, 'findById').andReturn({
+                'exec': function(done) {
+                    var user = { 'getTimeLeft': function() {return 1;} };
+                    done(null, user);
+                }
+            })
+        });
+        
+        it('should set response.locals.userTime to the minutes left for the current user', function(){
+            beacons.show(request, response, next);
+            expect(response.locals.userTime).toBe(1);
+        });
+        
+        it('should call next', function(){
+            beacons.show(request, response, next);
+            expect(next).toHaveBeenCalled();
         });
     });
 });

@@ -1,0 +1,25 @@
+<h2>Free friends</h2>
+<table class="free">
+    {{#each freeFriends}}
+    <tr>
+        <td><a href="https://facebook.com/messages/{{fbUsername}}">{{name}}</a></td>
+        {{#with distance}}
+        <td>
+            <a class="distance-link" href="#">{{name}} distance</a>
+            <div class="flyout distance-flyout">
+                <button name="close-btn" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+                {{description}}
+            </div>
+        </td>
+        {{/with}}
+        <td>{{time}} min left</td>
+    </tr>
+    {{/each}}
+</table>
+
+<h2>Offline friends</h2>
+<ul>
+    {{#each offlineFriends}}
+    <li>{{name}}</li>
+    {{/each}}
+</ul>

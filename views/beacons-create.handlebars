@@ -1,27 +1,17 @@
-<form action="/beacons" method="post">
-    <label class="timer-label group-end">
-	    I am free for
-	    <input type="number" max="60" min="1" value="30" name="main-timer" autofocus>
-	    minutes
-	</label>
-    <button type="submit" class="btn btn-primary btn-lg beacon-btn">Illuminate Beacon</button>
-</form>
-<h2>Free friends</h2>
-<table class="friends">
-    {{#each freeFriends}}
-    <tr>
-        <td><a href="https://facebook.com/messages/{{username}}">{{name}}</a></td>
-        {{#with distance}}
-        <td>
-            <a class="distance-link" href="#">{{name}} distance</a>
-            <div class="flyout distance-flyout">
-                <button name="close-btn" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
-                {{description}}
-            </div>
-        </td>
-        {{/with}}
-        <td>{{time}} min left</td>
-        <td><button name="free-button" type="button" class="btn btn-default">Say &#8220;I&#8217;m Free&#8221;</button></td>
-    </tr>
-    {{/each}}
-</table>
+<header>
+  <h1 class="header-text">Freedom Beacon</h1>
+  <button name="logout" class="btn btn-default btn-xs" type="button">logout</button>
+</header>
+
+<main role="main" class="container">
+  <form class="group-end" action="/beacons" method="post">
+      <label class="timer-label group-end">
+          I am free for
+          <input type="number" max="60" min="1" value="30" name="main-timer" autofocus>
+          minutes
+      </label>
+      <button type="submit" class="btn btn-primary btn-lg beacon-btn">Illuminate Beacon</button>
+  </form>
+  <input type="hidden" name="userFbId" value="_{{fbId}}">
+  <div class="friends"></div>
+</main>

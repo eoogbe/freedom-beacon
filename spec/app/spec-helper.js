@@ -6,8 +6,9 @@
 
 exports.response =
 {
-    'view': '',
     'data': {},
+    
+    'view': '',
     'render': function(view, data) {
         this.view = view;
         this.data = data;
@@ -21,6 +22,12 @@ exports.response =
     'path': '',
     'redirect': function(path) {
         this.path = path;
+    },
+    
+    'locals': {},
+    
+    'json': function(data) {
+        this.data = data;
     }
 };
 

@@ -11,7 +11,7 @@ FREE.Facebook = (function(){
         FB.api('/me', function(response){
             var data =
             {
-                'username': response.username,
+                'fbId': response.id,
                 'name': response.name
             };
             

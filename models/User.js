@@ -7,11 +7,9 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 var UserSchema = new mongoose.Schema({
     'name': String,
-    'username': String,
-    'friends': [{'type': ObjectId, 'ref': 'User'}],
+    'fbId': Number,
     'beacon': {'timeSet': Date, 'duration': Number},
-    'distance': {'type': ObjectId, 'ref': 'Distance'},
-    'friendRequests': [{'type': ObjectId, 'ref': 'User'}]
+    'distance': {'type': ObjectId, 'ref': 'Distance'}  // Change to a number
 });
 
 var MILLISECONDS_PER_MINUTE = 60000;

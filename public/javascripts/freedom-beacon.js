@@ -14,18 +14,6 @@ function initializePage() {
 	})();
 	
 	(function() {
-		var backButton = FREE.BackButton;
-		backButton.init();
-		backButton.registerEventHandlers();
-	})();
-	
-	(function() {
-		var headerTimer = FREE.HeaderTimer;
-		headerTimer.init();
-		headerTimer.run();
-	})();
-	
-	(function() {
 		var mainBeacon = FREE.MainBeacon;
 		mainBeacon.init();
 		mainBeacon.registerEventHandlers();
@@ -35,11 +23,5 @@ function initializePage() {
 		var friendsList = FREE.FriendsList;
 		friendsList.init();
 		friendsList.registerEventHandlers();
-	})();
-	
-	(function() {
-		var requestButton = FREE.RequestButton;
-		requestButton.init();
-		requestButton.registerEventHandlers();
 	})();
 }

@@ -8,37 +8,11 @@ require('../models/User');
 var User = mongoose.model('User');
 
 exports.create = function(request, response) {
-  var copy = require('../lib/copy').copy;
-  
   User.findById(request.session.userId)
-    .populate('friends')
-    .populate('distance')
     .exec(afterQuery);
   
   function afterQuery(err, user) {
-    var freeFriends = [];
-    
-    for (var i = 0; i < user.friends.length; ++i) {
-      var friend = user.friends[i];
-      
-      if (friend.isFree()) {
-        freeFriends.push(getFreeFriend(friend));
-      }
-    }
-    
-    response.render('beacons-create', {
-      'mainBeaconVisibility': 'invisible',
-      'freeFriends': freeFriends
-    });
-  }
-  
-  function getFreeFriend(friend) {
-    return {
-      'name': friend.name,
-      'username': friend.username,
-      'distance': copy(friend.distance),
-      'time': friend.beacon.duration
-    };
+    response.render('beacons-create', { 'userFbId': user.fbId });
   }
 };
 
@@ -60,7 +34,6 @@ exports.show = function(request, response, next) {
 
 	function afterQuery(err, user) {
 		response.locals.userTime = user.getTimeLeft();
-        console.log(user.beacon);
 		next();
 	}
 };

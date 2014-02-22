@@ -11,6 +11,10 @@ h3 {
 	font-size: 1.1em;
 }
 
+h1 > small {
+	display: block;
+}
+
 .group-end {
 	margin-bottom: 0.3em;
 }
@@ -78,19 +82,19 @@ input[name="header-timer"] {
 	font-size: 3em;
 }
 
-#beacon {
-	display: none;
-}
-
 .beacon-btn {
 	width: 100%;
 }
 
-.friends tr {
+.friends {
+	display: none;
+}
+
+.free tr {
 	border-bottom: 0.1em solid #ddd;
 }
 
-.friends td {
+.free td {
 	padding: 1em 0;
 	width: 15em;
 }
@@ -121,32 +125,8 @@ button[name="close-btn"] {
 	float: right;
 }
 
-.friends > li {
-	border-bottom: 0.1em solid #ddd;
-}
-
-#messages-box {
-	border: 0.3em solid #ccc;
-	margin-bottom: 0.5em;
-	height: 15em;
-	padding: 0.5em;
-}
-
 button[name="login"] {
 	margin: auto auto;
-}
-
-.msg {
-	border: 0.1em solid #ddd;
-	border-radius: 0.5em;
-	background-color: #fff;
-	width: 12em;
-	padding: 0.1em;
-	margin: 0.3em 0;
-}
-
-.user-msg {
-	float: right;
 }
 
 /*
