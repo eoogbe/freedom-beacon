@@ -12,44 +12,46 @@ exports.index = function(request, response) {
     var mongoose = require('mongoose');
 
     require('../models/User');
-    require('../models/Distance');
     var User = mongoose.model('User');
     
-    User.find({})
-        .populate('distance')
+    User.findById(request.session.userId)
         .exec(afterQuery);
     
-    function getUser(data) {
+    function getUser(data, favorites) {
         if (data.isFree()) {
             return {
                 'name': data.name,
                 'fbId': data.fbId,
                 'distance': copy(data.distance),
                 'time': data.timeLeft(),
-                'isFree': true
+                'isFree': true,
+                'isFavorite': favorites.indexOf(data._id) != -1
             };
         } else {
             return {
                 'name': data.name,
                 'fbId': data.fbId,
-                'isFree': false
+                'isFree': false,
+                'isFavorite': favorites.indexOf(data._id) != -1
             };
         }
     }
     
-    function getUsersData(users) {
+    function getUsersData(users, favorites) {
         var usersData = [];
         
         for (var i = 0; i < users.length; ++i) {
-            var user = getUser(users[i]);
+            var user = getUser(users[i], favorites);
             usersData.push(user);
         }
         
         return usersData;
     }
     
-    function afterQuery(err, users) {
-        var usersData = getUsersData(users);
-        response.json({'users': usersData});
+    function afterQuery(err, user) {
+        User.find({}, function(err, users) {
+            var usersData = getUsersData(users, user.favorites);
+            response.json({'users': usersData});
+        });
     }
 };

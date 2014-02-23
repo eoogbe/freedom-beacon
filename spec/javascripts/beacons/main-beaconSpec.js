@@ -1,80 +1,49 @@
 describe('MainBeacon', function(){
-    describe('registerEventHandlers()', function(){
-        beforeEach(function(){
-            loadFixtures('beacons/main-beacon.html');
-        });
-        
-        describe('when unchecked', function(){
+    describe('run()', function(){
+        describe('when illuminated', function(){
+            var mainBeacon;
+            
             beforeEach(function(){
-                spyOn(FREE.Countdowner, 'countdown');
+                loadFixtures('beacons/illuminated-main-beacon.html');
                 
-                var mainBeacon = FREE.MainBeacon
+                mainBeacon = FREE.MainBeacon
                 mainBeacon.init();
-                mainBeacon.registerEventHandlers();
-                
-                $('#beacon').click();
-            });
-            
-            it('should change the beacon button text to "deactivate beacon"', function(){
-                expect($('.beacon-btn')).toHaveText('deactivate beacon');
-            });
-            
-            it('should remove the btn-primary class', function(){
-                expect($('.beacon-btn')).not.toHaveClass('btn-primary');
-            });
-            
-            it('should add the btn-default class', function(){
-                expect($('.beacon-btn')).toHaveClass('btn-default');
-            });
-            
-            it('should add the readonly class to the main timer', function(){
-                expect($('input[name="main-timer"]')).toHaveClass('readonly');
-            });
-            
-            it('should make the timer readonly', function(){
-                expect($('input[name="main-timer"]')).toHaveProp('readonly');
             });
             
             it('should start a countdown', function(){
+                spyOn(FREE.Countdowner, 'countdown');
+                mainBeacon.run();
                 expect(FREE.Countdowner.countdown).toHaveBeenCalled();
             });
-        });
+            
+            describe('when the countdown ends', function(){
+                it('should tell the server', function(){
+                    spyOn(FREE.Countdowner, 'countdown').and.callFake(function($timer, done){
+                        done();
+                    });
+                    
+                    spyOn(jQuery, 'post').and.callFake(function(path){
+                        expect(path).toBe('/beacons/delete');
+                    });
+                    
+                    mainBeacon.run();
+                    
+                    expect(jQuery.post).toHaveBeenCalled();
+                });
+            });
+        })
         
-        describe('when checked', function(){
-            beforeEach(function(){
-                spyOn(FREE.Countdowner, 'stop');
-                
+        describe('when deactivate', function(){
+            it('should not start a countdown', function(){
+                loadFixtures('beacons/deactivated-main-beacon.html');
+                spyOn(FREE.Countdowner, 'countdown');
+                    
                 var mainBeacon = FREE.MainBeacon
                 mainBeacon.init();
-                mainBeacon.registerEventHandlers();
+                mainBeacon.run();
                 
-                $('#beacon').click();
-                $('#beacon').click();
+                expect(FREE.Countdowner.countdown).not.toHaveBeenCalled();
             });
-            
-            it('should change the beacon button text to "illuminate beacon"', function(){
-                expect($('.beacon-btn')).toHaveText('illuminate beacon');
-            });
-            
-            it('should add the btn-primary class', function(){
-                expect($('.beacon-btn')).toHaveClass('btn-primary');
-            });
-            
-            it('should remove the btn-default class', function(){
-                expect($('.beacon-btn')).not.toHaveClass('btn-default');
-            });
-            
-            it('should remove the readonly class to the main timer', function(){
-                expect($('input[name="main-timer"]')).not.toHaveClass('readonly');
-            });
-            
-            it('should remove the readonly property from the timer', function(){
-                expect($('input[name="main-timer"]')).toHaveProp('readonly', false);
-            });
-            
-            it('should stop the countdown', function(){
-                expect(FREE.Countdowner.stop).toHaveBeenCalled();
-            });
-        });
+        })
     });
 });

@@ -16,10 +16,18 @@ describe('beacons', function(){
     });
     
     describe('create()', function(){
-        beforeEach(function(){    
+        var user;
+        
+        beforeEach(function(){
+            user =
+            {
+                'fbId': 0,
+                'getTimeLeft': function(){return 0;}
+            };
+            
             spyOn(User, 'findById').andReturn({
                 'exec': function(done) {
-                    done(null, {'fbId': 0});
+                    done(null, user);
                 }
             });
         });
@@ -30,7 +38,7 @@ describe('beacons', function(){
                 
                 return {
                     'exec': function(done) {
-                        done(null, {'fbId': 0});
+                        done(null, user);
                     }
                 };
             });
@@ -47,6 +55,66 @@ describe('beacons', function(){
         it('should add the current user\'s Facebook id', function(){
             beacons.create(request, response);
             expect(response.data.userFbId).toBe(0);
+        });
+        
+        describe('when no time left', function(){
+            beforeEach(function(){
+                beacons.create(request, response);
+            });
+            
+            it('should set the beacon action to illuminate', function(){
+                expect(response.data.beaconAction).toBe('illuminate');
+            });
+            
+            it('should default the user time to 30', function(){
+                expect(response.data.userTime).toBe('30');
+            });
+            
+            it('should set the timer value to 30', function(){
+                expect(response.data.timerValue).toBe('30');
+            });
+            
+            it('should not have a timer class', function(){
+                expect(response.data.timerClass).toBeUndefined();
+            });
+            
+            it('should set the timer property to autofocus', function(){
+                expect(response.data.timerProp).toBe('autofocus');
+            });
+        });
+        
+        describe('when time left', function(){
+            beforeEach(function(){
+                user.getTimeLeft = function() { return 5; };
+                
+                User.findById.andReturn({
+                    'exec': function(done) {
+                        done(null, user);
+                    }
+                });
+                
+                beacons.create(request, response);
+            });
+            
+            it('should set the beacon action to deactivate', function(){
+                expect(response.data.beaconAction).toBe('deactivate');
+            });
+            
+            it('should set the user time to the time left', function(){
+                expect(response.data.userTime).toBe(5);
+            });
+            
+            it('should put both minutes and seconds in the timer value', function(){
+                expect(response.data.timerValue).toBe('5:00');
+            });
+            
+            it('should make the timer class disabled-timer', function(){
+                expect(response.data.timerClass).toBe('disabled-timer');
+            });
+            
+            it('should set the timer property to disabled', function(){
+                expect(response.data.timerProp).toBe('disabled');
+            });
         });
     });
     
@@ -81,6 +149,36 @@ describe('beacons', function(){
         it('should redirect back to the beacons-create page', function(){
             beacons.post(request, response);
             expect(response.path).toBe('back');
+        });
+    });
+    
+    describe('delete()', function(){
+        var user;
+        
+        beforeEach(function(){
+            user = jasmine.createSpyObj('user', ['save']);
+            user.beacon = {'duration': 5};
+            
+            user.save.andCallFake(function(done){
+                done();
+            });
+            
+            spyOn(User, 'findById').andReturn({
+                'exec': function(done) {
+                    done(null, user);
+                }
+            });
+            
+            beacons.delete(request, response);
+        });
+        
+        it('should set the beacon duration to 0', function(){
+            expect(user.beacon.duration).toBe(0);
+            expect(user.save).toHaveBeenCalled();
+        });
+        
+        it('should redirect to /beacons/create', function(){
+            expect(response.path).toBe('/beacons/create');
         });
     });
     

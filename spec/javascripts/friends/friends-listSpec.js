@@ -12,7 +12,9 @@ describe('FriendsList', function(){
             fbFriends = [
                 {'id': 1, 'username': 'uname1'},
                 {'id': 2, 'username': 'uname2'},
-                {'id': 4, 'username': 'uname4'}
+                {'id': 3, 'username': 'uname3'},
+                {'id': 5, 'username': 'uname5'},
+                {'id': 6, 'username': 'uname6'}
             ];
             
             FB = jasmine.createSpyObj('FB', ['api']);
@@ -20,28 +22,7 @@ describe('FriendsList', function(){
                 done(fbFriends);
             });
             
-            usersData =
-            {
-                'users': [
-                    {
-                        'name': 'user1',
-                        'fbId': 1,
-                        'distance': {'name': 'dist', 'description': 'desc'},
-                        'time': 5,
-                        'isFree': true
-                    },
-                    {
-                        'name': 'user2',
-                        'fbId': 2,
-                        'isFree': false
-                    },
-                    {
-                        'name': 'user3',
-                        'fbId': 3,
-                        'isFree': false
-                    }
-                ]
-            };
+            usersData = getJSONFixture('users.json');
             
             spyOn(jQuery, 'getJSON').and.callFake(function(url, done){
                 done(usersData);
@@ -58,6 +39,7 @@ describe('FriendsList', function(){
             spyOn(FREE.DistanceFlyout, 'registerEventHandlers');
             
             friendsList = FREE.FriendsList;
+            friendsList.init();
         });
         
         it('should get the Facebook friends', function(){
@@ -66,7 +48,6 @@ describe('FriendsList', function(){
                 done(fbFriends);
             });
             
-            friendsList.init();
             friendsList.loadFriends();
             
             expect(FB.api).toHaveBeenCalled();
@@ -78,38 +59,78 @@ describe('FriendsList', function(){
                 done(usersData);
             });
             
-            friendsList.init();
             friendsList.loadFriends();
             
             expect(jQuery.getJSON).toHaveBeenCalled();
         });
         
-        it('should format the friend data for /friends', function(){
+        it('should post the friend data to /friends', function(){
             jQuery.get.and.callFake(function(url, data, done){
                 expect(url).toBe('/friends');
+                done(friendsHtml);
+            });
+            
+            friendsList.loadFriends();
+            
+            expect(jQuery.get).toHaveBeenCalled();
+        });
+        
+        it('should split the friend data for /friends into free and offline friends', function(){
+            jQuery.get.and.callFake(function(url, data, done){
+                expect(data.freeFriends.length).toBe(2);
+                expect(data.offlineFriends.length).toBe(2);
                 
-                expect(data.freeFriends.length).toBe(1);
+                done(friendsHtml);
+            });
+            
+            friendsList.loadFriends();
+            
+            expect(jQuery.get).toHaveBeenCalled();
+        });
+        
+        it('should put the favorites before the unfavorites for /friends', function(){
+            jQuery.get.and.callFake(function(url, data, done){
+                expect(data.freeFriends[0].name).toBe('user2');
+                expect(data.freeFriends[1].name).toBe('user1');
                 
-                var freeFriend = data.freeFriends[0];
+                done(friendsHtml);
+            });
+            
+            friendsList.loadFriends();
+            
+            expect(jQuery.get).toHaveBeenCalled();
+        });
+        
+        it('should formate the free friends data for /friends', function(){
+            jQuery.get.and.callFake(function(url, data, done){
+                var freeFriend = data.freeFriends[1];
                 expect(freeFriend.name).toBe('user1');
                 expect(freeFriend.fbUsername).toBe('uname1');
                 expect(freeFriend.distance).toEqual({'name': 'dist', 'description': 'desc'});
                 expect(freeFriend.time).toBe(5);
                 
-                expect(data.offlineFriends.length).toBe(1);
-                expect(data.offlineFriends[0].name).toBe('user2');
+                done(friendsHtml);
+            });
+            
+            friendsList.loadFriends();
+            
+            expect(jQuery.get).toHaveBeenCalled();
+        });
+        
+        it('should format the offline friends data for /friends', function(){
+            jQuery.get.and.callFake(function(url, data, done){
+                expect(data.offlineFriends[0].name).toBe('user5');
+                expect(data.offlineFriends[1].name).toBe('user3');
                 
                 done(friendsHtml);
             });
             
-            friendsList.init();
             friendsList.loadFriends();
             
             expect(jQuery.get).toHaveBeenCalled();
         });
         
         it('should register the distance flyout event handlers', function(){
-            friendsList.init();
             friendsList.loadFriends();
             
             expect(FREE.DistanceFlyout.init).toHaveBeenCalled();
@@ -117,11 +138,10 @@ describe('FriendsList', function(){
         });
         
         it('should load the lists of friends', function(){
-            friendsList.init();
             friendsList.loadFriends();
             
-            expect($('.free')).toExist();
-            expect($('.offline')).toExist();
+            expect($('.free')).toBeVisible();
+            expect($('.offline')).toBeVisible();
         });
     });
 });

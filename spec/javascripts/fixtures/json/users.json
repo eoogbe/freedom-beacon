@@ -1,0 +1,38 @@
+{
+    "users": [
+        {
+            "name": "user1",
+            "fbId": 1,
+            "distance": {"name": "dist", "description": "desc"},
+            "time": 5,
+            "isFree": true,
+            "isFavorite": false
+        },
+        {
+            "name": "user2",
+            "fbId": 2,
+            "distance": {"name": "dist2", "description": "desc2"},
+            "time": 7,
+            "isFree": true,
+            "isFavorite": true
+        },
+        {
+            "name": "user3",
+            "fbId": 3,
+            "isFree": false,
+            "isFavorite": false
+        },
+        {
+            "name": "user4",
+            "fbId": 4,
+            "isFree": false,
+            "isFavorite": false
+        },
+        {
+            "name": "user5",
+            "fbId": 5,
+            "isFree": false,
+            "isFavorite": true
+        }
+    ]
+}

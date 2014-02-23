@@ -2,6 +2,7 @@
 <table class="free">
     {{#each freeFriends}}
     <tr>
+        {{> favorite-button this}}
         <td><a href="https://facebook.com/messages/{{fbUsername}}">{{name}}</a></td>
         {{#with distance}}
         <td>
@@ -18,8 +19,11 @@
 </table>
 
 <h2>Offline friends</h2>
-<ul>
+<table class="offline">
     {{#each offlineFriends}}
-    <li>{{name}}</li>
+    <tr>
+        {{> favorite-button this}}
+        <td>{{name}}</td>
+    </tr>
     {{/each}}
-</ul>
+</table>

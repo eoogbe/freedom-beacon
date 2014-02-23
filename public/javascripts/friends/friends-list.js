@@ -13,9 +13,18 @@ FREE.FriendsList = (function(){
 	function addFriend(friends, friend, fbFriend) {
 		if (friend.isFree) {
 			var friendData = getFriendData(friend, fbFriend);
-			friends.freeFriends.push(friendData);
+			
+			if (friend.isFavorite) {
+				friends.freeFriends.unshift(friendData);
+			} else {
+				friends.freeFriends.push(friendData);
+			}
 		} else {
-			friends.offlineFriends.push(friend);
+			if (friend.isFavorite) {
+				friends.offlineFriends.unshift(friend);
+			} else {
+				friends.offlineFriends.push(friend);
+			}
 		}
 	}
 	

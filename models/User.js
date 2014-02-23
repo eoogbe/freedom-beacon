@@ -9,6 +9,7 @@ var UserSchema = new mongoose.Schema({
     'name': String,
     'fbId': Number,
     'beacon': {'timeSet': Date, 'duration': Number},
+    'favorites': [{'type': ObjectId, 'ref': 'User'}],
     'distance': {'type': ObjectId, 'ref': 'Distance'}  // Change to a number
 });
 

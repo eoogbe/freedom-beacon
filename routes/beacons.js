@@ -11,8 +11,38 @@ exports.create = function(request, response) {
   User.findById(request.session.userId)
     .exec(afterQuery);
   
+  function getIlluminatedBeaconData(timeLeft) {
+    return {
+      'beaconAction': 'deactivate',
+      'userTime': timeLeft,
+      'timerValue': timeLeft + ':00',
+      'timerClass': 'disabled-timer',
+      'timerProp': 'disabled'
+    };
+  }
+  
+  function getDeactivatedBeaconData() {
+    return {
+      'beaconAction': 'illuminate',
+      'userTime': '30',
+      'timerValue': '30',
+      'timerProp': 'autofocus'
+    };
+  }
+  
+  function getData(user) {
+    var timeLeft = user.getTimeLeft();
+    
+    return timeLeft > 0
+      ? getIlluminatedBeaconData(timeLeft)
+      : getDeactivatedBeaconData();
+  }
+  
   function afterQuery(err, user) {
-    response.render('beacons-create', { 'userFbId': user.fbId });
+    var data = getData(user);
+    data.userFbId = user.fbId;
+    
+    response.render('beacons-create', data);
   }
 };
 
@@ -25,6 +55,18 @@ exports.post = function(request, response) {
     user.beacon.duration = request.body.mainTimer;
     user.save(function(){
       response.redirect('back');
+    });
+  }
+};
+
+exports.delete = function(request, response) {
+  User.findById(request.session.userId)
+    .exec(afterQuery);
+  
+  function afterQuery(err, user) {
+    user.beacon.duration = 0;
+    user.save(function(){
+      response.redirect('/beacons/create');
     });
   }
 };
