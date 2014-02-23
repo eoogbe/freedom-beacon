@@ -1,18 +1,53 @@
 describe('Facebook', function(){
-    describe('registerEventHandlers()', function(){
-        var facebook;
+    var facebook;
+    
+    beforeEach(function(){
+        FB = jasmine.createSpyObj('FB', ['init', 'api', 'login', 'logout', 'getLoginStatus']);
         
+        spyOn(jQuery, 'getScript').and.callFake(function(url, done){
+            done();
+        });
+        
+        facebook = FREE.Facebook;
+    });
+    
+    describe('init()', function(){
         beforeEach(function(){
-            FB = jasmine.createSpyObj('FB', ['init', 'api', 'login', 'logout', 'getLoginStatus']);
-            FB.Event = jasmine.createSpyObj('FB.Event', ['subscribe']);
+            loadFixtures('facebook/init.html');
+        });
+        
+        it('initializes FB', function(){
+            facebook.init();
             
-            spyOn(FREE.Url, 'redirect');
-            spyOn(jQuery, 'getScript').and.callFake(function(url, done){
+            expect(FB.init).toHaveBeenCalledWith({
+                'appId': '5',
+                'status': true,
+                'cookie': true,
+                'xfbml': true
+            });
+        });
+        
+        it('gets the JavaScript from facebook.net', function(){
+            jQuery.getScript.and.callFake(function(url, done){
                 expect(url).toBe('//connect.facebook.net/en_US/all.js');
                 done();
             });
             
-            facebook = FREE.Facebook;
+            facebook.init();
+            
+            expect(jQuery.getScript).toHaveBeenCalled();
+        });
+        
+        it('initializes the Url module', function(){
+            spyOn(FREE.Url, 'init');
+            facebook.init();
+            expect(FREE.Url.init).toHaveBeenCalled();
+        });
+    });
+    
+    describe('registerEventHandlers()', function(){
+        beforeEach(function(){
+            spyOn(FREE.Url, 'redirect');
         });
         
         describe('loginHandler', function(){

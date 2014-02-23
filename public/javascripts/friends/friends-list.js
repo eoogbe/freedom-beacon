@@ -68,10 +68,8 @@ FREE.FriendsList = (function(){
 	}
 	
 	function loadFriends() {
-		var userFbId = $('input[name="userFbId"]').val().slice(1);
-		var path = '/' + userFbId + '/friends';
-		
-		FB.api(path, function(fbFriends){
+		FB.api('/me/friends', function(fbFriends){
+			console.log(fbFriends);
 			getUsers(fbFriends);
 		});
 	}

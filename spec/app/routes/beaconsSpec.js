@@ -52,11 +52,6 @@ describe('beacons', function(){
             expect(response.view).toBe('beacons-create');
         });
         
-        it('should add the current user\'s Facebook id', function(){
-            beacons.create(request, response);
-            expect(response.data.userFbId).toBe(0);
-        });
-        
         describe('when no time left', function(){
             beforeEach(function(){
                 beacons.create(request, response);

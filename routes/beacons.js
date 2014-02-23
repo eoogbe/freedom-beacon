@@ -39,10 +39,7 @@ exports.create = function(request, response) {
   }
   
   function afterQuery(err, user) {
-    var data = getData(user);
-    data.userFbId = user.fbId;
-    
-    response.render('beacons-create', data);
+    response.render('beacons-create', getData(user));
   }
 };
 

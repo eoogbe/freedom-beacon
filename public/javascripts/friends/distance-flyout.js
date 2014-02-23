@@ -1,18 +1,19 @@
 var FREE = FREE || {};
 
 FREE.DistanceFlyout = (function(){
-    function closeClicked() {
-		$(this).parent().hide();
+    function addCloseHandler() {
+		var closeButton = FREE.CloseButton;
+		closeButton.init();
+		closeButton.registerEventHandlers();
 	}
 	
 	function distanceClicked(e) {
-		e.preventDefault();
 		$(this).siblings('.distance-flyout').show();
+		addCloseHandler();
 	}
     
     function registerEventHandlers() {
 		$('.distance-link').click(distanceClicked);
-		$('button[name="close-btn"]').click(closeClicked);
     }
     
     return {

@@ -44,7 +44,7 @@ describe('FriendsList', function(){
         
         it('should get the Facebook friends', function(){
             FB.api.and.callFake(function(path, done){
-                expect(path).toBe('/0/friends');
+                expect(path).toBe('/me/friends');
                 done(fbFriends);
             });
             

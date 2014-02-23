@@ -3,20 +3,24 @@
  */
 
 exports.index = function(request, response) {
-  if (!hasFriends()) {
+  if (!hasFriendsData()) {
     response.redirect('/');
+  } else {
+    var hasFriends = request.query.freeFriends.length > 0
+      || request.query.offlineFriends.length > 0;
+    
+    var data =
+    {
+      'layout': false,
+      'freeFriends': request.query.freeFriends,
+      'offlineFriends': request.query.offlineFriends,
+      'hasFriends': hasFriends
+    };
+    
+    response.render('friends-index', data); 
   }
   
-  var data =
-  {
-    'layout': false,
-    'freeFriends': request.query.freeFriends,
-    'offlineFriends': request.query.offlineFriends
-  };
-  
-  response.render('friends-index', data);
-  
-  function hasFriends() {
+  function hasFriendsData() {
     return typeof request.query.freeFriends !== 'undefined'
       && typeof request.query.offlineFriends !== 'undefined';
   }

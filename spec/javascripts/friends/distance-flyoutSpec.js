@@ -10,18 +10,17 @@ describe('DistanceFlyout', function(){
         })
         
         describe('when distance clicked', function(){
-            it('should show the distance flyout', function(){
+            beforeEach(function(){
+                spyOn(FREE.CloseButton, 'registerEventHandlers');
                 $('.distance-link').click();
+            });
+            
+            it('should show the distance flyout', function(){
                 expect($('.distance-flyout')).toBeVisible();
             });
-        });
-        
-        describe('when close clicked', function() {
-            it('should hide the distance flyout', function(){
-                $('.distance-link').click();
-                $('.distance-flyout > button[name="close-btn"]').click();
-                
-                expect($('.distance-flyout')).not.toBeVisible();
+            
+            it('should register the close handler', function(){
+                expect(FREE.CloseButton.registerEventHandlers).toHaveBeenCalled();
             });
         });
     });

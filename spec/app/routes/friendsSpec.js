@@ -34,21 +34,43 @@ describe('friends', function(){
             expect(response.data.layout).toBe(false);
         });
         
-        it('should send the freeFriends to the view', function(){
-            friends.index(request, response);
-            expect(response.data.freeFriends).toBeDefined();
+        describe('when friends', function(){
+            it('should send the freeFriends to the view', function(){
+                friends.index(request, response);
+                expect(response.data.freeFriends).toBeDefined();
+                
+            });
             
+            it('should send the offlineFriends to the view', function(){
+                friends.index(request, response);
+                expect(response.data.offlineFriends).toBeDefined();
+            });
+            
+            it('should set hasFriends to a truthy value', function(){
+                friends.index(request, response);
+                expect(response.data.hasFriends).toBeTruthy();
+            });
         });
         
-        it('should send the offlineFriends to the view', function(){
-            friends.index(request, response);
-            expect(response.data.offlineFriends).toBeDefined();
+        describe('when no friends', function(){
+            it('should set hasFriends to a falsy value', function(){
+                request =
+                {
+                    'query': {'freeFriends': [], 'offlineFriends': []}
+                };
+                
+                friends.index(request, response);
+                
+                expect(response.data.hasFriends).toBeFalsy();
+            });
         });
         
-        it('should redirect to the homepage when freeFriends and offlineFriends are not defined', function(){
-            request = {'query': {}};
-            friends.index(request, response);
-            expect(response.path).toBe('/');
+        describe('when friends not defined', function(){
+            it('should redirect to the homepage', function(){
+                request = {'query': {}};
+                friends.index(request, response);
+                expect(response.path).toBe('/');
+            });
         });
     });
 });
