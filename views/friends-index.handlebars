@@ -1,35 +1,45 @@
 {{#if hasFriends}}
-<h2>Free friends</h2>
-<table class="free">
-    {{#each freeFriends}}
-    <tr>
-        {{> favorite-button this}}
-        <td><a href="https://facebook.com/messages/{{fbUsername}}">{{name}}</a></td>
-        {{#with distance}}
-        <td>
-            <button class="distance-link btn btn-link" type="button">{{name}} distance</button>
-            <div class="flyout distance-flyout">
-                <button class="close-btn" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
-                {{description}}
-            </div>
-        </td>
-        {{/with}}
-        <td>{{time}} min left</td>
-    </tr>
-    {{/each}}
-</table>
-
-<h2>Offline friends</h2>
-<table class="offline">
-    {{#each offlineFriends}}
-    <tr>
-        {{> favorite-button this}}
-        <td>{{name}}</td>
-    </tr>
-    {{/each}}
-</table>
+    <h2>Free friends</h2>
+    {{#if freeFriends}}
+        <table class="free">
+            {{#each freeFriends}}
+            <tr>
+                {{> favorite-button this}}
+                <td><a href="https://facebook.com/messages/{{fbUsername}}">{{name}}</a></td>
+                {{#with distance}}
+                <td>
+                    <button class="distance-link btn btn-link" type="button">{{name}} distance</button>
+                    <div class="flyout distance-flyout">
+                        <button class="close-btn" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+                        {{description}}
+                    </div>
+                </td>
+                {{/with}}
+                <td>{{time}} min left</td>
+            </tr>
+            {{/each}}
+        </table>
+    {{else}}
+        <p>None of your Facebook friends are free.</p>
+        <p>Would you like to <button class="invite-link btn btn-link" type="button">invite more friends</button>?</p>
+        <div class="invite-flyout flyout"></div>
+    {{/if}}
+    
+    <h2>Offline friends</h2>
+    {{#if offlineFriends}}
+        <table class="offline">
+            {{#each offlineFriends}}
+            <tr>
+                {{> favorite-button this}}
+                <td>{{name}}</td>
+            </tr>
+            {{/each}}
+        </table>
+    {{else}}
+        <p>No friends are offline right now.</p>
+    {{/if}}
 {{else}}
-<p>None of your Facebook friends are on Freedom Beacon.</p>
-<p>Would you like to <button class="invite-link btn btn-link" type="button">invite them</button>?</p>
-<div class="invite-flyout flyout"></div>
+    <p>None of your Facebook friends are on Freedom Beacon.</p>
+    <p>Would you like to <button class="invite-link btn btn-link" type="button">invite them</button>?</p>
+    <div class="invite-flyout flyout"></div>
 {{/if}}

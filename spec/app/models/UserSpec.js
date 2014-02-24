@@ -9,7 +9,8 @@ describe('User', function(){
     
     beforeEach(function(){
         user = new User({
-            'beacon': {'timeSet': new Date(1000), 'duration': 5}
+            'beaconTimeSet': new Date(1000),
+            'beaconDuration': 5
         });
     });
     
@@ -27,12 +28,12 @@ describe('User', function(){
     
     describe('getTimeLeft()', function(){
         it('should return the time left until the beacon deactivates', function(){
-            spyOn(Date, 'now').andReturn(4 * 60000);
+            spyOn(Date, 'now').andReturn(5 * 60000);
             expect(user.getTimeLeft()).toBe(1);
         });
         
         it('should return no time left if the beacon deactivates now', function(){
-            spyOn(Date, 'now').andReturn(5 * 60000);
+            spyOn(Date, 'now').andReturn(6 * 60000);
             expect(user.getTimeLeft()).toBe(0);
         });
     });

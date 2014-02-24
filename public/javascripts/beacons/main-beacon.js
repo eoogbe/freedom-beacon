@@ -2,7 +2,7 @@ var FREE = FREE || {};
 
 FREE.MainBeacon = (function(){
     function deleteBeacon() {
-        $.post('/beacons/delete');
+        $.get('/beacons/create');
     }
     
     function run() {

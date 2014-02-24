@@ -1,14 +1,19 @@
 describe('beacons', function(){
-    var copy = require('../../../lib/copy').copy;
-    var beacons = require('../../../routes/beacons');
-    var helper = require('../spec-helper');
-    var mongoose = require('mongoose');
+    var copy,
+        helper,
+        beacons,
+        mongoose,
+        User,
+        request,
+        response;
+    
+    copy = require('../../../lib/copy').copy;
+    helper = require('../spec-helper');
+    beacons = require('../../../routes/beacons');
+    mongoose = require('mongoose');
     
     require('../../../models/User');
-    var User = mongoose.model('User');
-    
-    var response;
-    var request;
+    User = mongoose.model('User');
     
     beforeEach(function(){
         request = {'session': {'userId': helper.ids.user0}};
@@ -117,7 +122,7 @@ describe('beacons', function(){
         var user;
         
         beforeEach(function(){
-            request.body = {'mainTimer': 15};
+            request.body = {'main-timer': 15};
             
             user = jasmine.createSpyObj('user', ['save']);
             user.beacon = {'timeSet': null, 'duration': 0};
@@ -138,41 +143,12 @@ describe('beacons', function(){
             beacons.post(request, response);
             
             expect(user.save).toHaveBeenCalled();
-            expect(user.beacon).toEqual({'timeSet': new Date(5), 'duration': 15});
+            expect(user.beaconTimeSet).toEqual(new Date(5))
+            expect(user.beaconDuration).toBe(15);
         });
         
         it('should redirect back to the beacons-create page', function(){
             beacons.post(request, response);
-            expect(response.path).toBe('back');
-        });
-    });
-    
-    describe('delete()', function(){
-        var user;
-        
-        beforeEach(function(){
-            user = jasmine.createSpyObj('user', ['save']);
-            user.beacon = {'duration': 5};
-            
-            user.save.andCallFake(function(done){
-                done();
-            });
-            
-            spyOn(User, 'findById').andReturn({
-                'exec': function(done) {
-                    done(null, user);
-                }
-            });
-            
-            beacons.delete(request, response);
-        });
-        
-        it('should set the beacon duration to 0', function(){
-            expect(user.beacon.duration).toBe(0);
-            expect(user.save).toHaveBeenCalled();
-        });
-        
-        it('should redirect to /beacons/create', function(){
             expect(response.path).toBe('/beacons/create');
         });
     });

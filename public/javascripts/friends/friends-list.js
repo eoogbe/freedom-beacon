@@ -1,18 +1,30 @@
 var FREE = FREE || {};
 
 FREE.FriendsList = (function(){
-	function getFriendData(friend, fbFriend) {
+	function getFreeFriendData(friend, fbFriend) {
 		return {
+			'friendId': friend.userId,
 			'name': friend.name,
 			'fbUsername': fbFriend.username,
 			'distance': friend.distance,
-			'time': friend.time
+			'time': friend.time,
+			'isFavorite': friend.isFavorite
+		};
+	}
+	
+	function getOfflineFriendData(friend) {
+		return {
+			'friendId': friend.userId,
+			'name': friend.name,
+			'isFavorite': friend.isFavorite
 		};
 	}
 	
 	function addFriend(friends, friend, fbFriend) {
+		var friendData;
+		
 		if (friend.isFree) {
-			var friendData = getFriendData(friend, fbFriend);
+			friendData = getFreeFriendData(friend, fbFriend);
 			
 			if (friend.isFavorite) {
 				friends.freeFriends.unshift(friendData);
@@ -20,10 +32,12 @@ FREE.FriendsList = (function(){
 				friends.freeFriends.push(friendData);
 			}
 		} else {
+			friendData = getOfflineFriendData(friend);
+			
 			if (friend.isFavorite) {
-				friends.offlineFriends.unshift(friend);
+				friends.offlineFriends.unshift(friendData);
 			} else {
-				friends.offlineFriends.push(friend);
+				friends.offlineFriends.push(friendData);
 			}
 		}
 	}
@@ -47,19 +61,26 @@ FREE.FriendsList = (function(){
 		return friends;
 	}
 	
+	function registerModuleEventHandlers(module) {
+		module.init();
+		module.registerEventHandlers();
+	}
+	
 	function showFriends(friendsHtml) {
 		var $friends = $('.friends');
 		$friends.html(friendsHtml);
 		$friends.slideDown();
 		
-		var distanceFlyout = FREE.DistanceFlyout;
-		distanceFlyout.init();
-		distanceFlyout.registerEventHandlers();
+		registerModuleEventHandlers(FREE.DistanceFlyout);
+		registerModuleEventHandlers(FREE.FavoriteButton);
+		registerModuleEventHandlers(FREE.InviteLink);
 	}
 	
 	function getUsers(fbFriends) {
-		$.getJSON('/users', function(data){
+		$.getJSON('/users', {'requestor': 'jquery'}, function(data){
 			var friends = findFriends(data.users, fbFriends);
+			friends.hasFriends = friends.freeFriends.length > 0
+				|| friends.offlineFriends.length > 0;
 			
 			$.get('/friends', friends, function(data){
 				showFriends(data);
@@ -68,9 +89,12 @@ FREE.FriendsList = (function(){
 	}
 	
 	function loadFriends() {
-		FB.api('/me/friends', function(fbFriends){
-			console.log(fbFriends);
-			getUsers(fbFriends);
+		FB.api('/me/friends?fields=id,name,username', function(response){
+			if (response.error) {
+				console.log(response.error);
+			} else {
+				getUsers(response.data);
+			}
 		});
 	}
 	

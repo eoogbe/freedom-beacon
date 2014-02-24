@@ -15,6 +15,7 @@ exports.create = function(request, response) {
     return {
       'beaconAction': 'deactivate',
       'userTime': timeLeft,
+      'timerType': 'text',
       'timerValue': timeLeft + ':00',
       'timerClass': 'disabled-timer',
       'timerProp': 'disabled'
@@ -25,6 +26,7 @@ exports.create = function(request, response) {
     return {
       'beaconAction': 'illuminate',
       'userTime': '30',
+      'timerType': 'number',
       'timerValue': '30',
       'timerProp': 'autofocus'
     };
@@ -48,20 +50,9 @@ exports.post = function(request, response) {
     .exec(afterQuery);
   
   function afterQuery(err, user) {
-    user.beacon.timeSet = new Date(Date.now());
-    user.beacon.duration = request.body.mainTimer;
-    user.save(function(){
-      response.redirect('back');
-    });
-  }
-};
-
-exports.delete = function(request, response) {
-  User.findById(request.session.userId)
-    .exec(afterQuery);
-  
-  function afterQuery(err, user) {
-    user.beacon.duration = 0;
+    user.beaconTimeSet = new Date(Date.now());
+    user.beaconDuration = request.body['main-timer'];
+    
     user.save(function(){
       response.redirect('/beacons/create');
     });

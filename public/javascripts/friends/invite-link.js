@@ -18,18 +18,24 @@ FREE.InviteLink = (function(){
         closeButton.registerEventHandlers();
     }
     
-    function getFbFriendsHtml(fbFriends) {
+    function getFbFriendsHtml(fbFriends, $inviteFlyout) {
         $.get('/fbFriends', {'fbFriends': fbFriends}, function(data){
-            $('.invite-flyout').html(data);
+            $inviteFlyout.html(data);
+            $inviteFlyout.show();
             $('.send-invite-link').click(sendInviteClicked);
             addCloseHandler();
         });
     }
     
     function inviteClicked() {
-        FB.api('/me/friends', function(fbFriends){
-            console.log(fbFriends);
-            getFbFriendsHtml(fbFriends);
+        var $inviteFlyout = $(this).parent().siblings('.invite-flyout');
+        
+        FB.api('/me/friends', function(response){    
+            if (response.error) {
+                console.log(response.error);
+            } else {
+                getFbFriendsHtml(response.data, $inviteFlyout);
+            }
         });
     }
     

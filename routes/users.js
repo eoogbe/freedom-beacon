@@ -20,15 +20,17 @@ exports.index = function(request, response) {
     function getUser(data, favorites) {
         if (data.isFree()) {
             return {
+                'userId': data._id,
                 'name': data.name,
                 'fbId': data.fbId,
                 'distance': copy(data.distance),
-                'time': data.timeLeft(),
+                'time': data.getTimeLeft(),
                 'isFree': true,
                 'isFavorite': favorites.indexOf(data._id) != -1
             };
         } else {
             return {
+                'userId': data._id,
                 'name': data.name,
                 'fbId': data.fbId,
                 'isFree': false,

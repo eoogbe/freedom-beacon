@@ -1,16 +1,21 @@
 describe('users', function(){
     describe('index()', function(){
-        var copy = require('../../../lib/copy').copy;
-        var helper = require('../spec-helper');
-        var users = require('../../../routes/users');
-        var mongoose = require('mongoose');
+        var copy,
+            helper,
+            users,
+            mongoose,
+            User,
+            request,
+            response,
+            usersData;
+        
+        copy = require('../../../lib/copy').copy;
+        helper = require('../spec-helper');
+        users = require('../../../routes/users');
+        mongoose = require('mongoose');
         
         require('../../../models/User');
-        var User = mongoose.model('User');
-        
-        var request;
-        var response;
-        var usersData;
+        User = mongoose.model('User');
         
         beforeEach(function(){
             request =
@@ -38,7 +43,7 @@ describe('users', function(){
                     'name': 'user1',
                     'fbId': 1,
                     'distance': {'name': 'dist', 'description': 'desc'},
-                    'timeLeft': function() {return 8; },
+                    'getTimeLeft': function() {return 8; },
                     'isFree': function() {return true;}
                 },
                 {
@@ -46,7 +51,7 @@ describe('users', function(){
                     'name': 'user2',
                     'fbId': 2,
                     'distance': {'name': 'dist2', 'description': 'desc2'},
-                    'timeLeft': function() {return 5; },
+                    'getTimeLeft': function() {return 5; },
                     'isFree': function() {return true;}
                 },
                 {

@@ -8,9 +8,12 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 var UserSchema = new mongoose.Schema({
     'name': String,
     'fbId': Number,
-    'beacon': {'timeSet': Date, 'duration': Number},
+    'beaconDuration': Number,
+    'beaconTimeSet': Date,
     'favorites': [{'type': ObjectId, 'ref': 'User'}],
-    'distance': {'type': ObjectId, 'ref': 'Distance'}  // Change to a number
+    'positionId': Number,
+    'positionLat': Number,
+    'positionLng': Number
 });
 
 var MILLISECONDS_PER_MINUTE = 60000;
@@ -20,13 +23,13 @@ function addMinutes(date, min) {
 }
 
 UserSchema.methods.isFree = function() {
-    var end = addMinutes(this.beacon.timeSet, this.beacon.duration);
+    var end = addMinutes(this.beaconTimeSet, this.beaconDuration);
     return end.getTime() > Date.now();
 };
 
 UserSchema.methods.getTimeLeft = function() {
-	var timeLeft = Date.now() - this.beacon.timeSet.getTime();
-	return this.beacon.duration - Math.ceil(timeLeft / MILLISECONDS_PER_MINUTE);
+	var timeLeft = Date.now() - this.beaconTimeSet.getTime();
+	return this.beaconDuration - Math.floor(timeLeft / MILLISECONDS_PER_MINUTE);
 }
 
 mongoose.model('User', UserSchema);

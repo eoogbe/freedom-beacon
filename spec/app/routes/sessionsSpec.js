@@ -1,16 +1,22 @@
 describe('sessions', function(){
-    var copy = require('../../../lib/copy').copy;
-    var helper = require('../spec-helper');
-    var sessions = require('../../../routes/sessions');
+    var copy,
+        helper,
+        sessions,
+        request,
+        response;
     
-    var request;
-    var response;
+    copy = require('../../../lib/copy').copy;
+    helper = require('../spec-helper');
+    sessions = require('../../../routes/sessions');
     
     describe('post()', function(){
-        var mongoose = require('mongoose');
+        var mongoose,
+            User;
+        
+        mongoose = require('mongoose');
         
         require('../../../models/User');
-        var User = mongoose.model('User');
+        User = mongoose.model('User');
         
         beforeEach(function(){
             response = copy(helper.response);
@@ -59,8 +65,8 @@ describe('sessions', function(){
                     expect(data.fbId).toBe('0');
                     expect(data.name).toBe('thename');
                     
-                    expect(data.beacon.timeSet).toBeDefined();
-                    expect(data.beacon.duration).toBe(0);
+                    expect(data.beaconTimeSet).toBeDefined();
+                    expect(data.beaconDuration).toBe(0);
                     
                     done(null, {'_id': helper.ids.user0});
                 }); 

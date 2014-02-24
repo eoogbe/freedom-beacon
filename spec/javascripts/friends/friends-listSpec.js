@@ -1,5 +1,5 @@
 describe('FriendsList', function(){
-    describe('loadFriends', function(){
+    describe('loadFriends()', function(){
         var friendsList;
         var fbFriends;
         var usersData;
@@ -37,6 +37,12 @@ describe('FriendsList', function(){
             
             spyOn(FREE.DistanceFlyout, 'init');
             spyOn(FREE.DistanceFlyout, 'registerEventHandlers');
+            
+            spyOn(FREE.FavoriteButton, 'init');
+            spyOn(FREE.FavoriteButton, 'registerEventHandlers');
+            
+            spyOn(FREE.InviteLink, 'init');
+            spyOn(FREE.InviteLink, 'registerEventHandlers');
             
             friendsList = FREE.FriendsList;
             friendsList.init();
@@ -135,6 +141,20 @@ describe('FriendsList', function(){
             
             expect(FREE.DistanceFlyout.init).toHaveBeenCalled();
             expect(FREE.DistanceFlyout.registerEventHandlers).toHaveBeenCalled();
+        });
+        
+        it('should register the favorite button handler', function(){
+            friendsList.loadFriends();
+            
+            expect(FREE.FavoriteButton.init).toHaveBeenCalled();
+            expect(FREE.FavoriteButton.registerEventHandlers).toHaveBeenCalled();
+        });
+        
+        it('should register the invite link handler', function(){
+            friendsList.loadFriends();
+            
+            expect(FREE.InviteLink.init).toHaveBeenCalled();
+            expect(FREE.InviteLink.registerEventHandlers).toHaveBeenCalled();
         });
         
         it('should load the lists of friends', function(){

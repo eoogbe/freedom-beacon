@@ -2,12 +2,17 @@ var FREE = FREE || {};
 
 FREE.FavoriteButton = (function(){
     function buttonClicked($parent, url, newButtonKind) {
-        var friendId = $parent.data('friend-id');
+        var friendId,
+            buttonHtml;
+        
+        friendId = $parent.data('friend-id');
         
         $.post(url, {'friendId': friendId}, function(){
-            var buttonHtml = '<button class="' + newButtonKind + '-btn" type="button">' +
+            buttonHtml = '<button class="' + newButtonKind + '-btn" type="button">' +
                 newButtonKind + '</button>';
             $parent.html(buttonHtml);
+            
+            registerEventHandlers();
         });
     }
     

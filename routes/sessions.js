@@ -21,7 +21,8 @@ exports.post = function(request, response) {
         {
             'fbId': request.body.fbId,
             'name': request.body.name,
-            'beacon': {'timeSet': new Date(), 'duration': 0}
+            'beaconDuration': 0,
+            'beaconTimeSet': new Date()
         };
         
         User.create(userData, function(err, user){
