@@ -7,18 +7,28 @@ FREE.Facebook = (function(){
         url.redirect('/beacons/create');
     }
     
+    function afterWatching(pos) {
+        FB.api('/me', function(response){
+            var data;
+            
+            if (response.error) {
+                console.log(response.error)
+            } else {
+                data =
+                {
+                    'fbId': response.id,
+                    'name': response.name,
+                    'coords': pos.coords
+                };
+                
+                $.post('/sessions', data, afterPost);
+            }
+        });
+    }
+    
     function addSessionData() {
         if ('geolocation' in navigator) {
-            FB.api('/me', function(response){
-                var data;
-                
-                if (response.error) {
-                    console.log(response.error)
-                } else {
-                    data = { 'fbId': response.id, 'name': response.name };
-                    $.post('/sessions', data, afterPost);
-                }
-            });
+            navigator.geolocation.watchPosition(afterWatching);
         }
     }
     

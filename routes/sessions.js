@@ -22,7 +22,9 @@ exports.post = function(request, response) {
             'fbId': request.body.fbId,
             'name': request.body.name,
             'beaconDuration': 0,
-            'beaconTimeSet': new Date()
+            'beaconTimeSet': new Date(),
+            'positionLat': request.body.coords.latitude,
+            'positionLng': request.body.coords.longitue
         };
         
         User.create(userData, function(err, user){
