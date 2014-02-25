@@ -1,6 +1,8 @@
 var FREE = FREE || {};
 
 FREE.InviteLink = (function(){
+    var fbFriends;
+    
     function sendInviteClicked() {
         var friendId = $(this).data('fb-id');
         
@@ -18,23 +20,58 @@ FREE.InviteLink = (function(){
         closeButton.registerEventHandlers();
     }
     
-    function getFbFriendsHtml(fbFriends, $inviteFlyout) {
+    function getFbFriendsHtml(fbFriends, $searchResultsHolder) {
         $.get('/fbFriends', {'fbFriends': fbFriends}, function(data){
-            $inviteFlyout.html(data);
-            $inviteFlyout.show();
+            $searchResultsHolder.html(data);
             $('.send-invite-link').click(sendInviteClicked);
-            addCloseHandler();
         });
     }
     
+    function sanitizeString(str) {
+        return str.replace(/[^A-Za-z]/g, '');
+    }
+    
+    function searchTyped() {
+        var searchText,
+            searchRegexp,
+            searchResults;
+        
+        searchText = $.trim($('input[name="fbFriends-search"]').val());
+        if (!searchText) return;
+        
+        searchRegexp = new RegExp('^' + sanitizeString(searchText), 'i');
+        
+        searchResults = $.grep(fbFriends, function(friend){
+            return sanitizeString(friend.name).search(searchRegexp) !== -1;
+        });
+        
+        getFbFriendsHtml(searchResults, $('.search-results-holder'));
+    }
+    
     function inviteClicked() {
-        var $inviteFlyout = $(this).parent().siblings('.invite-flyout');
+        var $inviteFlyout,
+            flyoutHtml;
+        
+        $inviteFlyout = $(this).parent().siblings('.invite-flyout');
         
         FB.api('/me/friends', function(response){    
             if (response.error) {
                 console.log(response.error);
             } else {
-                getFbFriendsHtml(response.data, $inviteFlyout);
+                flyoutHtml = '<button class="close-btn" type="button">' +
+                    '<span class="glyphicon glyphicon-remove"></span> ' +
+                        'close</button>' +
+                    '<input type="search" role="search" ' +
+                        'name="fbFriends-search">' +
+                    '<div class="search-results-holder"></div>';
+                
+                fbFriends = response.data;
+                
+                $inviteFlyout.html(flyoutHtml);
+                $inviteFlyout.show();
+                addCloseHandler();
+                
+                $('input[name="fbFriends-search"]').keyup(searchTyped);
             }
         });
     }
@@ -44,7 +81,7 @@ FREE.InviteLink = (function(){
     }
     
     return {
-        'init': function(){},
+        'init': $.noop,
         'registerEventHandlers': registerEventHandlers
     }
 })();

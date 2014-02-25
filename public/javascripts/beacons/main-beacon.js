@@ -14,7 +14,7 @@ FREE.MainBeacon = (function(){
     }
     
     return {
-        'init': function(){},
+        'init': $.noop,
         'run': run
     };
 })();

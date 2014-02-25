@@ -39,7 +39,7 @@ FREE.Countdowner = (function(){
     }
     
     return {
-        'init': function(){},
+        'init': $.noop,
         'countdown': countdown,
         'stop': stop
     };

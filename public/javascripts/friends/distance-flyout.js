@@ -17,7 +17,7 @@ FREE.DistanceFlyout = (function(){
     }
     
     return {
-		'init': function(){},
+		'init': $.noop,
 		'registerEventHandlers': registerEventHandlers
 	};
 })();

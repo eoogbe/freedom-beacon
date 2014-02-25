@@ -1,4 +1,4 @@
-<button class="close-btn" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+{{#if fbFriends}}
 <ul>
     {{#each fbFriends}}
     <li>
@@ -6,3 +6,6 @@
     </li>
     {{/each}}
 </ul>
+{{else}}
+No matches found.
+{{/if}}

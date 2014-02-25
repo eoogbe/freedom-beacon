@@ -14,7 +14,7 @@ FREE.Url = (function(){
     }
     
     return {
-        'init': function(){},
+        'init': $.noop,
         'redirect': redirect,
         'getPathname': getPathname,
         'goBack': goBack

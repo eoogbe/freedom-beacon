@@ -42,7 +42,7 @@ exports.index = function(request, response) {
         var distance = Distance.calculate(user, curUser);
         var typeIdx = getDistanceType(distance);
         
-        return copy(Distance.type[typeIdx]);
+        return copy(Distance.types[typeIdx]);
     }
     
     function getUser(data, curUser) {

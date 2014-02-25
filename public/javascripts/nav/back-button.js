@@ -14,7 +14,7 @@ FREE.BackButton = (function(){
     }
     
     return {
-        'init': function(){},
+        'init': $.noop,
         'registerEventHandlers': registerEventHandlers
     };
 })();

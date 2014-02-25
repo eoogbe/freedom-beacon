@@ -99,7 +99,7 @@ FREE.FriendsList = (function(){
 	}
 	
     return {
-		'init': function(){},
+		'init': $.noop,
 		'loadFriends': loadFriends
 	};
 })();
