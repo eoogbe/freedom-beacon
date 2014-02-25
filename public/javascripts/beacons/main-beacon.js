@@ -2,7 +2,9 @@ var FREE = FREE || {};
 
 FREE.MainBeacon = (function(){
     function deleteBeacon() {
-        $.get('/beacons/create');
+        $.get('/beacons/delete', function(data){
+            $('form[name="main-timer-form"]').html(data);
+        });
     }
     
     function run() {

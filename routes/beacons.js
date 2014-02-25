@@ -59,6 +59,10 @@ exports.post = function(request, response) {
   }
 };
 
+exports.delete = function(request, response) {
+  response.render('main-beacon', {'layout': false});
+};
+
 exports.show = function(request, response, next) {
 	User.findById(request.session.userId).exec(afterQuery);
 
