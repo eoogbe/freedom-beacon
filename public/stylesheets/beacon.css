@@ -117,12 +117,57 @@ button[name="distance-btn"] {
 	padding: 0.5em;
 }
 
-button[name="close-btn"] {
-	float: right;
-}
-
 button[name="login"] {
 	margin: auto auto;
+	background-color: #4c66a4;
+	color: #fff;
+	border: 0.1em solid #ccc;
+	font-weight: bold;
+}
+
+button[name="login"]:hover,
+button[name="login"]:active {
+	color: #fff;
+	background-color: #5471b5;
+}
+
+input[name="main-timer"] {
+	width: 3em;
+}
+
+.disabled-timer {
+	background-color: #fff;
+	border: none;
+}
+
+.illuminate {
+	background-color: #3E82BD;
+}
+
+.illuminate:hover,
+.illuminate:active {
+	color: #444;
+}
+
+.close-btn {
+	background: none;
+	color: #444;
+	border: none;
+}
+
+.invite-link {
+	padding: 0;
+}
+
+.invite-flyout {
+	width: 15em;
+	height: 28em;
+	margin-top: -9em;
+	margin-left: -7.5em;
+}
+
+input[name="fbFriends-search"] {
+	margin: 0.3em;
 }
 
 /*

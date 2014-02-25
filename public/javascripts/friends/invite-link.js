@@ -58,9 +58,9 @@ FREE.InviteLink = (function(){
             if (response.error) {
                 console.log(response.error);
             } else {
-                flyoutHtml = '<button class="close-btn" type="button">' +
+                flyoutHtml = '<div class="clearfix"><button class="close-btn pull-right" type="button">' +
                     '<span class="glyphicon glyphicon-remove"></span> ' +
-                        'close</button>' +
+                        'close</button></div>' +
                     '<input type="search" role="search" ' +
                         'name="fbFriends-search">' +
                     '<div class="search-results-holder"></div>';

@@ -2,7 +2,7 @@ var FREE = FREE || {};
 
 FREE.CloseButton = (function(){
     function closeClicked() {
-		$(this).parent().hide();
+		$(this).parents('.flyout').hide();
 	}
 	
     function registerEventHandlers() {
