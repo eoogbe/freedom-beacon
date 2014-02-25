@@ -170,6 +170,12 @@ input[name="fbFriends-search"] {
 	margin: 0.3em;
 }
 
+.fbFriends-list {
+	overflow: auto;
+	width: 14.7em;
+	height: 23.7em;
+}
+
 /*
  * Turns off Chrome's spinners for the number input.
  * Taken from http://css-tricks.com/snippets/css/turn-off-number-input-spinners/
