@@ -9,11 +9,16 @@ $(document).ready(function() {
  * Function that is called when the document is ready.
  */
 function initializePage() {
-	var mainBeacon;
+	var mainBeacon,
+		inviteLink;
 	
 	FREE.Facebook.init();
 	
 	mainBeacon = FREE.MainBeacon;
 	mainBeacon.init();
 	mainBeacon.run();
+	
+	inviteLink = FREE.InviteLink;
+	inviteLink.init();
+	inviteLink.registerEventHandlers();
 }
