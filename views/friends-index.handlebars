@@ -5,7 +5,11 @@
             {{#each freeFriends}}
             <tr>
                 {{> favorite-button this}}
-                <td>{{name}}</td>
+                <td class="friend-name">{{name}}</td>
+                <td><a href="https://facebook.com/messages/{{fbUsername}}">Message</a></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
                 {{#with distance}}
                 <td>
                     <button class="distance-link btn btn-link" type="button">{{name}} distance</button>
@@ -18,7 +22,6 @@
                 </td>
                 {{/with}}
                 <td>{{time}} min left</td>
-                <td><a href="https://m.facebook.com/messages/{{fbUsername}}">Send a message</a></td>
             </tr>
             {{/each}}
         </table>

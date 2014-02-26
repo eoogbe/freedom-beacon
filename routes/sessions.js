@@ -24,7 +24,7 @@ exports.post = function(request, response) {
             'beaconDuration': 0,
             'beaconTimeSet': new Date(),
             'positionLat': request.body.coords.latitude,
-            'positionLng': request.body.coords.longitue
+            'positionLng': request.body.coords.longitude
         };
         
         User.create(userData, function(err, user){

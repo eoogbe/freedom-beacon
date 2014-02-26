@@ -3,7 +3,7 @@
  * couldn't think of a good place to put it.
  */
 
-var EARTH_RADIUS = 3961;
+var EARTH_RADIUS = 3961.0;
 
 // Uses the Haversine Formula to calculate the distance between two
 // coordinates. Taken from http://andrew.hedges.name/experiments/haversine/
@@ -33,12 +33,8 @@ exports.calculate = function(user1, user2){
 
 exports.types = [
     {
-        'name': 'shouting',
-        'description': 'Shouting distance is less than 0.1 miles away'
-    },
-    {
         'name': 'walking',
-        'description': 'Walking distance is between 1.0 and 0.1 miles away.'
+        'description': 'Walking distance is less than 1.0 miles away.'
     },
     {
         'name': 'biking',

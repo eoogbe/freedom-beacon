@@ -83,7 +83,6 @@ exports.index = function(request, response) {
         
         for (var i = 0; i < users.length; ++i) {
             user = getUser(users[i], curUser);
-            console.log(user);
             usersData.push(user);
         }
         

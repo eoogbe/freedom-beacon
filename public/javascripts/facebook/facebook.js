@@ -39,7 +39,7 @@ FREE.Facebook = (function(){
             } else {
                 FB.login(function(response){
                     if (response.authResponse) addSessionData();
-                });
+                }, {'scope': 'read_mailbox'});
             }
         });
     }
