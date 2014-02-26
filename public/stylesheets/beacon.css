@@ -66,10 +66,6 @@ h1 > small {
 	margin: 0;
 }
 
-.readonly {
-	border: none;
-}
-
 input[name="header-timer"] {
 	font-size: 1.7em;
 }
@@ -110,8 +106,8 @@ button[name="distance-btn"] {
 }
 
 .distance-flyout {
-	width: 30em;
-	height: 4em;
+	width: 25em;
+	height: 5em;
 	margin-left: -15em;
 	margin-top: -2em;
 	padding: 0.5em;
@@ -132,7 +128,7 @@ button[name="login"]:active {
 }
 
 input[name="main-timer"] {
-	width: 3em;
+	width: 4em;
 }
 
 .disabled-timer {
@@ -147,6 +143,11 @@ input[name="main-timer"] {
 .illuminate:hover,
 .illuminate:active {
 	color: #444;
+}
+
+.deactivate {
+	border: 0.1em solid #ccc;
+	background-color: #ddd;
 }
 
 .close-btn {

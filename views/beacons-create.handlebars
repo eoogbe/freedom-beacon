@@ -5,12 +5,16 @@
 
 <main role="main" class="container">
   <form name="main-timer-form" class="group-end" action="/beacons" method="post">
-      <label class="timer-label group-end">
-          I am free for
-          <input type="{{timerType}}" max="60" min="1" value="{{timerValue}}" name="main-timer" data-min="{{userTime}}" data-sec="0" class="{{timerClass}}" {{timerProp}}>
-          minutes
-      </label>
-      <button type="submit" class="btn btn-lg beacon-btn {{beaconAction}}">{{beaconAction}} beacon</button>
+      {{#if isDeactivated}}
+          {{> main-beacon this}}
+      {{else}}
+          <label class="timer-label group-end">
+              I am free for
+              <input type="text" max="60" min="1" value="{{userTime}}:00" name="main-timer" data-min="{{userTime}}" data-sec="0" class="disabled-timer" disabled>
+              minutes
+          </label>
+          <button type="submit" class="btn btn-lg beacon-btn deactivate">No longer free</button>
+      {{/if}}
   </form>
   
   <div class="friends"></div>

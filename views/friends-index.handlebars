@@ -5,7 +5,7 @@
             {{#each freeFriends}}
             <tr>
                 {{> favorite-button this}}
-                <td><a href="https://facebook.com/messages/{{fbUsername}}">{{name}}</a></td>
+                <td>{{name}}</td>
                 {{#with distance}}
                 <td>
                     <button class="distance-link btn btn-link" type="button">{{name}} distance</button>
@@ -18,9 +18,12 @@
                 </td>
                 {{/with}}
                 <td>{{time}} min left</td>
+                <td><a href="https://m.facebook.com/messages/{{fbUsername}}">Send a message</a></td>
             </tr>
             {{/each}}
         </table>
+        <button class="invite-link btn btn-link" type="button">Invite more friends</button>
+        <div class="invite-flyout flyout"></div>
     {{else}}
         <p>None of your Facebook friends are free.</p>
         <p>Would you like to <button class="invite-link btn btn-link" type="button">invite more friends</button>?</p>

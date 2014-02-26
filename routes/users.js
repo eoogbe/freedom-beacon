@@ -45,6 +45,14 @@ exports.index = function(request, response) {
         return copy(Distance.types[typeIdx]);
     }
     
+    function objectIdArrayContains(arr, id) {
+        for (var i = 0; i < arr.length; ++i) {
+            if (arr[i].equals(id)) return true;
+        }
+        
+        return false;
+    }
+    
     function getUser(data, curUser) {
         if (data.isFree()) {
             return {
@@ -54,7 +62,7 @@ exports.index = function(request, response) {
                 'distance': getDistance(data, curUser),
                 'time': data.getTimeLeft(),
                 'isFree': true,
-                'isFavorite': curUser.favorites.indexOf(data._id) != -1
+                'isFavorite': objectIdArrayContains(curUser.favorites, data._id)
             };
         } else {
             return {
@@ -62,7 +70,7 @@ exports.index = function(request, response) {
                 'name': data.name,
                 'fbId': data.fbId,
                 'isFree': false,
-                'isFavorite': curUser.favorites.indexOf(data._id) != -1
+                'isFavorite': objectIdArrayContains(curUser.favorites, data._id)
             };
         }
     }
@@ -75,6 +83,7 @@ exports.index = function(request, response) {
         
         for (var i = 0; i < users.length; ++i) {
             user = getUser(users[i], curUser);
+            console.log(user);
             usersData.push(user);
         }
         

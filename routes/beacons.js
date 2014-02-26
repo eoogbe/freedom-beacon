@@ -13,22 +13,15 @@ exports.create = function(request, response) {
   
   function getIlluminatedBeaconData(timeLeft) {
     return {
-      'beaconAction': 'deactivate',
-      'userTime': timeLeft,
-      'timerType': 'text',
-      'timerValue': timeLeft + ':00',
-      'timerClass': 'disabled-timer',
-      'timerProp': 'disabled'
+      'isDeactivated': false,
+      'userTime': timeLeft
     };
   }
   
   function getDeactivatedBeaconData() {
     return {
-      'beaconAction': 'illuminate',
-      'userTime': '30',
-      'timerType': 'number',
-      'timerValue': '30',
-      'timerProp': 'autofocus'
+      'isDeactivated': true,
+      'timerValue': '30'
     };
   }
   
@@ -60,7 +53,10 @@ exports.post = function(request, response) {
 };
 
 exports.delete = function(request, response) {
-  response.render('main-beacon', {'layout': false});
+  response.render('partials/main-beacon', {
+    'layout': false,
+    'timerValue': '0'
+  });
 };
 
 exports.show = function(request, response, next) {
