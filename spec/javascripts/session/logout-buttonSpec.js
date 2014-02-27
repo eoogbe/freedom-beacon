@@ -1,26 +1,24 @@
 describe('LogoutButton', function(){
     describe('registerEventHandlers()', function(){
-        var logoutButton;
-        
         beforeEach(function(){    
-            loadFixtures('session/logout-button.html');
+            setFixtures('<button name="logout" type="button">Logout</button>');
             
             FB = jasmine.createSpyObj('FB', ['logout']);
             spyOn(FREE.Url, 'redirect');
             
-            logoutButton = FREE.LogoutButton;
-            logoutButton.init();
+            this.logoutButton = FREE.LogoutButton;
+            this.logoutButton.init();
         });
         
         it('should log out of Facebook', function(){
-            logoutButton.registerEventHandlers();
+            this.logoutButton.registerEventHandlers();
             $('button[name="logout"]').click();
             expect(FB.logout).toHaveBeenCalled();
         });
         
         it('should redirect to the homepage', function(){
             spyOn(FREE.Url, 'init');
-            logoutButton.registerEventHandlers();
+            this.logoutButton.registerEventHandlers();
             
             $('button[name="logout"]').click();
             

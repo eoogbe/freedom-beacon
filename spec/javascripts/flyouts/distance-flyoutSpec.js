@@ -1,10 +1,12 @@
 describe('DistanceFlyout', function(){
     describe('registerEventHandlers()', function(){
         beforeEach(function(){
+            var distanceFlyout;
+            
             loadFixtures('flyouts/distance-flyout.html');
             setStyleFixtures('.distance-flyout {display: none}');
             
-            var distanceFlyout = FREE.DistanceFlyout;
+            distanceFlyout = FREE.DistanceFlyout;
             distanceFlyout.init();
             distanceFlyout.registerEventHandlers();
         })

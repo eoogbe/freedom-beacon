@@ -1,10 +1,8 @@
 describe('FavoriteButton', function(){
     describe('registerEventHandlers()', function(){
-        var favoritesButton;
-        
         beforeEach(function(){
-            favoriteButton = FREE.FavoriteButton;
-            favoriteButton.init();
+            this.favoriteButton = FREE.FavoriteButton;
+            this.favoriteButton.init();
         });
         
         describe('when favoriting', function(){
@@ -20,7 +18,7 @@ describe('FavoriteButton', function(){
                     done();
                 });
                 
-                favoriteButton.registerEventHandlers();
+                this.favoriteButton.registerEventHandlers();
                 $('.favorite-btn').click();
                 
                 expect(jQuery.post).toHaveBeenCalled();
@@ -31,7 +29,7 @@ describe('FavoriteButton', function(){
                     done();
                 });
                 
-                favoriteButton.registerEventHandlers();
+                this.favoriteButton.registerEventHandlers();
                 $('.favorite-btn').click();
                 
                 expect($('.favorite-btn')).not.toExist();
@@ -52,7 +50,7 @@ describe('FavoriteButton', function(){
                     done();
                 });
                 
-                favoriteButton.registerEventHandlers();
+                this.favoriteButton.registerEventHandlers();
                 $('.unfavorite-btn').click();
                 
                 expect(jQuery.post).toHaveBeenCalled();
@@ -63,7 +61,7 @@ describe('FavoriteButton', function(){
                     done();
                 });
                 
-                favoriteButton.registerEventHandlers();
+                this.favoriteButton.registerEventHandlers();
                 $('.unfavorite-btn').click();
                 
                 expect($('.unfavorite-btn')).not.toExist();

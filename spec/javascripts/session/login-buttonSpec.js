@@ -1,21 +1,18 @@
 describe('LoginButton', function(){
-    var loginButton;
-    
     beforeEach(function(){
-        loginButton = FREE.LoginButton;
+        setFixtures('<button name="login" type="button" disabled>Login</button>');
+        this.loginButton = FREE.LoginButton;
     });
     
     describe('init()', function(){
         it('should enable the button', function(){
-            loginButton.init();
+            this.loginButton.init();
             expect($('button[name="login"]')).not.toBeDisabled();
         });
     });
     
     describe('registerEventHandlers()', function(){    
         beforeEach(function(){
-            loadFixtures('session/login-button.html');
-            
             FB = jasmine.createSpyObj(FB, ['getLoginStatus', 'login', 'api']);
             FB.api.and.callFake(function(url, fn){
                 fn({'id': 1, 'name': 'user'});
@@ -30,7 +27,7 @@ describe('LoginButton', function(){
             });
             
             spyOn(FREE.Url, 'redirect');
-            loginButton.init();
+            this.loginButton.init();
         });
         
         describe('when logged in', function(){
@@ -41,7 +38,7 @@ describe('LoginButton', function(){
             });
             
             it('should watch the position', function(){
-                loginButton.registerEventHandlers();
+                this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
                 expect(navigator.geolocation.watchPosition).toHaveBeenCalled();
             });
@@ -52,7 +49,7 @@ describe('LoginButton', function(){
                     fn({'id': 1, 'name': 'user'});
                 });
                 
-                loginButton.registerEventHandlers();
+                this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
                 expect(FB.api).toHaveBeenCalled();
             });
@@ -65,14 +62,14 @@ describe('LoginButton', function(){
                     done();
                 });
                 
-                loginButton.registerEventHandlers();
+                this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
                 expect(jQuery.post).toHaveBeenCalled();
             });
             
             it('should redirect to the /beacons/create', function(){
                 spyOn(FREE.Url, 'init');
-                loginButton.registerEventHandlers();
+                this.loginButton.registerEventHandlers();
                 
                 $('button[name="login"]').click();
                 
@@ -98,13 +95,13 @@ describe('LoginButton', function(){
                     fn({'authResponse': true});
                 });
                 
-                loginButton.registerEventHandlers();
+                this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
                 expect(FB.login).toHaveBeenCalled();
             });
             
             it('should watch the position', function(){
-                loginButton.registerEventHandlers();
+                this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
                 expect(navigator.geolocation.watchPosition).toHaveBeenCalled();
             });
@@ -115,7 +112,7 @@ describe('LoginButton', function(){
                     fn({'id': 1, 'name': 'user'});
                 });
                 
-                loginButton.registerEventHandlers();
+                this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
                 expect(FB.api).toHaveBeenCalled();
             });
@@ -128,14 +125,14 @@ describe('LoginButton', function(){
                     done();
                 });
                 
-                loginButton.registerEventHandlers();
+                this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
                 expect(jQuery.post).toHaveBeenCalled();
             });
             
             it('should redirect to the /beacons/create', function(){
                 spyOn(FREE.Url, 'init');
-                loginButton.registerEventHandlers();
+                this.loginButton.registerEventHandlers();
                 
                 $('button[name="login"]').click();
                 

@@ -1,31 +1,28 @@
 describe('FriendsList', function(){
     describe('loadFriends()', function(){
-        var friendsList;
-        var fbFriends;
-        var usersData;
         var friendsHtml;
         
         beforeEach(function(){
-            loadFixtures('friends/friends-list.html');
+            setFixtures(sandbox({'class': 'friends'}));
             setStyleFixtures('.friends {display: none}');
-            
-            fbFriends = [
-                {'id': 1, 'username': 'uname1'},
-                {'id': 2, 'username': 'uname2'},
-                {'id': 3, 'username': 'uname3'},
-                {'id': 5, 'username': 'uname5'},
-                {'id': 6, 'username': 'uname6'}
-            ];
             
             FB = jasmine.createSpyObj('FB', ['api']);
             FB.api.and.callFake(function(path, done){
-                done({'data': fbFriends});
+                if (path === '/me/friends?fields=id,name,username') {
+                    done({'data': 'fbFriends'});
+                } else if (path === '/me/inbox') {
+                    done({'data': 'threads'});
+                }
             });
             
-            usersData = getJSONFixture('users.json');
-            
             spyOn(jQuery, 'getJSON').and.callFake(function(url, data, done){
-                done(usersData);
+                done({'users': 'users'});
+            });
+            
+            spyOn(FREE.FriendsFinder, 'init');
+            spyOn(FREE.FriendsFinder, 'findFriends').and.returnValue({
+                'freeFriends': ['friend1'],
+                'offlineFriends': ['friend2']
             });
             
             friendsHtml = '<table class="free"><tr><td>user1</td></tr></table>'+
@@ -35,131 +32,88 @@ describe('FriendsList', function(){
                 done(friendsHtml);
             });
             
-            spyOn(FREE.DistanceFlyout, 'init');
             spyOn(FREE.DistanceFlyout, 'registerEventHandlers');
-            
-            spyOn(FREE.FavoriteButton, 'init');
             spyOn(FREE.FavoriteButton, 'registerEventHandlers');
-            
-            spyOn(FREE.InviteLink, 'init');
             spyOn(FREE.InviteLink, 'registerEventHandlers');
             
-            friendsList = FREE.FriendsList;
-            friendsList.init();
+            this.friendsList = FREE.FriendsList;
+            this.friendsList.init();
         });
         
         it('should get the Facebook friends', function(){
-            FB.api.and.callFake(function(path, done){
-                expect(path).toBe('/me/friends?fields=id,name,username');
-                done({'data': fbFriends});
-            });
-            
-            friendsList.loadFriends();
-            
-            expect(FB.api).toHaveBeenCalled();
+            this.friendsList.loadFriends();
+            expect(FB.api.calls.argsFor(0)[0])
+                .toBe('/me/friends?fields=id,name,username');
+        });
+        
+        it('should add the thread ids', function(){
+            this.friendsList.loadFriends();
+            expect(FB.api.calls.argsFor(1)[0]).toBe('/me/inbox');
         });
         
         it('should get all the users', function(){
             jQuery.getJSON.and.callFake(function(url, data, done){
                 expect(url).toBe('/users');
                 expect(data).toEqual({'requestor': 'jquery'});
-                done(usersData);
+                
+                done('users');
             });
             
-            friendsList.loadFriends();
+            this.friendsList.loadFriends();
             
             expect(jQuery.getJSON).toHaveBeenCalled();
         });
         
-        it('should post the friend data to /friends', function(){
+        it('should get the friend html from /friends', function(){
             jQuery.get.and.callFake(function(url, data, done){
                 expect(url).toBe('/friends');
                 done(friendsHtml);
             });
             
-            friendsList.loadFriends();
+            this.friendsList.loadFriends();
             
             expect(jQuery.get).toHaveBeenCalled();
         });
         
-        it('should split the friend data for /friends into free and offline friends', function(){
-            jQuery.get.and.callFake(function(url, data, done){
-                expect(data.freeFriends.length).toBe(2);
-                expect(data.offlineFriends.length).toBe(2);
-                
-                done(friendsHtml);
-            });
+        it('should find the friends', function(){
+            this.friendsList.loadFriends();
             
-            friendsList.loadFriends();
-            
-            expect(jQuery.get).toHaveBeenCalled();
-        });
-        
-        it('should put the favorites before the unfavorites for /friends', function(){
-            jQuery.get.and.callFake(function(url, data, done){
-                expect(data.freeFriends[0].name).toBe('user2');
-                expect(data.freeFriends[1].name).toBe('user1');
-                
-                done(friendsHtml);
-            });
-            
-            friendsList.loadFriends();
-            
-            expect(jQuery.get).toHaveBeenCalled();
-        });
-        
-        it('should format the free friends data for /friends', function(){
-            jQuery.get.and.callFake(function(url, data, done){
-                var freeFriend = data.freeFriends[1];
-                expect(freeFriend.name).toBe('user1');
-                expect(freeFriend.fbUsername).toBe('uname1');
-                expect(freeFriend.distance).toEqual({'name': 'dist', 'description': 'desc'});
-                expect(freeFriend.time).toBe(5);
-                
-                done(friendsHtml);
-            });
-            
-            friendsList.loadFriends();
-            
-            expect(jQuery.get).toHaveBeenCalled();
-        });
-        
-        it('should format the offline friends data for /friends', function(){
-            jQuery.get.and.callFake(function(url, data, done){
-                expect(data.offlineFriends[0].name).toBe('user5');
-                expect(data.offlineFriends[1].name).toBe('user3');
-                
-                done(friendsHtml);
-            });
-            
-            friendsList.loadFriends();
-            
-            expect(jQuery.get).toHaveBeenCalled();
+            expect(FREE.FriendsFinder.init)
+                .toHaveBeenCalledWith('users', 'threads', 'fbFriends');
+            expect(FREE.FriendsFinder.findFriends).toHaveBeenCalled();
         });
         
         it('should register the distance flyout event handlers', function(){
-            friendsList.loadFriends();
+            spyOn(FREE.DistanceFlyout, 'init');
+            
+            this.friendsList.loadFriends();
             
             expect(FREE.DistanceFlyout.init).toHaveBeenCalled();
-            expect(FREE.DistanceFlyout.registerEventHandlers).toHaveBeenCalled();
+            expect(FREE.DistanceFlyout.registerEventHandlers)
+                .toHaveBeenCalled();
         });
         
         it('should register the favorite button handler', function(){
-            friendsList.loadFriends();
+            spyOn(FREE.FavoriteButton, 'init');
+            
+            this.friendsList.loadFriends();
             
             expect(FREE.FavoriteButton.init).toHaveBeenCalled();
-            expect(FREE.FavoriteButton.registerEventHandlers).toHaveBeenCalled();
+            expect(FREE.FavoriteButton.registerEventHandlers)
+                .toHaveBeenCalled();
         });
         
         it('should register the invite link handler', function(){
-            friendsList.loadFriends();
+            spyOn(FREE.InviteLink, 'init');
+            
+            this.friendsList.loadFriends();
             
             expect(FREE.InviteLink.init).toHaveBeenCalled();
             expect(FREE.InviteLink.registerEventHandlers).toHaveBeenCalled();
         });
         
         it('should load the lists of friends', function(){
-            friendsList.loadFriends();
+            this.friendsList.loadFriends();
             
             expect($('.free')).toBeVisible();
             expect($('.offline')).toBeVisible();

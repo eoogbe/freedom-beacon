@@ -1,18 +1,18 @@
 describe('MainBeacon', function(){
     describe('run()', function(){
+        beforeEach(function(){
+            this.mainBeacon = FREE.MainBeacon
+            this.mainBeacon.init();
+        });
+        
         describe('when illuminated', function(){
-            var mainBeacon;
-            
             beforeEach(function(){
-                loadFixtures('beacons/illuminated-main-beacon.html');
-                
-                mainBeacon = FREE.MainBeacon
-                mainBeacon.init();
+                loadFixtures('beacons/illuminated-main-beacon.html');    
             });
             
             it('should start a countdown', function(){
                 spyOn(FREE.Countdowner, 'countdown');
-                mainBeacon.run();
+                this.mainBeacon.run();
                 expect(FREE.Countdowner.countdown).toHaveBeenCalled();
             });
             
@@ -26,7 +26,7 @@ describe('MainBeacon', function(){
                         expect(path).toBe('/beacons/delete');
                     });
                     
-                    mainBeacon.run();
+                    this.mainBeacon.run();
                     
                     expect(jQuery.get).toHaveBeenCalled();
                 });
@@ -37,10 +37,8 @@ describe('MainBeacon', function(){
             it('should not start a countdown', function(){
                 loadFixtures('beacons/deactivated-main-beacon.html');
                 spyOn(FREE.Countdowner, 'countdown');
-                    
-                var mainBeacon = FREE.MainBeacon
-                mainBeacon.init();
-                mainBeacon.run();
+                
+                this.mainBeacon.run();
                 
                 expect(FREE.Countdowner.countdown).not.toHaveBeenCalled();
             });

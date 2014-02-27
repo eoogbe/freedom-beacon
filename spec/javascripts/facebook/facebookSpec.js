@@ -1,6 +1,4 @@
 describe('Facebook', function(){
-    var facebook;
-    
     beforeEach(function(){
         FB = jasmine.createSpyObj('FB', ['init', 'api', 'login', 'logout', 'getLoginStatus']);
         
@@ -8,19 +6,19 @@ describe('Facebook', function(){
             done();
         });
         
-        facebook = FREE.Facebook;
+        this.facebook = FREE.Facebook;
     });
     
     describe('init()', function(){
         beforeEach(function(){
-            loadFixtures('facebook/init.html');
+            setFixtures('<input type="hidden" name="app-id" value="_5">');
             
             spyOn(FREE.LoginButton, 'registerEventHandlers');
             spyOn(FREE.LogoutButton, 'registerEventHandlers');
         });
         
         it('should initialize Facebook', function(){
-            facebook.init();
+            this.facebook.init();
             
             expect(FB.init).toHaveBeenCalledWith({
                 'appId': '5',
@@ -36,7 +34,7 @@ describe('Facebook', function(){
                 done();
             });
             
-            facebook.init();
+            this.facebook.init();
             
             expect(jQuery.getScript).toHaveBeenCalled();
         });
@@ -44,7 +42,7 @@ describe('Facebook', function(){
         it('should register the login button', function(){
             spyOn(FREE.LoginButton, 'init');
             
-            facebook.init();
+            this.facebook.init();
             
             expect(FREE.LoginButton.init).toHaveBeenCalled();
             expect(FREE.LoginButton.registerEventHandlers).toHaveBeenCalled();
@@ -53,7 +51,7 @@ describe('Facebook', function(){
         it('should register the logout button', function(){
             spyOn(FREE.LogoutButton, 'init');
             
-            facebook.init();
+            this.facebook.init();
             
             expect(FREE.LogoutButton.init).toHaveBeenCalled();
             expect(FREE.LogoutButton.registerEventHandlers).toHaveBeenCalled();
