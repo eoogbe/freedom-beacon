@@ -23,7 +23,12 @@ describe('sessions', function(){
             request =
             {
                 'session': {},
-                'body': {'fbId': '0', 'name': 'thename'}
+                'body':
+                {
+                    'fbId': '0',
+                    'name': 'thename',
+                    'coords': {'latitude': 1.0, 'longitude': 2.5}
+                }
             };
         });
         
@@ -67,6 +72,9 @@ describe('sessions', function(){
                     
                     expect(data.beaconTimeSet).toBeDefined();
                     expect(data.beaconDuration).toBe(0);
+                    
+                    expect(data.positionLat).toBe(1.0);
+                    expect(data.positionLng).toBe(2.5);
                     
                     done(null, {'_id': helper.ids.user0});
                 }); 

@@ -62,24 +62,12 @@ describe('beacons', function(){
                 beacons.create(request, response);
             });
             
-            it('should set the beacon action to illuminate', function(){
-                expect(response.data.beaconAction).toBe('illuminate');
-            });
-            
-            it('should default the user time to 30', function(){
-                expect(response.data.userTime).toBe('30');
+            it('should set isDeactivated to true', function(){
+                expect(response.data.isDeactivated).toBe(true);
             });
             
             it('should set the timer value to 30', function(){
                 expect(response.data.timerValue).toBe('30');
-            });
-            
-            it('should not have a timer class', function(){
-                expect(response.data.timerClass).toBeUndefined();
-            });
-            
-            it('should set the timer property to autofocus', function(){
-                expect(response.data.timerProp).toBe('autofocus');
             });
         });
         
@@ -96,24 +84,12 @@ describe('beacons', function(){
                 beacons.create(request, response);
             });
             
-            it('should set the beacon action to deactivate', function(){
-                expect(response.data.beaconAction).toBe('deactivate');
+            it('should set isDeactivated to false', function(){
+                expect(response.data.isDeactivated).toBe(false);
             });
             
             it('should set the user time to the time left', function(){
                 expect(response.data.userTime).toBe(5);
-            });
-            
-            it('should put both minutes and seconds in the timer value', function(){
-                expect(response.data.timerValue).toBe('5:00');
-            });
-            
-            it('should make the timer class disabled-timer', function(){
-                expect(response.data.timerClass).toBe('disabled-timer');
-            });
-            
-            it('should set the timer property to disabled', function(){
-                expect(response.data.timerProp).toBe('disabled');
             });
         });
     });
@@ -153,27 +129,21 @@ describe('beacons', function(){
         });
     });
     
-    describe('show()', function(){
-        var next;
-        
+    describe('delete()', function(){
         beforeEach(function(){
-            next = jasmine.createSpy('next');
-            spyOn(User, 'findById').andReturn({
-                'exec': function(done) {
-                    var user = { 'getTimeLeft': function() {return 1;} };
-                    done(null, user);
-                }
-            })
+            beacons.delete({}, response);
         });
         
-        it('should set response.locals.userTime to the minutes left for the current user', function(){
-            beacons.show(request, response, next);
-            expect(response.locals.userTime).toBe(1);
+        it('should render the main-beacon partial', function(){
+            expect(response.view).toBe('partials/main-beacon');
         });
         
-        it('should call next', function(){
-            beacons.show(request, response, next);
-            expect(next).toHaveBeenCalled();
+        it('should not render the layout', function(){
+            expect(response.data.layout).toBe(false);
+        });
+        
+        it('should set the timerValue to 0', function(){
+            expect(response.data.timerValue).toBe('0');
         });
     });
 });

@@ -19,7 +19,8 @@ describe('friends', function(){
                 'query':
                 {
                     'freeFriends': [ { 'name': 'friend1' } ],
-                    'offlineFriends': [ { 'name': 'friend2' } ]
+                    'offlineFriends': [ { 'name': 'friend2' } ],
+                    'hasFriends': 'true'
                 }
             };
         });
@@ -46,22 +47,27 @@ describe('friends', function(){
                 expect(response.data.offlineFriends).toBeDefined();
             });
             
-            it('should set hasFriends to a truthy value', function(){
+            it('should set hasFriends to true', function(){
                 friends.index(request, response);
-                expect(response.data.hasFriends).toBeTruthy();
+                expect(response.data.hasFriends).toBe(true);
             });
         });
         
         describe('when no friends', function(){
-            it('should set hasFriends to a falsy value', function(){
+            it('should set hasFriends to false', function(){
                 request =
                 {
-                    'query': {'freeFriends': [], 'offlineFriends': []}
+                    'query':
+                    {
+                        'freeFriends': [],
+                        'offlineFriends': [],
+                        'hasFriends': 'false'
+                    }
                 };
                 
                 friends.index(request, response);
                 
-                expect(response.data.hasFriends).toBeFalsy();
+                expect(response.data.hasFriends).toBe(false);
             });
         });
         

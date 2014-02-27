@@ -4,7 +4,9 @@ describe('users', function(){
             helper,
             users,
             mongoose,
+            ObjectId,
             User,
+            Distance,
             request,
             response,
             usersData;
@@ -13,9 +15,12 @@ describe('users', function(){
         helper = require('../spec-helper');
         users = require('../../../routes/users');
         mongoose = require('mongoose');
+        ObjectId = mongoose.Types.ObjectId;
         
         require('../../../models/User');
         User = mongoose.model('User');
+        
+        Distance = require('../../../models/Distance');
         
         beforeEach(function(){
             request =
@@ -30,7 +35,10 @@ describe('users', function(){
                 'exec': function(done){
                     var user =
                     {
-                        'favorites': [helper.ids.user2, helper.ids.user3]
+                        'favorites': [
+                            new ObjectId(helper.ids.user2),
+                            new ObjectId(helper.ids.user3)
+                        ]
                     };
                     
                     return done(null, user);
@@ -71,6 +79,9 @@ describe('users', function(){
             spyOn(User, 'find').andCallFake(function(conditions, done){
                 done(null, usersData);
             });
+            
+            spyOn(Distance, 'calculate').andReturn(1.0);
+            Distance.types = [{}, {'name': 'dist', 'description': 'desc'}];
         });
         
         it('should find the current user\'s favorites', function(){
@@ -81,13 +92,20 @@ describe('users', function(){
                     'exec': function(done){
                         var user =
                         {
-                            'favorites': [helper.ids.user2, helper.ids.user3]
+                            'favorites': [
+                                new ObjectId(helper.ids.user2),
+                                new ObjectId(helper.ids.user3)
+                            ]
                         };
                         
                         return done(null, user);
                     }
                 };
             });
+            
+            users.index(request, response);
+            
+            expect(User.findById).toHaveBeenCalled();
         });
         
         it('should find all the users', function(){
@@ -124,7 +142,7 @@ describe('users', function(){
             
             expect(usersJson[1].name).toBe('user2');
             expect(usersJson[1].fbId).toBe(2);
-            expect(usersJson[1].distance).toEqual({'name': 'dist2', 'description': 'desc2'});
+            expect(usersJson[1].distance).toEqual({'name': 'dist', 'description': 'desc'});
             expect(usersJson[1].time).toBe(5);
             expect(usersJson[1].isFree).toBe(true);
             expect(usersJson[1].isFavorite).toBe(true);

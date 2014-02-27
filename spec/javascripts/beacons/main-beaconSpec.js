@@ -22,13 +22,13 @@ describe('MainBeacon', function(){
                         done();
                     });
                     
-                    spyOn(jQuery, 'post').and.callFake(function(path){
+                    spyOn(jQuery, 'get').and.callFake(function(path){
                         expect(path).toBe('/beacons/delete');
                     });
                     
                     mainBeacon.run();
                     
-                    expect(jQuery.post).toHaveBeenCalled();
+                    expect(jQuery.get).toHaveBeenCalled();
                 });
             });
         })

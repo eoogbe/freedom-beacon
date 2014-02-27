@@ -7,7 +7,7 @@ describe('InviteLink', function(){
         beforeEach(function(){
             loadFixtures('friends/invite-link.html');
             
-            fbFriends = [ { 'id': 1, 'name': 'friend1' } ];
+            fbFriends = {'data': [ { 'id': 1, 'name': 'friend1' } ]};
             fbFriendsHtml = readFixtures('friends/invite-flyout.html');
             
             FB = jasmine.createSpyObj('FB', ['api', 'ui']);
@@ -37,31 +37,36 @@ describe('InviteLink', function(){
             expect(FB.api).toHaveBeenCalled();
         });
         
-        it('should get the formatted list of Facebook friends from /fbFriends', function(){
-            jQuery.get.and.callFake(function(url, data, done){
-                expect(url).toBe('/fbFriends');
-                expect(data).toEqual({'fbFriends': fbFriends});
-                
-                done(fbFriendsHtml);
-            });
-            
+        it('should add the Facebook friends search flyout', function(){
             inviteLink.registerEventHandlers();
             $('.invite-link').click();
             
-            expect(jQuery.get).toHaveBeenCalled();
+            expect($('.invite-flyout')).toBeVisible();
         });
         
-        it('should add the Facebook friends flyout', function(){
+        it('should register the search typed keypress handler', function(){
             inviteLink.registerEventHandlers();
+            
             $('.invite-link').click();
             
-            expect($('.send-invite-link')).toBeVisible();
+            // Triggering the event won't set the value and vice versa
+            $('input[name="fbFriends-search"]').val('F');
+            var e = $.Event('keypress', {'keyCode': 70, 'which': 70});
+            $('input[name="fbFriends-search"]').trigger(e);
+            
+            expect($('.fbFriends-list')).toExist();
         });
         
-        it('should register the send invite link event handler', function(){
+        it('should register the send invite link click handler', function(){
             inviteLink.registerEventHandlers();
             
             $('.invite-link').click();
+            
+            // Triggering the event won't set the value and vice versa
+            $('input[name="fbFriends-search"]').val('F');
+            var e = $.Event('keypress', {'keyCode': 70, 'which': 70});
+            $('input[name="fbFriends-search"]').trigger(e);
+            
             $('.send-invite-link').click();
             
             expect(FB.ui).toHaveBeenCalledWith({

@@ -25,16 +25,14 @@ exports.index = function(request, response) {
         .exec(afterQuery);
     
     function getDistanceType(distance) {
-        if (distance < 0.1) {
+        if (distance < 1.0) {
             return 0;
-        } else if (distance < 1.0) {
-            return 1;
         } else if (distance < 3.0) {
-            return 2;
+            return 1;
         } else if (distance < 25.0) {
-            return 3;
+            return 2;
         } else {
-            return 4;
+            return 3;
         }
     }
     

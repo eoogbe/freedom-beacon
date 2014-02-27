@@ -19,12 +19,12 @@ describe('FriendsList', function(){
             
             FB = jasmine.createSpyObj('FB', ['api']);
             FB.api.and.callFake(function(path, done){
-                done(fbFriends);
+                done({'data': fbFriends});
             });
             
             usersData = getJSONFixture('users.json');
             
-            spyOn(jQuery, 'getJSON').and.callFake(function(url, done){
+            spyOn(jQuery, 'getJSON').and.callFake(function(url, data, done){
                 done(usersData);
             });
             
@@ -50,8 +50,8 @@ describe('FriendsList', function(){
         
         it('should get the Facebook friends', function(){
             FB.api.and.callFake(function(path, done){
-                expect(path).toBe('/me/friends');
-                done(fbFriends);
+                expect(path).toBe('/me/friends?fields=id,name,username');
+                done({'data': fbFriends});
             });
             
             friendsList.loadFriends();
@@ -60,8 +60,9 @@ describe('FriendsList', function(){
         });
         
         it('should get all the users', function(){
-            jQuery.getJSON.and.callFake(function(url, done){
+            jQuery.getJSON.and.callFake(function(url, data, done){
                 expect(url).toBe('/users');
+                expect(data).toEqual({'requestor': 'jquery'});
                 done(usersData);
             });
             
@@ -107,7 +108,7 @@ describe('FriendsList', function(){
             expect(jQuery.get).toHaveBeenCalled();
         });
         
-        it('should formate the free friends data for /friends', function(){
+        it('should format the free friends data for /friends', function(){
             jQuery.get.and.callFake(function(url, data, done){
                 var freeFriend = data.freeFriends[1];
                 expect(freeFriend.name).toBe('user1');

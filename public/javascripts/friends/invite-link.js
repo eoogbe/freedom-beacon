@@ -71,7 +71,7 @@ FREE.InviteLink = (function(){
                 $inviteFlyout.show();
                 addCloseHandler();
                 
-                $('input[name="fbFriends-search"]').keyup(searchTyped);
+                $('input[name="fbFriends-search"]').keypress(searchTyped);
             }
         });
     }

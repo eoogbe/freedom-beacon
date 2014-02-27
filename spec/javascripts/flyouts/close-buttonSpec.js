@@ -1,7 +1,7 @@
 describe('CloseButton', function(){
     describe('registerEventHandlers()', function(){
         it('should hide the flyout', function(){
-            loadFixtures('nav/close-button.html');
+            loadFixtures('flyouts/close-button.html');
             
             var closeButton = FREE.CloseButton;
             closeButton.init();
