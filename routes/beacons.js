@@ -20,11 +20,16 @@ function getBeaconData(user) {
   var timeLeft
     , data;
   
-  timeLeft = user.getTimeLeft();
+  if (user) {
+    timeLeft = user.getTimeLeft();
   
-  data = timeLeft > 0
-    ? getIlluminatedBeaconData(timeLeft)
-    : getDeactivatedBeaconData();
+    data = timeLeft > 0
+      ? getIlluminatedBeaconData(timeLeft)
+      : getDeactivatedBeaconData();
+  } else {
+    data = getDeactivatedBeaconData();
+    data.error = 'You have not logged in';
+  }
   
   data.isExperiment = true;
   return data;
