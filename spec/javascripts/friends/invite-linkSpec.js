@@ -6,12 +6,16 @@ describe('InviteLink', function(){
         beforeEach(function(){
             loadFixtures('friends/invite-link.html');
             
-            fbFriends = {'data': [ { 'id': 1, 'name': 'friend1' } ]};
+            fbFriends = [ { 'id': 1, 'name': 'friend1' } ];
             fbFriendsHtml = readFixtures('friends/invite-flyout.html');
             
             FB = jasmine.createSpyObj('FB', ['api', 'ui']);
             FB.api.and.callFake(function(path, done){
-                done(fbFriends);
+                done({'data': fbFriends});
+            });
+            
+            spyOn(jQuery, 'getJSON').and.callFake(function(url, data, done){
+                done({'fbFriends': fbFriends});
             });
             
             spyOn(jQuery, 'get').and.callFake(function(url, data, done){
@@ -24,16 +28,18 @@ describe('InviteLink', function(){
             this.inviteLink.init();
         });
         
-        it('should load the Facebook friends from Facebook', function(){
-            FB.api.and.callFake(function(path, done){
-                expect(path).toBe('/me/friends');
-                done(fbFriends);
+        it('should check if friends are stored', function(){
+            jQuery.getJSON.and.callFake(function(url, data, done){
+                expect(url).toBe('/fbFriends');
+                expect(data).toEqual({'format': 'json'});
+                
+                done({'fbFriends': fbFriends});
             });
             
             this.inviteLink.registerEventHandlers();
             $('.invite-link').click();
             
-            expect(FB.api).toHaveBeenCalled();
+            expect(jQuery.getJSON).toHaveBeenCalled();
         });
         
         it('should add the Facebook friends search flyout', function(){
@@ -103,6 +109,33 @@ describe('InviteLink', function(){
             $('.invite-link').click();
             
             expect(FREE.CloseButton.registerEventHandlers).toHaveBeenCalled();
+        });
+        
+        describe('when Facebook friends stored', function(){
+            it('should not load the Facebook friends from Facebook', function(){
+                this.inviteLink.registerEventHandlers();
+                $('.invite-link').click();
+                
+                expect(FB.api).not.toHaveBeenCalled();
+            });
+        })
+        
+        describe('when no Facebook friends stored', function(){
+            it('should load the Facebook friends from Facebook', function(){
+                jQuery.getJSON.and.callFake(function(url, data, done){
+                    done({});
+                });
+                
+                FB.api.and.callFake(function(path, done){
+                    expect(path).toBe('/me/friends');
+                    done(fbFriends);
+                });
+                
+                this.inviteLink.registerEventHandlers();
+                $('.invite-link').click();
+                
+                expect(FB.api).toHaveBeenCalled();
+            });
         });
     });
 });

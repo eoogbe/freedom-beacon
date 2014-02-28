@@ -34,12 +34,13 @@ describe('MainBeacon', function(){
         })
         
         describe('when deactivate', function(){
-            it('should not start a countdown', function(){
+            beforeEach(function(){
                 loadFixtures('beacons/deactivated-main-beacon.html');
+            });
+            
+            it('should not start a countdown', function(){
                 spyOn(FREE.Countdowner, 'countdown');
-                
                 this.mainBeacon.run();
-                
                 expect(FREE.Countdowner.countdown).not.toHaveBeenCalled();
             });
         })

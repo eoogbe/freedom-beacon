@@ -7,6 +7,8 @@ exports.index = function(request, response) {
         User;
     
     mongoose = require('mongoose');
+    
+    require('../models/User');
     User = mongoose.model('User');
     
     if (request.query.format === 'json') {
@@ -42,6 +44,8 @@ exports.post = function(request, response) {
         User;
     
     mongoose = require('mongoose');
+    
+    require('../models/User');
     User = mongoose.model('User');
     
     User.findById(request.session.userId)

@@ -3,5 +3,5 @@
  */
 
 exports.index = function(request, response) {
-  response.render('index', {'isSplash': 'isSplash'});
+  response.render('index');
 };

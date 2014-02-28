@@ -85,27 +85,8 @@ describe('users', function(){
         });
         
         it('should find the current user\'s favorites', function(){
-            User.findById.andCallFake(function(userId){
-                expect(userId).toBe(helper.ids.user0);
-                
-                return {
-                    'exec': function(done){
-                        var user =
-                        {
-                            'favorites': [
-                                new ObjectId(helper.ids.user2),
-                                new ObjectId(helper.ids.user3)
-                            ]
-                        };
-                        
-                        return done(null, user);
-                    }
-                };
-            });
-            
             users.index(request, response);
-            
-            expect(User.findById).toHaveBeenCalled();
+            expect(User.findById).toHaveBeenCalledWith(helper.ids.user0);
         });
         
         it('should find all the users', function(){

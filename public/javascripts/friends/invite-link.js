@@ -55,10 +55,7 @@ FREE.InviteLink = (function(){
     
     function loadFbFriends() {
         $.getJSON('/fbFriends', {'format': 'json'}, function(data){
-            if (data) {
-                fbFriends = data.fbFriends;
-                registerSearchHandler();
-            } else {
+            if ($.isEmptyObject(data)) {
                 FB.api('/me/friends', function(response){
                     if (response.error) {
                         console.log(response.error);
@@ -67,6 +64,9 @@ FREE.InviteLink = (function(){
                         registerSearchHandler();
                     }
                 });
+            } else {
+                fbFriends = data.fbFriends;
+                registerSearchHandler();
             }
         });
     }

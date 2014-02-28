@@ -6,7 +6,7 @@
 <main role="main" class="container">
   <form name="main-timer-form" class="group-end" action="/beacons" method="post">
       {{#if isDeactivated}}
-          {{> main-beacon this}}
+        {{> main-beacon this}}
       {{else}}
           <label class="timer-label group-end">
               I am free for
@@ -17,5 +17,7 @@
       {{/if}}
   </form>
   
-  <div class="friends"></div>
+  {{#unless isAlternate}}
+    <div class="friends"></div>
+  {{/unless}}
 </main>

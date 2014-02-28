@@ -69,10 +69,10 @@ FREE.FriendsList = (function(){
 		showFlash();
 		
 		$.getJSON('/fbFriends', {'format': 'json'}, function(data){
-			if (data) {
-				getUsers(data.fbFriends, data.threads);
-			} else {
+			if ($.isEmptyObject(data)) {
 				loadFbFriends();
+			} else {
+				getUsers(data.fbFriends, data.threads);
 			}
 		});
 	}

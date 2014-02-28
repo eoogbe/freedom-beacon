@@ -36,38 +36,23 @@ describe('favorites', function(){
     describe('post()', function(){
         beforeEach(function(){
             user.favorites = [];
+            favorites.post(request, response);
         });
         
         it('should get the current user', function(){
-            User.findById.andCallFake(function(id){
-                expect(id).toBe(helper.ids.user0);
-                
-                return {
-                    'exec': function(done) {
-                        done(null, user);
-                    }
-                };
-            });
-            
-            favorites.post(request, response);
-            
-            expect(User.findById).toHaveBeenCalled();
+            expect(User.findById).toHaveBeenCalledWith(helper.ids.user0);
         });
         
         it('should add a favorite', function(){
-            favorites.post(request, response);
-            
             expect(user.favorites.length).toBe(1);
             expect(user.favorites[0]).toEqual(helper.ids.user1);
         });
         
         it('should save the user', function(){
-            favorites.post(request, response);
             expect(user.save).toHaveBeenCalled();
         });
         
         it('should send a 200 status', function(){
-            favorites.post(request, response);
             expect(response.sent).toBe(200);
         });
     });
@@ -75,38 +60,23 @@ describe('favorites', function(){
     describe('delete()', function(){
         beforeEach(function(){
             user.favorites = [helper.ids.user1, helper.ids.user2];
+            favorites.delete(request, response);
         });
         
         it('should get the current user', function(){
-            User.findById.andCallFake(function(id){
-                expect(id).toBe(helper.ids.user0);
-                
-                return {
-                    'exec': function(done) {
-                        done(null, user);
-                    }
-                };
-            });
-            
-            favorites.delete(request, response);
-            
-            expect(User.findById).toHaveBeenCalled();
+            expect(User.findById).toHaveBeenCalledWith(helper.ids.user0);
         });
         
         it('should remove a favorite from the current user', function(){
-            favorites.delete(request, response);
-            
             expect(user.favorites.length).toBe(1);
             expect(user.favorites[0]).toEqual(helper.ids.user2);
         });
         
         it('should save the user', function(){
-            favorites.delete(request, response);
             expect(user.save).toHaveBeenCalled();
         });
         
-        it('should send a 200 status', function(){
-            favorites.delete(request, response);
+        it('should send a 200 status code', function(){
             expect(response.sent).toBe(200);
         });
     });

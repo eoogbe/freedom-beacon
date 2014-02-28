@@ -51,7 +51,7 @@ describe('sessions', function(){
                 expect(request.session.userId).toBe(helper.ids.user0);
             });
             
-            it('should send a response with status 200', function(){
+            it('should send a 200 status code', function(){
                 expect(response.sent).toBe(200);
             });
         });

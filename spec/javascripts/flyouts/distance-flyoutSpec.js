@@ -4,7 +4,7 @@ describe('DistanceFlyout', function(){
             var distanceFlyout;
             
             loadFixtures('flyouts/distance-flyout.html');
-            setStyleFixtures('.distance-flyout {display: none}');
+            setStyleFixtures('.distance-flyout {display: none;}');
             
             distanceFlyout = FREE.DistanceFlyout;
             distanceFlyout.init();

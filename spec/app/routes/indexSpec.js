@@ -15,9 +15,5 @@ describe('index', function(){
         it('should render the index view', function(){
             expect(response.view).toBe('index');
         });
-        
-        it('should not use the header', function(){
-            expect(response.data.isSplash).toBeTruthy();
-        });
     });
 });

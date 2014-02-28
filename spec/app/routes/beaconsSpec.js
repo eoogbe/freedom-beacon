@@ -38,18 +38,8 @@ describe('beacons', function(){
         });
         
         it('should find the current user', function(){
-            User.findById.andCallFake(function(userId){
-                expect(userId).toBe(helper.ids.user0);
-                
-                return {
-                    'exec': function(done) {
-                        done(null, user);
-                    }
-                };
-            });
-            
             beacons.create(request, response);
-            expect(User.findById).toHaveBeenCalled();
+            expect(User.findById).toHaveBeenCalledWith(helper.ids.user0);
         });
         
         it('should render the beacons-create view', function(){
@@ -91,6 +81,26 @@ describe('beacons', function(){
             it('should set the user time to the time left', function(){
                 expect(response.data.userTime).toBe(5);
             });
+        });
+    });
+    
+    describe('createAlt()', function(){
+        it('should set isAlternate', function(){
+            var user =
+            {
+                'fbId': 0,
+                'getTimeLeft': function(){return 0;}
+            };
+            
+            spyOn(User, 'findById').andReturn({
+                'exec': function(done) {
+                    done(null, user);
+                }
+            });
+            
+            beacons.createAlt(request, response);
+            
+            expect(response.data.isAlternate).toBe(true);
         });
     });
     

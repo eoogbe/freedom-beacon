@@ -3,8 +3,8 @@ describe('FriendsList', function(){
         var friendsHtml;
         
         beforeEach(function(){
-            setFixtures(sandbox({'class': 'friends'}));
-            setStyleFixtures('.friends {display: none}');
+            loadFixtures('friends/friends-list.html');
+            setStyleFixtures('.flash {display: none;} .friends {display: none;}');
             
             FB = jasmine.createSpyObj('FB', ['api']);
             FB.api.and.callFake(function(path, done){
@@ -16,7 +16,19 @@ describe('FriendsList', function(){
             });
             
             spyOn(jQuery, 'getJSON').and.callFake(function(url, data, done){
-                done({'users': 'users'});
+                var fbFriendData;
+                
+                if (url === '/fbFriends') {
+                    fbFriendsData =
+                    {
+                        'fbFriends': 'fbFriends',
+                        'threads': 'threads'
+                    };
+                    
+                    done(fbFriendsData);
+                } else if (url === '/users') {
+                    done({'users': 'users'});
+                }
             });
             
             spyOn(FREE.FriendsFinder, 'init');
@@ -40,28 +52,27 @@ describe('FriendsList', function(){
             this.friendsList.init();
         });
         
-        it('should get the Facebook friends', function(){
-            this.friendsList.loadFriends();
-            expect(FB.api.calls.argsFor(0)[0])
-                .toBe('/me/friends?fields=id,name,username');
-        });
-        
-        it('should add the thread ids', function(){
-            this.friendsList.loadFriends();
-            expect(FB.api.calls.argsFor(1)[0]).toBe('/me/inbox');
-        });
-        
         it('should get all the users', function(){
             jQuery.getJSON.and.callFake(function(url, data, done){
-                expect(url).toBe('/users');
-                expect(data).toEqual({'requestor': 'jquery'});
+                var fbFriendData;
                 
-                done('users');
+                if (url === '/fbFriends') {
+                    fbFriendsData =
+                    {
+                        'fbFriends': 'fbFriends',
+                        'threads': 'threads'
+                    };
+                    
+                    done(fbFriendsData);
+                } else if (url === '/users') {
+                    expect(data).toEqual({'requestor': 'jquery'});
+                    done({'users': 'users'});
+                }
             });
             
             this.friendsList.loadFriends();
             
-            expect(jQuery.getJSON).toHaveBeenCalled();
+            expect(jQuery.getJSON.calls.count()).toBe(2);
         });
         
         it('should get the friend html from /friends', function(){
@@ -117,6 +128,65 @@ describe('FriendsList', function(){
             
             expect($('.free')).toBeVisible();
             expect($('.offline')).toBeVisible();
+        });
+        
+        it('should hide the flash after done', function(){
+            this.friendsList.loadFriends();
+            expect($('.flash')).toBeHidden();
+        });
+        
+        describe('when Facebook friends are stored', function(){
+            it('should get friends from the database', function(){
+                jQuery.getJSON.and.callFake(function(url, data, done){
+                    var fbFriendData;
+                    
+                    if (url === '/fbFriends') {
+                        fbFriendsData =
+                        {
+                            'fbFriends': 'fbFriends',
+                            'threads': 'threads'
+                        };
+                        
+                        expect(data).toEqual({'format': 'json'});
+                        
+                        done(fbFriendsData);
+                    } else if (url === '/users') {
+                        done({'users': 'users'});
+                    }
+                });
+                
+                this.friendsList.loadFriends();
+                
+                expect(jQuery.getJSON.calls.count()).toBe(2);
+            });
+            
+            it('should not get the Facebook friends or threads again', function(){
+                this.friendsList.loadFriends();
+                expect(FB.api).not.toHaveBeenCalled();
+            });
+        });
+        
+        describe('when Facebook friends are not stored', function(){
+            beforeEach(function(){
+                jQuery.getJSON.and.callFake(function(url, data, done){
+                    if (url === '/fbFriends') {
+                        done({});
+                    } else if (url === '/users') {
+                        done({'users': 'users'});
+                    }
+                });
+            });
+            
+            it('should get the Facebook friends', function(){
+                this.friendsList.loadFriends();
+                expect(FB.api.calls.argsFor(0)[0])
+                    .toBe('/me/friends?fields=id,name,username');
+            });
+            
+            it('should get the threads', function(){
+                this.friendsList.loadFriends();
+                expect(FB.api.calls.argsFor(1)[0]).toBe('/me/inbox');
+            });
         });
     });
 });

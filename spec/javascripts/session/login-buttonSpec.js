@@ -1,6 +1,8 @@
 describe('LoginButton', function(){
     beforeEach(function(){
-        setFixtures('<button name="login" type="button" disabled>Login</button>');
+        loadFixtures('session/login-button.html');
+        setStyleFixtures('.flash {dispaly: none;}');
+        
         this.loginButton = FREE.LoginButton;
     });
     
@@ -14,6 +16,11 @@ describe('LoginButton', function(){
     describe('registerEventHandlers()', function(){    
         beforeEach(function(){
             FB = jasmine.createSpyObj(FB, ['getLoginStatus', 'login', 'api']);
+            
+            FB.getLoginStatus.and.callFake(function(fn){
+                fn({'status': 'connected'});
+            });
+            
             FB.api.and.callFake(function(url, fn){
                 fn({'id': 1, 'name': 'user'});
             });
@@ -27,54 +34,64 @@ describe('LoginButton', function(){
             });
             
             spyOn(FREE.Url, 'redirect');
+            
             this.loginButton.init();
         });
         
+        it('should watch the position', function(){
+            this.loginButton.registerEventHandlers();
+            $('button[name="login"]').click();
+            expect(navigator.geolocation.watchPosition).toHaveBeenCalled();
+        });
+        
+        it('should show the flash', function(){
+            this.loginButton.registerEventHandlers();
+            
+            $('button[name="login"]').click();
+            
+            expect($('.flash')).toBeVisible();
+            expect($('.flash')).toHaveText('Loading data...');
+        });
+        
+        it('should get the user\'s data', function(){
+            FB.api.and.callFake(function(url, fn){
+                expect(url).toBe('/me');
+                fn({'id': 1, 'name': 'user'});
+            });
+            
+            this.loginButton.registerEventHandlers();
+            $('button[name="login"]').click();
+            expect(FB.api).toHaveBeenCalled();
+        });
+        
+        it('should create the session', function(){
+            jQuery.post.and.callFake(function(url, data, done){
+                expect(url).toBe('/sessions');
+                expect(data).toEqual({'fbId': 1, 'name': 'user', 'coords': 'c'})
+                
+                done();
+            });
+            
+            this.loginButton.registerEventHandlers();
+            $('button[name="login"]').click();
+            expect(jQuery.post).toHaveBeenCalled();
+        });
+        
+        it('should redirect to the /beacons/create', function(){
+            spyOn(FREE.Url, 'init');
+            this.loginButton.registerEventHandlers();
+            
+            $('button[name="login"]').click();
+            
+            expect(FREE.Url.init).toHaveBeenCalled();
+            expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
+        });
+        
         describe('when logged in', function(){
-            beforeEach(function(){
-                FB.getLoginStatus.and.callFake(function(fn){
-                    fn({'status': 'connected'});
-                });
-            });
-            
-            it('should watch the position', function(){
+            it('should not log in again', function(){
                 this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
-                expect(navigator.geolocation.watchPosition).toHaveBeenCalled();
-            });
-            
-            it('should get the user\'s data', function(){
-                FB.api.and.callFake(function(url, fn){
-                    expect(url).toBe('/me');
-                    fn({'id': 1, 'name': 'user'});
-                });
-                
-                this.loginButton.registerEventHandlers();
-                $('button[name="login"]').click();
-                expect(FB.api).toHaveBeenCalled();
-            });
-            
-            it('should create the session', function(){
-                jQuery.post.and.callFake(function(url, data, done){
-                    expect(url).toBe('/sessions');
-                    expect(data).toEqual({'fbId': 1, 'name': 'user', 'coords': 'c'})
-                    
-                    done();
-                });
-                
-                this.loginButton.registerEventHandlers();
-                $('button[name="login"]').click();
-                expect(jQuery.post).toHaveBeenCalled();
-            });
-            
-            it('should redirect to the /beacons/create', function(){
-                spyOn(FREE.Url, 'init');
-                this.loginButton.registerEventHandlers();
-                
-                $('button[name="login"]').click();
-                
-                expect(FREE.Url.init).toHaveBeenCalled();
-                expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
+                expect(FB.login).not.toHaveBeenCalled();
             });
         });
         
@@ -98,46 +115,6 @@ describe('LoginButton', function(){
                 this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
                 expect(FB.login).toHaveBeenCalled();
-            });
-            
-            it('should watch the position', function(){
-                this.loginButton.registerEventHandlers();
-                $('button[name="login"]').click();
-                expect(navigator.geolocation.watchPosition).toHaveBeenCalled();
-            });
-            
-            it('should get the user\'s data', function(){
-                FB.api.and.callFake(function(url, fn){
-                    expect(url).toBe('/me');
-                    fn({'id': 1, 'name': 'user'});
-                });
-                
-                this.loginButton.registerEventHandlers();
-                $('button[name="login"]').click();
-                expect(FB.api).toHaveBeenCalled();
-            });
-            
-            it('should create the session', function(){
-                jQuery.post.and.callFake(function(url, data, done){
-                    expect(url).toBe('/sessions');
-                    expect(data).toEqual({'fbId': 1, 'name': 'user', 'coords': 'c'})
-                    
-                    done();
-                });
-                
-                this.loginButton.registerEventHandlers();
-                $('button[name="login"]').click();
-                expect(jQuery.post).toHaveBeenCalled();
-            });
-            
-            it('should redirect to the /beacons/create', function(){
-                spyOn(FREE.Url, 'init');
-                this.loginButton.registerEventHandlers();
-                
-                $('button[name="login"]').click();
-                
-                expect(FREE.Url.init).toHaveBeenCalled();
-                expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
             });
         });
     });

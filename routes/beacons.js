@@ -1,44 +1,73 @@
 /*
  * the routes for the beacons resource.
  */
+function getIlluminatedBeaconData(timeLeft) {
+  return {
+    'isDeactivated': false,
+    'userTime': timeLeft
+  };
+}
 
-var mongoose = require('mongoose');
+function getDeactivatedBeaconData() {
+  return {
+    'isDeactivated': true,
+    'timerValue': '30'
+  };
+}
 
-require('../models/User');
-var User = mongoose.model('User');
+function getBeaconData(user) {
+  var timeLeft = user.getTimeLeft();
+  
+  return timeLeft > 0
+    ? getIlluminatedBeaconData(timeLeft)
+    : getDeactivatedBeaconData();
+}
 
 exports.create = function(request, response) {
+  var mongoose
+    , User;
+  
+  mongoose = require('mongoose');
+
+  require('../models/User');
+  User = mongoose.model('User');
+  
   User.findById(request.session.userId)
     .exec(afterQuery);
   
-  function getIlluminatedBeaconData(timeLeft) {
-    return {
-      'isDeactivated': false,
-      'userTime': timeLeft
-    };
+  function afterQuery(err, user) {
+    response.render('beacons-create', getBeaconData(user));
   }
+};
+
+exports.createAlt = function(request, response) {
+  var mongoose
+    , User;
   
-  function getDeactivatedBeaconData() {
-    return {
-      'isDeactivated': true,
-      'timerValue': '30'
-    };
-  }
+  mongoose = require('mongoose');
+
+  require('../models/User');
+  User = mongoose.model('User');
   
-  function getData(user) {
-    var timeLeft = user.getTimeLeft();
-    
-    return timeLeft > 0
-      ? getIlluminatedBeaconData(timeLeft)
-      : getDeactivatedBeaconData();
-  }
+  User.findById(request.session.userId)
+    .exec(afterQuery);
   
   function afterQuery(err, user) {
-    response.render('beacons-create', getData(user));
+    var data = getBeaconData(user);
+    data.isAlternate = true;
+    response.render('beacons-create', data);
   }
 };
 
 exports.post = function(request, response) {
+  var mongoose
+    , User;
+  
+  mongoose = require('mongoose');
+
+  require('../models/User');
+  User = mongoose.model('User');
+  
   User.findById(request.session.userId)
     .exec(afterQuery);
   
