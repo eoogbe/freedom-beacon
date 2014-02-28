@@ -51,7 +51,6 @@ FREE.LoginButton = (function(){
     
     function handleWatchingErrors(err) {
         var locationFlyout;
-        console.log(err);
         
         if (err.code === err.PERMISSION_DENIED) {
             $('.location-flyout').show();
