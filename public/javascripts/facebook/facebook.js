@@ -7,6 +7,12 @@ FREE.Facebook = (function(){
         loginButton.registerEventHandlers();
     }
     
+    function registerLogoutHandler() {
+        var logoutButton = FREE.LogoutButton;
+        logoutButton.init();
+        logoutButton.registerEventHandlers();
+    }
+    
     function init(facebook) {
         $.ajaxSetup({'cache': true});
         $.getScript('//connect.facebook.net/en_US/all.js', function(){
@@ -20,6 +26,7 @@ FREE.Facebook = (function(){
             });
             
             registerLoginHandler();
+            registerLogoutHandler();
             
             if ($('.friends').length > 0) {
                 FB.getLoginStatus(function(response){

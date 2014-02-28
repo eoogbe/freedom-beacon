@@ -14,10 +14,6 @@ function initializePage() {
 	
 	FREE.Facebook.init();
 	
-	var logoutButton = FREE.LogoutButton;
-	logoutButton.init();
-	logoutButton.registerEventHandlers();
-	
 	mainBeacon = FREE.MainBeacon;
 	mainBeacon.init();
 	mainBeacon.run();
