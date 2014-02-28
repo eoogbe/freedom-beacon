@@ -16,6 +16,11 @@ exports.post = function(request, response) {
         response.send(200);
     }
     
+    function getOneMinuteAgo() {
+        var MILLISECONDS_PER_MINUTE = 60000;
+        return new Date(Date.now() - MILLISECONDS_PER_MINUTE);
+    }
+    
     function createUser() {
         var userData,
             coords;
@@ -26,7 +31,7 @@ exports.post = function(request, response) {
         {
             'fbId': request.body.fbId,
             'name': request.body.name,
-            'beacon': {'duration': 0, 'timeSet': new Date()},
+            'beacon': {'duration': 1, 'timeSet': getOneMinuteAgo()},
             'position':
             {
                 'latitude': coords.latitude,
