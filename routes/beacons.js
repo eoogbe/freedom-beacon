@@ -4,7 +4,8 @@
 function getIlluminatedBeaconData(timeLeft) {
   return {
     'isDeactivated': false,
-    'userTime': timeLeft
+    'userTime': timeLeft,
+    'timerValue': timeLeft + ':00'
   };
 }
 
@@ -40,7 +41,7 @@ exports.create = function(request, response) {
   }
 };
 
-exports.createAlt = function(request, response) {
+exports.createB = function(request, response) {
   var mongoose
     , User;
   
@@ -54,7 +55,28 @@ exports.createAlt = function(request, response) {
   
   function afterQuery(err, user) {
     var data = getBeaconData(user);
-    data.isAlternate = true;
+    data.isB = true;
+    response.render('beacons-create', data);
+  }
+};
+
+exports.createC = function(request, response) {
+  var mongoose
+    , User;
+  
+  mongoose = require('mongoose');
+
+  require('../models/User');
+  User = mongoose.model('User');
+  
+  User.findById(request.session.userId)
+    .exec(afterQuery);
+  
+  function afterQuery(err, user) {
+    var data = getBeaconData(user);
+    data.altC = 'alt-c';
+    data.timerValue = data.userTime;
+    
     response.render('beacons-create', data);
   }
 };

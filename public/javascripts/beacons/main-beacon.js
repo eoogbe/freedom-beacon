@@ -16,10 +16,17 @@ FREE.MainBeacon = (function(){
     }
     
     function run() {
+        var countdowner;
+        
         if ($('.deactivate').length > 0) {
-            var countdowner = FREE.Countdowner;
-            countdowner.init();
-            countdowner.countdown($('input[name="main-timer"]'), deleteBeacon);
+            countdowner = FREE.Countdowner;
+            countdowner.init($('input[name="main-timer"]'), deleteBeacon);
+            
+            if ($('.alt-c').length === 0) {
+                countdowner.countdown();
+            } else {
+                countdowner.countdownC();
+            }
         } else {
             $('form[name="main-timer-form"]').submit(beaconSubmitted);
         }

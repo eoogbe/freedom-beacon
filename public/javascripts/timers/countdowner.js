@@ -1,12 +1,26 @@
 var FREE = FREE || {};
 
 FREE.Countdowner = (function(){
-    var DELAY = 1000;
-    var interval;
+    var DELAY,
+        DELAY_C,
+        interval,
+        $timer,
+        done;
     
-    function tick($timer, done) {
-        var min = parseInt($timer.data('min'));
-        var sec = parseInt($timer.data('sec'));
+    DELAY = 1000;
+    DELAY_C = DELAY * 60;
+    
+    function init($t, d) {
+        $timer = $t;
+        done = d;
+    }
+    
+    function tick() {
+        var min,
+            sec;
+        
+        min = parseInt($timer.data('min'));
+        sec = parseInt($timer.data('sec'));
         
         if (sec <= 0 && min <= 0) {
             done();
@@ -26,21 +40,39 @@ FREE.Countdowner = (function(){
         }
     };
     
-    function countdown($timer, done) {
-        interval = new FREE.Interval(function(){
-            tick($timer, done);
-        }, DELAY);
+    function tickC() {
+        var min = parseInt($timer.data('min'));
         
+        if (min <= 0) {
+            done();
+        } else {
+            --min;
+            $timer.data('min', min);
+            $timer.val(min);
+        }
+    }
+    
+    function countdownImpl(delay, tickFn) {
+        interval = new FREE.Interval(tickFn, delay);
         interval.start();
     };
+    
+    function countdown() {
+        countdownImpl(DELAY, tick);
+    }
+    
+    function countdownC() {
+        countdownImpl(DELAY_C, tickC);
+    }
     
     function stop() {
         interval.stop();
     }
     
     return {
-        'init': $.noop,
+        'init': init,
         'countdown': countdown,
+        'countdownC': countdownC,
         'stop': stop
     };
 })();

@@ -149,7 +149,8 @@ button[name="login"]:active {
 }
 
 input[name="main-timer"] {
-	width: 4em;
+	width: 2.5em;
+	text-align: center;
 }
 
 .disabled-timer {

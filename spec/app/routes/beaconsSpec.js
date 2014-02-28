@@ -81,11 +81,15 @@ describe('beacons', function(){
             it('should set the user time to the time left', function(){
                 expect(response.data.userTime).toBe(5);
             });
+            
+            it('should set the timer value to the minutes and the seconds', function(){
+                expect(response.data.timerValue).toBe('5:00');
+            });
         });
     });
     
-    describe('createAlt()', function(){
-        it('should set isAlternate', function(){
+    describe('createB()', function(){
+        it('should set isB', function(){
             var user =
             {
                 'fbId': 0,
@@ -98,9 +102,35 @@ describe('beacons', function(){
                 }
             });
             
-            beacons.createAlt(request, response);
+            beacons.createB(request, response);
             
-            expect(response.data.isAlternate).toBe(true);
+            expect(response.data.isB).toBe(true);
+        });
+    });
+    
+    describe('createC()', function(){
+        beforeEach(function(){
+            var user =
+            {
+                'fbId': 0,
+                'getTimeLeft': function(){return 5;}
+            };
+            
+            spyOn(User, 'findById').andReturn({
+                'exec': function(done) {
+                    done(null, user);
+                }
+            });
+            
+            beacons.createC(request, response);
+        });
+        
+        it('should set altC', function(){
+            expect(response.data.altC).toBe('alt-c');
+        });
+        
+        it('should set the timer value to just the minutes', function(){
+            expect(response.data.timerValue).toBe(5);
         });
     });
     

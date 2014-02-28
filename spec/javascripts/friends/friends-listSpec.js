@@ -44,6 +44,10 @@ describe('FriendsList', function(){
                 done(friendsHtml);
             });
             
+            spyOn(jQuery, 'post').and.callFake(function(url, data, done){
+                done();
+            });
+            
             spyOn(FREE.DistanceFlyout, 'registerEventHandlers');
             spyOn(FREE.FavoriteButton, 'registerEventHandlers');
             spyOn(FREE.InviteLink, 'registerEventHandlers');
@@ -186,6 +190,25 @@ describe('FriendsList', function(){
             it('should get the threads', function(){
                 this.friendsList.loadFriends();
                 expect(FB.api.calls.argsFor(1)[0]).toBe('/me/inbox');
+            });
+            
+            it('should post the Facebook friends', function(){
+                jQuery.post.and.callFake(function(url, data, done){
+                    var expectedData =
+                    {
+                        'fbFriends': 'fbFriends',
+                        'threads': 'threads'
+                    };
+                    
+                    expect(url).toBe('/fbFriends');
+                    expect(data).toEqual(expectedData);
+                    
+                    done();
+                });
+                
+                this.friendsList.loadFriends();
+                
+                expect(jQuery.post).toHaveBeenCalled();
             });
         });
     });

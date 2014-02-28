@@ -7,28 +7,47 @@ describe('MainBeacon', function(){
         
         describe('when illuminated', function(){
             beforeEach(function(){
-                loadFixtures('beacons/illuminated-main-beacon.html');    
+                spyOn(FREE.Countdowner, 'init');
+                spyOn(FREE.Countdowner, 'countdown');
             });
             
             it('should start a countdown', function(){
-                spyOn(FREE.Countdowner, 'countdown');
+                loadFixtures('beacons/illuminated-main-beacon.html');
+                
                 this.mainBeacon.run();
+                
+                expect(FREE.Countdowner.init).toHaveBeenCalled();
                 expect(FREE.Countdowner.countdown).toHaveBeenCalled();
             });
             
             describe('when the countdown ends', function(){
                 it('should tell the server', function(){
-                    spyOn(FREE.Countdowner, 'countdown').and.callFake(function($timer, done){
+                    loadFixtures('beacons/illuminated-main-beacon.html');
+                    
+                    FREE.Countdowner.init.and.callFake(function($timer, done){
                         done();
                     });
                     
-                    spyOn(jQuery, 'get').and.callFake(function(path){
+                    spyOn(jQuery, 'get').and.callFake(function(path, done){
                         expect(path).toBe('/beacons/delete');
+                        done('<div></div>');
                     });
                     
                     this.mainBeacon.run();
                     
                     expect(jQuery.get).toHaveBeenCalled();
+                    expect($('form[name="main-timer-form"]')).toHaveHtml('<div></div>');
+                });
+            });
+            
+            describe('when is Alternate C', function(){
+                it('should start countdownC', function(){
+                    loadFixtures('beacons/alt-c.html');
+                    spyOn(FREE.Countdowner, 'countdownC');
+                    
+                    this.mainBeacon.run();
+                    
+                    expect(FREE.Countdowner.countdownC).toHaveBeenCalled();
                 });
             });
         })

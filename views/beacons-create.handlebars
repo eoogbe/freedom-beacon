@@ -10,14 +10,14 @@
       {{else}}
           <label class="timer-label group-end">
               I am free for
-              <input type="text" max="60" min="1" value="{{userTime}}:00" name="main-timer" data-min="{{userTime}}" data-sec="0" class="disabled-timer" disabled>
+              <input type="text" max="60" min="1" value="{{timerValue}}" name="main-timer" data-min="{{userTime}}" data-sec="0" class="disabled-timer {{altC}}" disabled>
               minutes
           </label>
           <button type="submit" class="btn btn-lg beacon-btn deactivate">No longer free</button>
       {{/if}}
   </form>
   
-  {{#unless isAlternate}}
+  {{#unless isB}}
     <div class="friends"></div>
   {{/unless}}
 </main>
