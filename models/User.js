@@ -23,7 +23,7 @@ function validateBeaconDuration(beacon) {
 UserSchema = new mongoose.Schema({
     'name': String,
     'fbId': Number,
-    'beacon': {'type': Mixed, 'validate': validateBeaconDuration},
+    'beacon': {'type': Mixed, 'validate': validatorBeaconDuration},
     'favorites': [{'type': ObjectId, 'ref': 'User'}],
     'position': {'latitude': Number, 'longitude': Number},
     'fbFriends': [{'fbId': Number, 'username': String}],
