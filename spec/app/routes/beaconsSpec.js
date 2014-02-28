@@ -100,7 +100,7 @@ describe('beacons', function(){
         beforeEach(function(){
             request.body = {'main-timer': 15};
             
-            user = jasmine.createSpyObj('user', ['save']);
+            user = jasmine.createSpyObj('user', ['save', 'markModified']);
             user.beacon = {'timeSet': null, 'duration': 0};
             user.save.andCallFake(function(done){
                 done();
@@ -118,9 +118,10 @@ describe('beacons', function(){
         it('should update the beacon in the database to the current time', function(){
             beacons.post(request, response);
             
+            expect(user.markModified).toHaveBeenCalledWith('beacon');
             expect(user.save).toHaveBeenCalled();
-            expect(user.beaconTimeSet).toEqual(new Date(5))
-            expect(user.beaconDuration).toBe(15);
+            expect(user.beacon.timeSet).toEqual(new Date(5))
+            expect(user.beacon.duration).toBe(15);
         });
         
         it('should redirect back to the beacons-create page', function(){

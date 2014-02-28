@@ -2,19 +2,29 @@
  * the User model defintion.
  */
 
-var MILLISECONDS_PER_MINUTE = 60000;
+var MILLISECONDS_PER_MINUTE,
+    mongoose,
+    ObjectId,
+    UserSchema;
+    
+MILLISECONDS_PER_MINUTE = 60000;
 
-var mongoose = require('mongoose');
-var ObjectId = mongoose.Schema.Types.ObjectId;
+mongoose = require('mongoose');
+ObjectId = mongoose.Schema.Types.ObjectId;
 
-var UserSchema = new mongoose.Schema({
+UserSchema = new mongoose.Schema({
     'name': String,
     'fbId': Number,
-    'beaconDuration': Number,
-    'beaconTimeSet': Date,
+    'beacon': {'duration': Number, 'timeSet': Date},
     'favorites': [{'type': ObjectId, 'ref': 'User'}],
-    'positionLat': Number,
-    'positionLng': Number
+    'position': {'latitude': Number, 'longitude': Number},
+    'fbFriends': [{'fbId': Number, 'username': String}],
+    'threads': [
+        {
+            'id': Number,
+            'participants': [{'id': Number}]
+        }
+    ]
 });
 
 function addMinutes(date, min) {
@@ -22,13 +32,13 @@ function addMinutes(date, min) {
 }
 
 UserSchema.methods.isFree = function() {
-    var end = addMinutes(this.beaconTimeSet, this.beaconDuration);
+    var end = addMinutes(this.beacon.timeSet, this.beacon.duration);
     return end.getTime() > Date.now();
 };
 
 UserSchema.methods.getTimeLeft = function() {
-	var timeLeft = Date.now() - this.beaconTimeSet.getTime();
-	return this.beaconDuration - Math.floor(timeLeft / MILLISECONDS_PER_MINUTE);
+	var timeLeft = Date.now() - this.beacon.timeSet.getTime();
+	return this.beacon.duration - Math.floor(timeLeft / MILLISECONDS_PER_MINUTE);
 };
 
 mongoose.model('User', UserSchema);

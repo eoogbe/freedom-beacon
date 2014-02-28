@@ -9,8 +9,7 @@ describe('User', function(){
     
     beforeEach(function(){
         user = new User({
-            'beaconTimeSet': new Date(1000),
-            'beaconDuration': 5
+            'beacon': {'timeSet': new Date(1000), 'duration': 5}
         });
     });
     

@@ -43,8 +43,13 @@ exports.post = function(request, response) {
     .exec(afterQuery);
   
   function afterQuery(err, user) {
-    user.beaconTimeSet = new Date(Date.now());
-    user.beaconDuration = request.body['main-timer'];
+    user.beacon =
+    {
+      'duration': request.body['main-timer'],
+      'timeSet': new Date(Date.now())
+    };
+    
+    user.markModified('beacon');
     
     user.save(function(){
       response.redirect('/beacons/create');

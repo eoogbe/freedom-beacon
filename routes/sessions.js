@@ -17,14 +17,21 @@ exports.post = function(request, response) {
     }
     
     function createUser() {
-        var userData =
+        var userData,
+            coords;
+        
+        coords = request.body.coords;
+        
+        userData =
         {
             'fbId': request.body.fbId,
             'name': request.body.name,
-            'beaconDuration': 0,
-            'beaconTimeSet': new Date(),
-            'positionLat': request.body.coords.latitude,
-            'positionLng': request.body.coords.longitude
+            'beacon': {'duration': 0, 'timeSet': new Date()},
+            'position':
+            {
+                'latitude': coords.latitude,
+                'longitude': coords.longitude
+            }
         };
         
         User.create(userData, function(err, user){

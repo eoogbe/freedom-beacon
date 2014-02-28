@@ -12,6 +12,9 @@ FREE.LoginButton = (function(){
     }
     
     function afterWatching(pos) {
+        $('.flash').text('Loading data...');
+        $('.flash').show();
+        
         FB.api('/me', function(response){
             var data;
             

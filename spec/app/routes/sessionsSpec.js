@@ -70,11 +70,11 @@ describe('sessions', function(){
                     expect(data.fbId).toBe('0');
                     expect(data.name).toBe('thename');
                     
-                    expect(data.beaconTimeSet).toBeDefined();
-                    expect(data.beaconDuration).toBe(0);
+                    expect(data.beacon.timeSet).toBeDefined();
+                    expect(data.beacon.duration).toBe(0);
                     
-                    expect(data.positionLat).toBe(1.0);
-                    expect(data.positionLng).toBe(2.5);
+                    expect(data.position.latitude).toBe(1.0);
+                    expect(data.position.longitude).toBe(2.5);
                     
                     done(null, {'_id': helper.ids.user0});
                 }); 

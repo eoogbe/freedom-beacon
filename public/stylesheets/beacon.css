@@ -27,8 +27,9 @@ h1 > small {
 	height: 2em;
 	width: 3.5em;
 	padding: 0.3em 0.4em;
-	border-radius: 0.1em 0.3em 0.3em 0.1em;
-	-moz-border-radius: 0.1em 0.3em 0.3em 0.1em;
+	
+			border-radius: 0.1em 0.3em 0.3em 0.1em;
+	   -moz-border-radius: 0.1em 0.3em 0.3em 0.1em;
 	-webkit-border-radius: 0.1em 0.3em 0.3em 0.1em;
 }
 
@@ -68,6 +69,23 @@ h1 > small {
 
 input[name="header-timer"] {
 	font-size: 1.7em;
+}
+
+.flash {
+	display: none;
+	position: absolute;
+	left: 50%;
+	top: 0;
+	width: 9em;
+	margin-left: -4.5em;
+	background-color: #ff0;
+	padding: 0.3em 0.4em;
+	color: #000005;
+	border: 0.1em solid #ccc;
+	
+			border-radius: 0.1em 0.1em 0.2em 0.2em;
+	   -moz-border-radius: 0.1em 0.1em 0.2em 0.2em;
+	-webkit-border-radius: 0.1em 0.1em 0.2em 0.2em;
 }
 
 .timer-label {

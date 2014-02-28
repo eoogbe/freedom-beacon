@@ -17,10 +17,10 @@ exports.calculate = function(user1, user2){
         a,
         c;
     
-    lat1 = user1.positionLat;
-    lat2 = user2.positionLat;
-    lng1 = user1.positionLng;
-    lng2 = user2.positionLng;
+    lat1 = user1.position.latitude;
+    lat2 = user2.position.latitude;
+    lng1 = user1.position.longitude;
+    lng2 = user2.position.longitude;
     
     dlng = lng2 - lng1;
     dlat = lat2 - lat1;
