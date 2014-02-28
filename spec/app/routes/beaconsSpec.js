@@ -168,24 +168,6 @@ describe('beacons', function(){
             beacons.post(request, response);
             expect(response.path).toBe('/beacons/create');
         });
-        
-        describe('when invalid', function(){
-            beforeEach(function(){
-                user.save.andCallFake(function(done){
-                    done({'errors': {'beacon': {'message': 'error message'}}});
-                });
-                
-                beacons.post(request, response);
-            });
-            
-            it('should render the beacons-create page with the errors', function(){
-                expect(response.view).toBe('beacons-create');
-            });
-            
-            it('should set the error', function(){
-                expect(response.data.error).toBe('error message');
-            });
-        });
     });
     
     describe('delete()', function(){
