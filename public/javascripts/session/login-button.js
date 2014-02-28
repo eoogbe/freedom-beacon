@@ -5,16 +5,18 @@ FREE.LoginButton = (function(){
         $('button[name="login"]').prop('disabled', false);
     }
     
+    function showFlash() {
+        $('.flash').text('Loading data...');
+        $('.flash').show();
+    }
+    
     function afterPost() {
         var url = FREE.Url;
         url.init();
         url.redirect('/beacons/create');
     }
     
-    function afterWatching(pos) {
-        $('.flash').text('Loading data...');
-        $('.flash').show();
-        
+    function loadFbData(coords) {
         FB.api('/me', function(response){
             var data;
             
@@ -25,7 +27,7 @@ FREE.LoginButton = (function(){
                 {
                     'fbId': response.id,
                     'name': response.name,
-                    'coords': pos.coords
+                    'coords': coords
                 };
                 
                 $.post('/sessions', data, afterPost);
@@ -33,9 +35,21 @@ FREE.LoginButton = (function(){
         });
     }
     
+    function afterWatching(pos) {
+        showFlash();
+        loadFbData(pos.coords);
+    }
+    
+    function loginWithoutLocation() {
+        showFlash();
+        loadFbData(null);
+    }
+    
     function addSessionData() {
         if ('geolocation' in navigator) {
-            navigator.geolocation.watchPosition(afterWatching);
+            navigator.geolocation.watchPosition(afterWatching, loginWithoutLocation);
+        } else {
+            loginWithoutLocation();
         }
     }
     

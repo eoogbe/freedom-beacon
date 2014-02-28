@@ -19,5 +19,9 @@
   
   {{#unless isB}}
     <div class="friends"></div>
+  {{else}}
+    {{#unless isDeactivated}}
+    <div class="friends"></div>
+    {{/unless}}
   {{/unless}}
 </main>

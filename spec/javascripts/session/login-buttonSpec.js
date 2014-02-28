@@ -1,7 +1,7 @@
 describe('LoginButton', function(){
     beforeEach(function(){
         loadFixtures('session/login-button.html');
-        setStyleFixtures('.flash {dispaly: none;}');
+        setStyleFixtures('.flash {display: none;}');
         
         this.loginButton = FREE.LoginButton;
     });
@@ -41,6 +41,7 @@ describe('LoginButton', function(){
         it('should watch the position', function(){
             this.loginButton.registerEventHandlers();
             $('button[name="login"]').click();
+            
             expect(navigator.geolocation.watchPosition).toHaveBeenCalled();
         });
         
@@ -61,6 +62,7 @@ describe('LoginButton', function(){
             
             this.loginButton.registerEventHandlers();
             $('button[name="login"]').click();
+            
             expect(FB.api).toHaveBeenCalled();
         });
         
@@ -74,6 +76,7 @@ describe('LoginButton', function(){
             
             this.loginButton.registerEventHandlers();
             $('button[name="login"]').click();
+            
             expect(jQuery.post).toHaveBeenCalled();
         });
         
@@ -114,7 +117,26 @@ describe('LoginButton', function(){
                 
                 this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
+                
                 expect(FB.login).toHaveBeenCalled();
+            });
+        });
+        
+        describe('when error watching position', function(){
+            it('should login without location', function(){
+                navigator.geolocation.watchPosition.and.callFake(function(successFn, errorFn){
+                    errorFn();
+                });
+                
+                jQuery.post.and.callFake(function(url, data, done){
+                    expect(data.coords).toBeNull();
+                    done();
+                });
+                
+                this.loginButton.registerEventHandlers();
+                $('button[name="login"]').click();
+                
+                expect(jQuery.post).toHaveBeenCalled();
             });
         });
     });
