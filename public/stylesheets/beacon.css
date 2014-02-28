@@ -88,14 +88,6 @@ input[name="header-timer"] {
 	-webkit-border-radius: 0.1em 0.1em 0.2em 0.2em;
 }
 
-.location-flyout {
-	padding: 0.3em;
-	width: 33em;
-	height: 2em;
-	margin-left: -16.5em;
-	margin-top: -1em;
-}
-
 .timer-label {
 	font-size: 3em;
 }
