@@ -4,7 +4,7 @@
 </header>
 
 <main role="main" class="container">
-  <form name="main-timer-form" class="group-end" action="/beacons" method="post">
+  <form name="main-timer-form" class="group-end" action="/beacons" method="post" novalidate>
       {{#if isDeactivated}}
         {{> main-beacon this}}
       {{else}}

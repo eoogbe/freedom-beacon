@@ -5,15 +5,19 @@ FREE.LoginButton = (function(){
         $('button[name="login"]').prop('disabled', false);
     }
     
+    function showFlash() {
+        $('.flash').text('Loading data...');
+        $('.flash').show();
+    }
+    
     function afterPost() {
         var url = FREE.Url;
         url.init();
         url.redirect('/beacons/create');
     }
     
-    function afterWatching(pos) {
-        $('.flash').text('Loading data...');
-        $('.flash').show();
+    function getFbData(coords) {
+        showFlash();
         
         FB.api('/me', function(response){
             var data;
@@ -25,7 +29,7 @@ FREE.LoginButton = (function(){
                 {
                     'fbId': response.id,
                     'name': response.name,
-                    'coords': pos.coords
+                    'coords': coords
                 };
                 
                 $.post('/sessions', data, afterPost);
@@ -33,9 +37,37 @@ FREE.LoginButton = (function(){
         });
     }
     
+    function afterWatching(pos) {
+        getFbData(pos.coords);
+    }
+    
+    function withLocationClicked() {
+        addSessionData();
+    }
+    
+    function withoutLocationClicked() {
+        getFbData(null);
+    }
+    
+    function handleWatchingErrors(err) {
+        var locationFlyout;
+        console.log(err);
+        
+        if (err.code === err.PERMISSION_DENIED) {
+            $('.location-flyout').show();
+            
+            $('button[name="with-location"]').click(withLocationClicked);
+            $('button[name="without-location"]').click(withoutLocationClicked);
+        } else if (err.code === err.POSITION_UNAVAILABLE) {
+            getFbData(null);
+        }
+    }
+    
     function addSessionData() {
         if ('geolocation' in navigator) {
-            navigator.geolocation.watchPosition(afterWatching);
+            navigator.geolocation.watchPosition(afterWatching, handleWatchingErrors);
+        } else {
+            getFbData(null);
         }
     }
     

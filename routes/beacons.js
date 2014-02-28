@@ -102,8 +102,17 @@ exports.post = function(request, response) {
     
     user.markModified('beacon');
     
-    user.save(function(){
-      response.redirect('/beacons/create');
+    user.save(function(err){
+      var data;
+      
+      if (err) {
+        data = getDeactivatedBeaconData();
+        data.error = err.errors.beacon.message;
+        
+        response.render('beacons-create', data);
+      } else {
+        response.redirect('/beacons/create');
+      }
     });
   }
 };

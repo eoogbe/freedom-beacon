@@ -1,7 +1,7 @@
 describe('LoginButton', function(){
     beforeEach(function(){
         loadFixtures('session/login-button.html');
-        setStyleFixtures('.flash {dispaly: none;}');
+        setStyleFixtures('.flash {display: none;} .location-flyout {display: none;}');
         
         this.loginButton = FREE.LoginButton;
     });
@@ -41,6 +41,7 @@ describe('LoginButton', function(){
         it('should watch the position', function(){
             this.loginButton.registerEventHandlers();
             $('button[name="login"]').click();
+            
             expect(navigator.geolocation.watchPosition).toHaveBeenCalled();
         });
         
@@ -87,10 +88,58 @@ describe('LoginButton', function(){
             expect(FREE.Url.redirect).toHaveBeenCalledWith('/beacons/create');
         });
         
+        describe('when permission to use location is denied', function(){
+            beforeEach(function(){
+                navigator.geolocation.watchPosition.and.callFake(function(success, failure){
+                    failure({'code': 2, 'POSITION_UNAVAILABLE': 1, 'PERMISSION_DENIED': 2});
+                });
+                
+                this.loginButton.registerEventHandlers();
+                $('button[name="login"]').click();
+            });
+            
+            it('should show the location flyout', function(){
+                expect($('.location-flyout')).toBeVisible();
+            });
+            
+            it('should register the with location click handler', function(){
+                $('button[name="with-location"]').click();
+                expect(navigator.geolocation.watchPosition.calls.count()).toBe(2);
+            });
+            
+            it('should reigster the without location click handler', function(){
+                $('button[name="without-location"]').click();
+                expect(navigator.geolocation.watchPosition.calls.count()).toBe(1);
+            });
+        });
+        
+        describe('when position unavailable', function(){
+            beforeEach(function(){
+                navigator.geolocation.watchPosition.and.callFake(function(success, failure){
+                    failure({'code': 1, 'POSITION_UNAVAILABLE': 1, 'PERMISSION_DENIED': 2});
+                });
+            });
+            
+            it('should create the session with no coords', function(){
+                jQuery.post.and.callFake(function(url, data, done){
+                    expect(url).toBe('/sessions');
+                    expect(data).toEqual({'fbId': 1, 'name': 'user', 'coords': null})
+                    
+                    done();
+                });
+                
+                this.loginButton.registerEventHandlers();
+                $('button[name="login"]').click();
+                
+                expect(jQuery.post).toHaveBeenCalled();
+            });
+        });
+        
         describe('when logged in', function(){
             it('should not log in again', function(){
                 this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
+                
                 expect(FB.login).not.toHaveBeenCalled();
             });
         });
@@ -114,6 +163,7 @@ describe('LoginButton', function(){
                 
                 this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
+                
                 expect(FB.login).toHaveBeenCalled();
             });
         });
