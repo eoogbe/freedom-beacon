@@ -107,7 +107,7 @@ exports.post = function(request, response) {
       
       if (err) {
         data = getDeactivatedBeaconData();
-        data.error = err.errors.beacon.message;
+        data.error = 'Set a time between 1 and 60 minutes';
         
         response.render('beacons-create', data);
       } else {

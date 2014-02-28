@@ -5,10 +5,6 @@ FREE.Url = (function(){
         window.location = url;
     }
     
-    function getPathname() {
-        return window.location.pathname;
-    }
-    
     function goBack() {
         history.back(-1);
     }
@@ -16,7 +12,6 @@ FREE.Url = (function(){
     return {
         'init': $.noop,
         'redirect': redirect,
-        'getPathname': getPathname,
         'goBack': goBack
     };
 })();

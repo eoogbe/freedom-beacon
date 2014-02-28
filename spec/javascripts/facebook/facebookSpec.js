@@ -12,9 +12,7 @@ describe('Facebook', function(){
     describe('init()', function(){
         beforeEach(function(){
             setFixtures('<input type="hidden" name="app-id" value="_5">');
-            
             spyOn(FREE.LoginButton, 'registerEventHandlers');
-            spyOn(FREE.LogoutButton, 'registerEventHandlers');
         });
         
         it('should initialize Facebook', function(){
@@ -46,15 +44,6 @@ describe('Facebook', function(){
             
             expect(FREE.LoginButton.init).toHaveBeenCalled();
             expect(FREE.LoginButton.registerEventHandlers).toHaveBeenCalled();
-        });
-        
-        it('should register the logout button', function(){
-            spyOn(FREE.LogoutButton, 'init');
-            
-            this.facebook.init();
-            
-            expect(FREE.LogoutButton.init).toHaveBeenCalled();
-            expect(FREE.LogoutButton.registerEventHandlers).toHaveBeenCalled();
         });
     });
 });
