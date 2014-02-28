@@ -10,17 +10,21 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                {{#with distance}}
-                <td>
-                    <button class="distance-link btn btn-link" type="button">{{name}} distance</button>
-                    <div class="flyout distance-flyout">
-                        <div class="clearfix">
-                            <button class="close-btn pull-right" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+                {{#if distance}}
+                    {{#with distance}}
+                    <td>
+                        <button class="distance-link btn btn-link" type="button">{{name}} distance</button>
+                        <div class="flyout distance-flyout">
+                            <div class="clearfix">
+                                <button class="close-btn pull-right" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+                            </div>
+                            {{description}}
                         </div>
-                        {{description}}
-                    </div>
-                </td>
-                {{/with}}
+                    </td>
+                    {{/with}}
+                {{else}}
+                    <td>N/A</td>
+                {{/if}}
                 <td>{{time}} min left</td>
             </tr>
             {{/each}}

@@ -40,10 +40,14 @@ exports.index = function(request, response) {
         var distance,
             typeIdx;
         
-        distance = Distance.calculate(user, curUser);
-        typeIdx = getDistanceType(distance);
-        
-        return copy(Distance.types[typeIdx]);
+        if (curUser.distance && user.distance) {
+            distance = Distance.calculate(user, curUser);
+            typeIdx = getDistanceType(distance);
+            
+            return copy(Distance.types[typeIdx]);
+        } else {
+            return null;
+        }
     }
     
     function objectIdArrayContains(arr, id) {

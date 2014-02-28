@@ -38,7 +38,9 @@ describe('users', function(){
                         'favorites': [
                             new ObjectId(helper.ids.user2),
                             new ObjectId(helper.ids.user3)
-                        ]
+                        ],
+                        
+                        'distance': {'name': 'dist', 'description': 'desc'}
                     };
                     
                     return done(null, user);
@@ -58,7 +60,7 @@ describe('users', function(){
                     '_id': helper.ids.user2,
                     'name': 'user2',
                     'fbId': 2,
-                    'distance': {'name': 'dist2', 'description': 'desc2'},
+                    'distance': null,
                     'getTimeLeft': function() {return 5; },
                     'isFree': function() {return true;}
                 },
@@ -123,7 +125,7 @@ describe('users', function(){
             
             expect(usersJson[1].name).toBe('user2');
             expect(usersJson[1].fbId).toBe(2);
-            expect(usersJson[1].distance).toEqual({'name': 'dist', 'description': 'desc'});
+            expect(usersJson[1].distance).toBeNull();
             expect(usersJson[1].time).toBe(5);
             expect(usersJson[1].isFree).toBe(true);
             expect(usersJson[1].isFavorite).toBe(true);
