@@ -100,7 +100,11 @@ input[name="header-timer"] {
 	display: none;
 }
 
-.friends tr:nth-child(even) {
+.free tr:nth-child(even) {
+	border-bottom: 0.1em solid #ddd;
+}
+
+.offline tr {
 	border-bottom: 0.1em solid #ddd;
 }
 

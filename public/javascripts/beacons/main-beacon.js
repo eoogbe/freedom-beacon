@@ -7,11 +7,18 @@ FREE.MainBeacon = (function(){
         });
     }
     
+    function showFlash() {
+        $('.flash').text('Loading data...');
+        $('.flash').show();
+    }
+    
     function beaconSubmitted(e) {
         var form = this;
         e.preventDefault();
-        $('.flash').text('Loading data...');
-        $('.flash').show();
+        
+        showFlash();
+        ga('send', 'event', 'beacon', 'illuminate');
+        
         form.submit();
     }
     
