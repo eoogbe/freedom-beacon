@@ -241,4 +241,23 @@ describe('beacons', function(){
             expect(response.data.timerValue).toBe('0');
         });
     });
+    
+    describe('show()', function(){
+        it('should send the current user\'s beacon as a JSON object', function(){
+            spyOn(User, 'findById').andReturn({
+                'exec': function(done) {
+                    var user =
+                    {
+                        'beacon': {'timeSet': new Date(5), 'duration': '2'}
+                    };
+                    
+                    done(null, user);
+                }
+            });
+            
+            beacons.show(request, response);
+            
+            expect(response.data).toEqual({'timeSet': new Date(5), 'duration': '2'});
+        });
+    });
 });

@@ -12,7 +12,29 @@ FREE.MainBeacon = (function(){
         $('.flash').show();
     }
     
-    function beaconSubmitted(e) {
+    function illuminatedBeaconSubmitted(e) {
+        var form = this;
+        e.preventDefault();
+        
+        showFlash();
+        
+        $.getJSON('/beacons/show', function(data){
+            var minsLeft,
+                timeSpent;
+            
+            if (!$.isEmptyObject(data)) {
+                minsLeft = $('input[name="main-timer"]').data('min');
+                timeSpent = data.duration - minsLeft;
+                
+                ga('send', 'timing', 'beacon', 'duration', timeSpent);
+            }
+        });
+        
+        ga('send', 'event', 'beacon', 'deactivate');
+        form.submit();
+    }
+    
+    function deactivatedBeaconSubmitted(e) {
         var form = this;
         e.preventDefault();
         
@@ -34,8 +56,10 @@ FREE.MainBeacon = (function(){
             } else {
                 countdowner.countdownC();
             }
+            
+            $('form[name="main-timer-form"]').submit(illuminatedBeaconSubmitted);
         } else {
-            $('form[name="main-timer-form"]').submit(beaconSubmitted);
+            $('form[name="main-timer-form"]').submit(deactivatedBeaconSubmitted);
         }
     }
     

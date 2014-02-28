@@ -156,3 +156,21 @@ exports.delete = function(request, response) {
     'timerValue': '0'
   });
 };
+
+exports.show = function(request, response) {
+  var mongoose
+    , User;
+  
+  mongoose = require('mongoose');
+
+  require('../models/User');
+  User = mongoose.model('User');
+  
+  User.findById(request.session.userId)
+    .exec(afterQuery);
+  
+  function afterQuery(err, user) {
+    var data = user ? user.beacon : {};
+    response.json(data);
+  }
+};

@@ -71,7 +71,7 @@ describe('sessions', function(){
                     expect(data.name).toBe('thename');
                     
                     expect(data.beacon.timeSet).toBeDefined();
-                    expect(data.beacon.duration).toBe(0);
+                    expect(data.beacon.duration).toBe(1);
                     
                     expect(data.position.latitude).toBe(1.0);
                     expect(data.position.longitude).toBe(2.5);
