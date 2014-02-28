@@ -47,6 +47,11 @@ describe('beacons', function(){
             expect(response.view).toBe('beacons-create');
         });
         
+        it('should be the experiment page', function(){
+            beacons.create(request, response);
+            expect(response.data.isExperiment).toBe(true);
+        });
+        
         describe('when no time left', function(){
             beforeEach(function(){
                 beacons.create(request, response);
@@ -89,7 +94,7 @@ describe('beacons', function(){
     });
     
     describe('createB()', function(){
-        it('should set isB', function(){
+        beforeEach(function(){
             var user =
             {
                 'fbId': 0,
@@ -103,8 +108,14 @@ describe('beacons', function(){
             });
             
             beacons.createB(request, response);
-            
+        });
+        
+        it('should set isB', function(){
             expect(response.data.isB).toBe(true);
+        });
+        
+        it('should be the experiment page', function(){
+            expect(response.data.isExperiment).toBe(true);
         });
     });
     
@@ -132,13 +143,17 @@ describe('beacons', function(){
         it('should set the timer value to just the minutes', function(){
             expect(response.data.timerValue).toBe(5);
         });
+        
+        it('should be the experiment page', function(){
+            expect(response.data.isExperiment).toBe(true);
+        });
     });
     
     describe('post()', function(){
         var user;
         
         beforeEach(function(){
-            request.body = {'main-timer': 15};
+            request.body = {'main-beacon': '15'};
             
             user = jasmine.createSpyObj('user', ['save', 'markModified']);
             user.beacon = {'timeSet': null, 'duration': 0};
@@ -152,7 +167,7 @@ describe('beacons', function(){
                 }
             });
             
-            spyOn(Date, 'now').andReturn(5);
+            spyOn(Date, 'now').andReturn(120000);
         });
         
         it('should update the beacon in the database to the current time', function(){
@@ -160,13 +175,52 @@ describe('beacons', function(){
             
             expect(user.markModified).toHaveBeenCalledWith('beacon');
             expect(user.save).toHaveBeenCalled();
-            expect(user.beacon.timeSet).toEqual(new Date(5))
-            expect(user.beacon.duration).toBe(15);
+            expect(user.beacon.timeSet.getTime()).toBe(120000)
+            expect(user.beacon.duration).toBe('15');
         });
         
         it('should redirect back to the beacons-create page', function(){
             beacons.post(request, response);
             expect(response.path).toBe('/beacons/create');
+        });
+        
+        describe('when the beacon duration is invalid', function(){
+            beforeEach(function(){
+                request.body = {'main-beacon': '150'};
+                
+                user.save.andCallFake(function(done){
+                    done('error');
+                });
+                
+                beacons.post(request, response);
+            });
+            
+            it('should render the beacons-create page', function(){
+                expect(response.view).toBe('beacons-create');
+            });
+            
+            it('should add the error', function(){
+                expect(response.data.error).toBeDefined();
+            });
+            
+            it('should set isDeactivated to true', function(){
+                expect(response.data.isDeactivated).toBe(true);
+            });
+            
+            it('should set the timer value to empty', function(){
+                expect(response.data.timerValue).toBe('');
+            });
+        });
+        
+        describe('when beacon illuminated', function(){
+            it('should simulate zeroing the duration', function(){
+                request.body = {};
+                
+                beacons.post(request, response);
+                
+                expect(user.beacon.timeSet.getTime()).toBe(60000);
+                expect(user.beacon.duration).toBe(1);
+            });
         });
     });
     

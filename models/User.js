@@ -5,17 +5,24 @@
 var MILLISECONDS_PER_MINUTE,
     mongoose,
     ObjectId,
+    Mixed,
     UserSchema;
     
 MILLISECONDS_PER_MINUTE = 60000;
 
 mongoose = require('mongoose');
+
 ObjectId = mongoose.Schema.Types.ObjectId;
+Mixed = mongoose.Schema.Types.Mixed;
+
+function validateBeaconDuration(beacon) {
+    return beacon.duration >= 1 && beacon.duration <= 60;
+}
 
 UserSchema = new mongoose.Schema({
     'name': String,
     'fbId': Number,
-    'beacon': {'duration': Number, 'timeSet': Date},
+    'beacon': {'type': Mixed, 'validate': validateBeaconDuration},
     'favorites': [{'type': ObjectId, 'ref': 'User'}],
     'position': {'latitude': Number, 'longitude': Number},
     'fbFriends': [{'fbId': Number, 'username': String}],

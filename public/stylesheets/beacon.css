@@ -96,6 +96,12 @@ input[name="header-timer"] {
 	width: 100%;
 }
 
+.error {
+	display: block;
+	font-size: 0.5em;
+	color: #f00;
+}
+
 .friends {
 	display: none;
 }
