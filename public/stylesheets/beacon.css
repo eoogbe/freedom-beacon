@@ -205,13 +205,17 @@ input[name="main-timer"] {
 }
 
 input[name="fbFriends-search"] {
-	margin: 0.3em;
+	margin: 0.3em 0.3em 0.5em;
 }
 
 .fbFriends-list {
 	overflow: auto;
 	width: 14.7em;
 	height: 23.7em;
+}
+
+.search-results-holder > div {
+	margin: 0.5em;
 }
 
 /*

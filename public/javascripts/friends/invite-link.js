@@ -20,11 +20,11 @@ FREE.InviteLink = (function(){
         closeButton.registerEventHandlers();
     }
     
-    function getFbFriendsHtml(fbFriends, $searchResultsHolder) {
+    function getFbFriendsHtml(fbFriends) {
         var fbFriendData = {'fbFriends': fbFriends, 'format': 'html'};
         
         $.get('/fbFriends', fbFriendData, function(data){
-            $searchResultsHolder.html(data);
+            $('.search-results-holder').html(data);
             $('.send-invite-link').click(sendInviteClicked);
         });
     }
@@ -33,7 +33,7 @@ FREE.InviteLink = (function(){
         return str.replace(/[^A-Za-z]/g, '');
     }
     
-    function searchTyped() {
+    function searched() {
         var searchText,
             searchRegexp;
         
@@ -46,11 +46,11 @@ FREE.InviteLink = (function(){
             return sanitizeString(friend.name).search(searchRegexp) !== -1;
         });
         
-        getFbFriendsHtml(searchResults, $('.search-results-holder'));
+        getFbFriendsHtml(searchResults);
     }
     
     function registerSearchHandler() {
-        $('input[name="fbFriends-search"]').keypress(searchTyped);
+        $('input[name="fbFriends-search"]').keyup(searched);
     }
     
     function loadFbFriends() {
@@ -72,25 +72,15 @@ FREE.InviteLink = (function(){
     }
     
     function inviteClicked() {
-        var $inviteFlyout,
-            flyoutHtml;
+        var $inviteFlyout = $(this).parent().siblings('.invite-flyout');
         
-        $inviteFlyout = $(this).parent().siblings('.invite-flyout');
-        
-        flyoutHtml = '<div class="clearfix">' +
-            '<button class="close-btn pull-right" type="button">' +
-            '<span class="glyphicon glyphicon-remove"></span> ' +
-                'close</button></div>' +
-            '<input type="search" role="search" ' +
-                'name="fbFriends-search" ' +
-                'placeholder="Enter a friend\'s name">' +
-            '<div class="search-results-holder"></div>';
-        
-        $inviteFlyout.html(flyoutHtml);
-        $inviteFlyout.show();
-        
-        addCloseHandler();
-        loadFbFriends();
+        $.get('/invites', function(data){    
+            $inviteFlyout.html(data);
+            $inviteFlyout.show();
+            
+            addCloseHandler();
+            loadFbFriends();
+        });
     }
     
     function registerEventHandlers() {

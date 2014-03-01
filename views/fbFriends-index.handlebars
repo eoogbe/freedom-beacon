@@ -2,10 +2,10 @@
 <ul class="list-group fbFriends-list">
     {{#each fbFriends}}
     <li class="list-group-item">
-        <button class="btn btn-link send-invite-link" type="button" data-fb-id="{{id}}">{{name}}</button>
+        <button type="button" class="btn btn-link send-invite-link" data-fb-id="{{id}}">{{name}}</button>
     </li>
     {{/each}}
 </ul>
 {{else}}
-No matches found.
+<div>No matches found.</div>
 {{/if}}
