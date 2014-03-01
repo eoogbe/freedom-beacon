@@ -54,15 +54,15 @@ FREE.LoginButton = (function(){
     }
     
     function loginClicked() {
-        FB.getLoginStatus(function(response){
-            if (response.status === 'connected') {
-                addSessionData();
-            } else {
+        //FB.getLoginStatus(function(response){
+        //    if (response.status === 'connected') {
+        //        addSessionData();
+        //    } else {
                 FB.login(function(response){
                     if (response.authResponse) addSessionData();
                 }, {'scope': 'read_mailbox'});
-            }
-        });
+        //    }
+        //});
     }
     
     function registerEventHandlers() {

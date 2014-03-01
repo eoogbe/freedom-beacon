@@ -42,16 +42,15 @@ FREE.FriendsList = (function(){
 	
 	function loadThreads(fbFriends) {
 		FB.api('/me/inbox', function(response){
-			var data;
+			var data = {'fbFriends': fbFriends, 'threads': []};
 			
-			if (response.error) {
-				console.log(response.error);
-			} else {
-				data = {'fbFriends': fbFriends, 'threads': response.data};
-				$.post('/fbFriends', data, function(){
-					getUsers(fbFriends, response.data);
-				});
+			if (!response.error) {
+				data.threads = response.data;
 			}
+			
+			$.post('/fbFriends', data, function(){
+				getUsers(fbFriends, data.threads);
+			});
 		});
 	}
 	
