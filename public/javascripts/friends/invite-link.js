@@ -82,7 +82,8 @@ FREE.InviteLink = (function(){
             '<span class="glyphicon glyphicon-remove"></span> ' +
                 'close</button></div>' +
             '<input type="search" role="search" ' +
-                'name="fbFriends-search">' +
+                'name="fbFriends-search" ' +
+                'placeholder="Enter a friend\'s name">' +
             '<div class="search-results-holder"></div>';
         
         $inviteFlyout.html(flyoutHtml);
