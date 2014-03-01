@@ -35,11 +35,17 @@ FREE.MainBeacon = (function(){
     }
     
     function deactivatedBeaconSubmitted(e) {
-        var form = this;
+        var form = this,
+            timeSet;
+        
         e.preventDefault();
         
         showFlash();
+        
+        timeSet = $('input[name="main-becon"]').val();
+        
         ga('send', 'event', 'beacon', 'illuminate');
+        ga('send', 'timing', 'beacon', 'time set', timeSet);
         
         form.submit();
     }
