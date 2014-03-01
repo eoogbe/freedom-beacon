@@ -49,11 +49,11 @@ FREE.InviteLink = (function(){
         getFbFriendsHtml(searchResults);
     }
     
-    function registerSearchHandler() {
-        $('input[name="fbFriends-search"]').keyup(searched);
+    function registerSearchHandler($inviteFlyout) {
+        $inviteFlyout.on('keyup', 'input[name="fbFriends-search"]', searched);
     }
     
-    function loadFbFriends() {
+    function loadFbFriends($inviteFlyout) {
         $.getJSON('/fbFriends', {'format': 'json'}, function(data){
             if ($.isEmptyObject(data)) {
                 FB.api('/me/friends', function(response){
@@ -61,12 +61,12 @@ FREE.InviteLink = (function(){
                         console.log(response.error);
                     } else {
                         fbFriends = response.data;
-                        registerSearchHandler();
+                        registerSearchHandler($inviteFlyout);
                     }
                 });
             } else {
                 fbFriends = data.fbFriends;
-                registerSearchHandler();
+                registerSearchHandler($inviteFlyout);
             }
         });
     }
@@ -79,7 +79,7 @@ FREE.InviteLink = (function(){
             $inviteFlyout.show();
             
             addCloseHandler();
-            loadFbFriends();
+            loadFbFriends($inviteFlyout);
         });
     }
     

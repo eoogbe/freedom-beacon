@@ -206,6 +206,7 @@ input[name="main-timer"] {
 
 input[name="fbFriends-search"] {
 	margin: 0.3em 0.3em 0.5em;
+	width: 75%;
 }
 
 .fbFriends-list {
