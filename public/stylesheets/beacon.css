@@ -199,8 +199,8 @@ input[name="main-timer"] {
 
 .invite-flyout {
 	width: 15em;
-	height: 28em;
-	margin-top: -9em;
+	height: 32.5em;
+	top: 0.3em;
 	margin-left: -7.5em;
 }
 
@@ -211,7 +211,7 @@ input[name="fbFriends-search"] {
 .fbFriends-list {
 	overflow: auto;
 	width: 14.7em;
-	height: 23.7em;
+	height: 28.2em;
 }
 
 .search-results-holder > div {
