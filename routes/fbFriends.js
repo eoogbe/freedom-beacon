@@ -26,7 +26,7 @@ exports.index = function(request, response) {
     function afterQuery(err, user) {
         var data;
         
-        if (user.fbFriends && user.threads) {
+        if (user.fbFriends.length > 0 && user.threads.length > 0) {
             data = {
                 'fbFriends': user.fbFriends,
                 'threads': user.threads

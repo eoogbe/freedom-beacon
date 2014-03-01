@@ -25,7 +25,7 @@ UserSchema = new mongoose.Schema({
     'beacon': {'type': Mixed, 'validate': validateBeaconDuration},
     'favorites': [{'type': ObjectId, 'ref': 'User'}],
     'position': {'latitude': Number, 'longitude': Number},
-    'fbFriends': [{'fbId': Number, 'username': String}],
+    'fbFriends': [{'id': Number, 'username': String}],
     'threads': [
         {
             'id': Number,
