@@ -11,6 +11,10 @@ h1 > small {
 	display: block;
 }
 
+.index > h2 {
+	color: #000005;
+}
+
 .group-end {
 	margin-bottom: 0.3em;
 }
