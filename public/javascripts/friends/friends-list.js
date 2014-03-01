@@ -29,7 +29,11 @@ FREE.FriendsList = (function(){
 	
 	function getUsers(fbFriends, threads) {
 		$.getJSON('/users', {'requestor': 'jquery'}, function(data){
-			var friends = findFriends(data.users, threads, fbFriends);
+			var users,
+				friends;
+			
+			users = data.users ? data.users : [];
+			friends = findFriends(users, threads, fbFriends);
 			friends.hasFriends = friends.freeFriends.length > 0
 				|| friends.offlineFriends.length > 0;
 			

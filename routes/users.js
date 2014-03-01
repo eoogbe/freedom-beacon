@@ -95,9 +95,13 @@ exports.index = function(request, response) {
     }
     
     function afterQuery(err, user) {
-        User.find({}, function(err, users) {
-            var usersData = getUsersData(users, user);
-            response.json({'users': usersData});
-        });
+        if (user) {
+            User.find({}, function(err, users) {
+                var usersData = getUsersData(users, user);
+                response.json({'users': usersData});
+            });
+        } else {
+            response.json({});
+        }
     }
 };

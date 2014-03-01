@@ -19,19 +19,22 @@ FREE.MainBeacon = (function(){
         showFlash();
         
         $.getJSON('/beacons/show', function(data){
-            var minsLeft,
+            var min,
+                sec,
                 timeSpent;
             
-            if (!$.isEmptyObject(data)) {
-                minsLeft = $('input[name="main-timer"]').data('min');
-                timeSpent = data.duration - minsLeft;
+            if (!($.isEmptyObject(data))) {
+                min = $('input[name="main-timer"]').data('min');
+                sec = $('input[name="main-timer"]').data('sec');
+                timeSpent = data.duration - min;
+                if (sec > 0) --timeSpent;
                 
                 ga('send', 'timing', 'beacon', 'duration', timeSpent);
             }
+            
+            ga('send', 'event', 'beacon', 'deactivate');
+            form.submit();
         });
-        
-        ga('send', 'event', 'beacon', 'deactivate');
-        form.submit();
     }
     
     function deactivatedBeaconSubmitted(e) {
@@ -42,8 +45,7 @@ FREE.MainBeacon = (function(){
         
         showFlash();
         
-        timeSet = $('input[name="main-becon"]').val();
-        
+        timeSet = $('input[name="main-beacon"]').val();
         ga('send', 'event', 'beacon', 'illuminate');
         ga('send', 'timing', 'beacon', 'time set', timeSet);
         
