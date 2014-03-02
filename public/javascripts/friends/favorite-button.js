@@ -6,6 +6,7 @@ FREE.FavoriteButton = (function(){
             friendId,
             buttonHtml;
         
+        console.log(this);
         $parent = $(this).parents('li')[0];
         console.log('$parent: ' + $parent);
         friendId = $parent.data('friend-id');
