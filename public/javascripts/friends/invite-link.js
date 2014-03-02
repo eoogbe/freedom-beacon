@@ -35,25 +35,26 @@ FREE.InviteLink = (function(){
     
     function searched() {
         var searchText,
-            searchRegexp;
+            searchRegexp,
+            searchResults;
         
         searchText = $.trim($('input[name="fbFriends-search"]').val());
         if (!searchText) return;
         
         searchRegexp = new RegExp('^' + sanitizeString(searchText), 'i');
         
-        var searchResults = $.grep(fbFriends, function(friend){
+        searchResults = $.grep(fbFriends, function(friend){
             return sanitizeString(friend.name).search(searchRegexp) !== -1;
         });
         
         getFbFriendsHtml(searchResults);
     }
     
-    function registerSearchHandler($inviteFlyout) {
-        $inviteFlyout.on('keyup', 'input[name="fbFriends-search"]', searched);
+    function registerSearchHandler() {
+        $('input[name="fbFriends-search"]').on('input', searched);
     }
     
-    function loadFbFriends($inviteFlyout) {
+    function loadFbFriends() {
         $.getJSON('/fbFriends', {'format': 'json'}, function(data){
             if ($.isEmptyObject(data)) {
                 FB.api('/me/friends', function(response){
@@ -61,12 +62,12 @@ FREE.InviteLink = (function(){
                         console.log(response.error);
                     } else {
                         fbFriends = response.data;
-                        registerSearchHandler($inviteFlyout);
+                        registerSearchHandler();
                     }
                 });
             } else {
                 fbFriends = data.fbFriends;
-                registerSearchHandler($inviteFlyout);
+                registerSearchHandler();
             }
         });
     }
@@ -79,7 +80,7 @@ FREE.InviteLink = (function(){
             $inviteFlyout.show();
             
             addCloseHandler();
-            loadFbFriends($inviteFlyout);
+            loadFbFriends();
         });
     }
     
