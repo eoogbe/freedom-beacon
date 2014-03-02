@@ -11,7 +11,7 @@ exports.post = function(request, response) {
     require('../models/User');
     User = mongoose.model('User');
     
-    console.log(request);
+    console.log('session: ' + request.session);
     
     User.findById(request.session.userId)
         .exec(afterQuery);

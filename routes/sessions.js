@@ -8,12 +8,26 @@ exports.post = function(request, response) {
     require('../models/User');
     var User = mongoose.model('User');
     
-    User.find({'fbId': request.body.fbId})
+    User.findOne({'fbId': request.body.fbId})
         .exec(afterQuery);
     
     function setUserId(user) {
         request.session.userId = user._id;
         response.send(200);
+    }
+    
+    function savePosition(user) {
+        var coords = request.body.coords;
+        user.position =
+        {
+            'latitude': coords.latitude,
+            'longitude': coords.longitude
+        };
+        
+        user.markModified('position');
+        user.save(function(){
+            setUserId(user);
+        });
     }
     
     function getOneMinuteAgo() {
@@ -44,9 +58,9 @@ exports.post = function(request, response) {
         });
     }
     
-    function afterQuery(err, users) {
-        if (users.length > 0) {
-            setUserId(users[0]);
+    function afterQuery(err, user) {
+        if (user) {
+            savePosition(user);
         } else {
             createUser();
         }
