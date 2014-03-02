@@ -11,10 +11,11 @@ exports.post = function(request, response) {
     require('../models/User');
     User = mongoose.model('User');
     
-    console.log('session: ');
+    console.log('session: {');
     for (var i in request.session) {
         console.log(i);
     }
+    console.log('}');
     
     User.findById(request.session.userId)
         .exec(afterQuery);
