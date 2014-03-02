@@ -14,7 +14,7 @@ FREE.FavoriteButton = (function(){
         $.post(url, {'friendId': friendId}, function(){
             buttonHtml = '<button class="' + newButtonKind + '-btn btn btn-default" type="button">' +
                 newButtonKind + '</button>';
-            $parent.html(buttonHtml);
+            $btn.parent().html(buttonHtml);
             
             registerEventHandlers();
         });
