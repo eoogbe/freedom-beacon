@@ -152,6 +152,7 @@ exports.post = function(request, response) {
 };
 
 exports.delete = function(request, response) {
+  console.log('deleting beacon...');
   response.render('partials/main-beacon', {
     'layout': false,
     'timerValue': '0'
