@@ -1,34 +1,37 @@
 {{#if hasFriends}}
     <h2>Free friends</h2>
     {{#if freeFriends}}
-        <table class="free">
+        <ul class="free list-unstyled">
             {{#each freeFriends}}
-            <tr>
-                {{> favorite-button this}}
-                <td class="friend-name">{{name}}</td>
-                <td><a href="{{url}}">Message</a></td>
-            </tr>
-            <tr>
-                <td>&nbsp;</td>
-                {{#if distance}}
-                    {{#with distance}}
-                    <td>
-                        <button class="distance-link btn btn-link" type="button">{{name}} distance</button>
-                        <div class="flyout distance-flyout">
-                            <div class="clearfix">
-                                <button class="close-btn pull-right" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+            <li data-friend-id="{{friendId}}">
+                <div class="row">
+                    {{> favorite-button this}}
+                    <span class="friend-name col-xs-5">{{name}}</span>
+                    <span class="col-xs-4">
+                        <button type="button" class="btn btn-default msg-btn">Message</button>
+                    </span>
+                </div>
+                <div class="row">
+                    {{#if distance}}
+                        {{#with distance}}
+                        <div class="col-xs-5 col-xs-offset-3">
+                            <button class="distance-link btn btn-link" type="button">{{name}} distance</button>
+                            <div class="flyout distance-flyout">
+                                <div class="clearfix">
+                                    <button class="close-btn pull-right" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+                                </div>
+                                {{description}}
                             </div>
-                            {{description}}
                         </div>
-                    </td>
-                    {{/with}}
-                {{else}}
-                    <td>N/A</td>
-                {{/if}}
-                <td>{{time}} min left</td>
-            </tr>
+                        {{/with}}
+                    {{else}}
+                        <span class="col-xs-5 col-xs-offset-3">Distance N/A</span>
+                    {{/if}}
+                    <span class="col-xs-4">{{time}} min left</span>
+                </div>
+            </li>
             {{/each}}
-        </table>
+        </ul>
         <div><button class="invite-link btn btn-link" type="button">Invite more friends</button></div>
         <div class="invite-flyout flyout"></div>
     {{else}}
@@ -39,14 +42,14 @@
     
     <h2>Offline friends</h2>
     {{#if offlineFriends}}
-        <table class="offline">
+        <ul class="offline list-unstyled">
             {{#each offlineFriends}}
-            <tr>
+            <li class="row" data-friend-id="{{friendId}}">
                 {{> favorite-button this}}
-                <td>{{name}}</td>
-            </tr>
+                <span class="col-xs-5 friend-name">{{name}}</span>
+            </li>
             {{/each}}
-        </table>
+        </ul>
     {{else}}
         <p>No friends are offline right now.</p>
     {{/if}}

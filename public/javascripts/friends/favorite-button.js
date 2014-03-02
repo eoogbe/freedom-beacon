@@ -1,10 +1,12 @@
 var FREE = FREE || {};
 
 FREE.FavoriteButton = (function(){
-    function buttonClicked($parent, url, newButtonKind) {
-        var friendId,
+    function buttonClicked(url, newButtonKind) {
+        var $parent,
+            friendId,
             buttonHtml;
         
+        $parent = $(this).parents('li');
         friendId = $parent.data('friend-id');
         
         $.post(url, {'friendId': friendId}, function(){
@@ -17,11 +19,11 @@ FREE.FavoriteButton = (function(){
     }
     
     function favoriteClicked() {
-        buttonClicked($(this).parent(), '/favorites', 'unfavorite');
+        buttonClicked('/favorites', 'unfavorite');
     }
     
     function unfavoriteClicked() {
-        buttonClicked($(this).parent(), '/favorites/delete', 'favorite');
+        buttonClicked('/favorites/delete', 'favorite');
     }
     
     function registerEventHandlers() {

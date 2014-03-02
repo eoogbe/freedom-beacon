@@ -54,11 +54,13 @@ FREE.LoginButton = (function(){
     }
     
     function loginClicked() {
-        FB.login(function(response){
-            if (response.authResponse) {
-                FB.login(function(response) {
-                    addSessionData();
-                }, {'scope': 'read_mailbox'});
+        FB.getLoginStatus(function(response){
+            if (response.status === 'connected') {
+                addSessionData();
+            } else {
+                FB.login(function(response){
+                    if (response.authResponse) addSessionData();
+                });
             }
         });
     }

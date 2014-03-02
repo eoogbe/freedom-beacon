@@ -110,16 +110,8 @@ input[name="header-timer"] {
 	display: none;
 }
 
-.free tr:nth-child(even) {
+.friends > ul > li {
 	border-bottom: 0.1em solid #ddd;
-}
-
-.offline tr {
-	border-bottom: 0.1em solid #ddd;
-}
-
-.friends td {
-	padding: 0 0.5em;
 }
 
 .friend-name {

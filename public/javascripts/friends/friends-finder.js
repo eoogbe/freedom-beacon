@@ -2,39 +2,12 @@ var FREE = FREE || {};
 
 FREE.FriendsFinder = (function(){
 	var users,
-		threads,
 		fbFriends;
-	
-	function hasFriendParticipant(participants, friendId) {
-		for (var i = 0; i < participants.length; ++i) {
-			if (participants[i].id === friendId) return true;
-		}
-		
-		return false;
-	}
-	
-	function getThreadId(friendId) {
-		for (var i = 0; i < threads.length; ++i) {
-			if (hasFriendParticipant(threads[i].participants, friendId)) {
-				return threads[i].id;
-			}
-		}
-		
-		return null;
-	}
-	
-	function getFriendUrl(fbFriend) {
-		var threadId = getThreadId(fbFriend.id);
-		return threadId
-			? 'https://m.facebook.com/messages/read/?tid=' + threadId
-			: 'https://facebook.com/messages/' + fbFriend.username;
-	}
 	
     function getFreeFriendData(friend, fbFriend) {
         return {
 			'friendId': friend.fbId,
 			'name': friend.name,
-			'url': getFriendUrl(fbFriend),
 			'distance': friend.distance,
 			'time': friend.time,
 			'isFavorite': friend.isFavorite
@@ -90,9 +63,8 @@ FREE.FriendsFinder = (function(){
 		return friends;
 	}
 	
-	function init(u, t, f) {
+	function init(u, f) {
 		users = u;
-		threads = t;
 		fbFriends = f;
 	}
     

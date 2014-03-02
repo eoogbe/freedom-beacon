@@ -24,16 +24,17 @@ FREE.FriendsList = (function(){
 		
 		registerModuleEventHandlers(FREE.DistanceFlyout);
 		registerModuleEventHandlers(FREE.FavoriteButton);
+		registerModuleEventHandlers(FREE.MessageButton);
 		registerModuleEventHandlers(FREE.InviteLink);
 	}
 	
-	function getUsers(fbFriends, threads) {
+	function getUsers(fbFriends) {
 		$.getJSON('/users', {'requestor': 'jquery'}, function(data){
 			var users,
 				friends;
 			
 			users = data.users ? data.users : [];
-			friends = findFriends(users, threads, fbFriends);
+			friends = findFriends(users, fbFriends);
 			friends.hasFriends = friends.freeFriends.length > 0
 				|| friends.offlineFriends.length > 0;
 			
@@ -44,20 +45,12 @@ FREE.FriendsList = (function(){
 		});
 	}
 	
-	function loadThreads(fbFriends) {
-		FB.api('/me/inbox', function(response){
-			var data = {'fbFriends': fbFriends, 'threads': []};
-			if (!response.error) data.threads = response.data;
-			getUsers(fbFriends, data.threads);
-		});
-	}
-	
 	function loadFbFriends() {
 		FB.api('/me/friends?fields=id,name,username', function(response){
 			if (response.error) {
 				console.log(response.error);
 			} else {
-				loadThreads(response.data);
+				getUsers(response.data);
 			}
 		});
 	}
