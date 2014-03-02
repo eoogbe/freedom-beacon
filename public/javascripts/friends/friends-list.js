@@ -12,6 +12,19 @@ FREE.FriendsList = (function(){
 		return friendsFinder.findFriends();
 	}
 	
+	// The query will convert false into a string that Handlebars will
+	// treat as truthy, so we need to replace the boolean with an empty
+	// string which is falsy.
+	function convertToHandlebarsFalse(bool) {
+		return bool ? true : '';
+	}
+	
+	function addHasFriends(friends) {
+		var hasFriends = friends.freeFriends.length > 0
+			|| friends.offlineFriends.length > 0;
+		friends.hasFriends = convertToHandlebarsFalse(hasFriends);
+	}
+	
 	function registerModuleEventHandlers(module) {
 		module.init();
 		module.registerEventHandlers();
@@ -35,8 +48,7 @@ FREE.FriendsList = (function(){
 			
 			users = data.users ? data.users : [];
 			friends = findFriends(users, fbFriends);
-			friends.hasFriends = friends.freeFriends.length > 0
-				|| friends.offlineFriends.length > 0;
+			addHasFriends(friends);
 			
 			$.get('/friends', friends, function(data){
 				showFriends(data);

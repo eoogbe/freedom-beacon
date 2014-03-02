@@ -7,9 +7,7 @@ FREE.FavoriteButton = (function(){
             buttonHtml;
         
         $parent = $($btn.parents('li')[0]);
-        console.log('$parent: ' + $parent);
         friendId = $parent.data('friend-id');
-        console.log('friendId: ' + friendId)
         
         $.post(url, {'friendId': friendId}, function(){
             buttonHtml = '<button class="' + newButtonKind + '-btn btn btn-default" type="button">' +

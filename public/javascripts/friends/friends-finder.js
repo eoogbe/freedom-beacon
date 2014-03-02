@@ -4,6 +4,13 @@ FREE.FriendsFinder = (function(){
 	var users,
 		fbFriends;
 	
+	// The query will convert false into a string that Handlebars will
+	// treat as truthy, so we need to replace the boolean with an empty
+	// string which is falsy.
+	function convertToHandlebarsFalse(bool) {
+		return bool ? true : '';
+	}
+	
     function getFreeFriendData(friend, fbFriend) {
         return {
 			'friendId': friend.userId,
@@ -11,7 +18,7 @@ FREE.FriendsFinder = (function(){
 			'name': friend.name,
 			'distance': friend.distance,
 			'time': friend.time,
-			'isFavorite': friend.isFavorite
+			'isFavorite': convertToHandlebarsFalse(friend.isFavorite)
 		};
     }
     
@@ -19,7 +26,7 @@ FREE.FriendsFinder = (function(){
 		return {
 			'friendId': friend.userId,
 			'name': friend.name,
-			'isFavorite': friend.isFavorite
+			'isFavorite': convertToHandlebarsFalse(friend.isFavorite)
 		};
 	}
 	
