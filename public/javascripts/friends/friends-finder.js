@@ -6,7 +6,8 @@ FREE.FriendsFinder = (function(){
 	
     function getFreeFriendData(friend, fbFriend) {
         return {
-			'friendId': friend.fbId,
+			'friendId': friend.userId,
+			'fbId': friend.fbId,
 			'name': friend.name,
 			'distance': friend.distance,
 			'time': friend.time,
@@ -16,7 +17,7 @@ FREE.FriendsFinder = (function(){
     
     function getOfflineFriendData(friend) {
 		return {
-			'friendId': friend.fbId,
+			'friendId': friend.userId,
 			'name': friend.name,
 			'isFavorite': friend.isFavorite
 		};

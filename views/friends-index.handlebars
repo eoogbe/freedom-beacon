@@ -3,7 +3,7 @@
     {{#if freeFriends}}
         <ul class="free list-unstyled">
             {{#each freeFriends}}
-            <li data-friend-id="{{friendId}}">
+            <li data-friend-id="{{friendId}}" data-fb-id="{{fbId}}">
                 <div class="row">
                     {{> favorite-button this}}
                     <span class="friend-name col-xs-5">{{name}}</span>
@@ -44,7 +44,7 @@
     {{#if offlineFriends}}
         <ul class="offline list-unstyled">
             {{#each offlineFriends}}
-            <li class="row" data-friend-id="{{friendId}}">
+            <li class="row" data-friend-id="{{friendId}}" data-fb-id="{{fbId}}">
                 {{> favorite-button this}}
                 <span class="col-xs-5 friend-name">{{name}}</span>
             </li>
