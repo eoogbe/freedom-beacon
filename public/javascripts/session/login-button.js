@@ -13,7 +13,7 @@ FREE.LoginButton = (function(){
     function afterPost() {
         var url = FREE.Url;
         url.init();
-        //url.redirect('/beacons/create');
+        url.redirect('/beacons/create');
     }
     
     function loadFbData(coords) {
