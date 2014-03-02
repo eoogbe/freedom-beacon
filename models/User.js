@@ -24,14 +24,7 @@ UserSchema = new mongoose.Schema({
     'fbId': Number,
     'beacon': {'type': Mixed, 'validate': validateBeaconDuration},
     'favorites': [{'type': ObjectId, 'ref': 'User'}],
-    'position': {'latitude': Number, 'longitude': Number},
-    'fbFriends': [{'id': Number, 'name': String, 'username': String}],
-    'threads': [
-        {
-            'id': Number,
-            'participants': [{'id': Number}]
-        }
-    ]
+    'position': {'latitude': Number, 'longitude': Number}
 });
 
 function addMinutes(date, min) {

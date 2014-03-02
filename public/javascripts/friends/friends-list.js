@@ -47,14 +47,8 @@ FREE.FriendsList = (function(){
 	function loadThreads(fbFriends) {
 		FB.api('/me/inbox', function(response){
 			var data = {'fbFriends': fbFriends, 'threads': []};
-			
-			if (!response.error) {
-				data.threads = response.data;
-			}
-			
-			$.post('/fbFriends', data, function(){
-				getUsers(fbFriends, data.threads);
-			});
+			if (!response.error) data.threads = response.data;
+			getUsers(fbFriends, data.threads);
 		});
 	}
 	
@@ -70,14 +64,7 @@ FREE.FriendsList = (function(){
 	
 	function loadFriends() {
 		showFlash();
-		
-		$.getJSON('/fbFriends', {'format': 'json'}, function(data){
-			if ($.isEmptyObject(data)) {
-				loadFbFriends();
-			} else {
-				getUsers(data.fbFriends, data.threads);
-			}
-		});
+		loadFbFriends();
 	}
 	
     return {
