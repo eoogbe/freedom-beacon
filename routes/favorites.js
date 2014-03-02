@@ -2,12 +2,17 @@
  * the routes for the favorites resource.
  */
 
-var mongoose = require('mongoose');
+exports.post = function(request, response) {
+    var mongoose,
+        User;
+    
+    mongoose = require('mongoose');
 
-require('../models/User');
-var User = mongoose.model('User');
-
-exports.post = function(request, response) {    
+    require('../models/User');
+    User = mongoose.model('User');
+    
+    console.log(request);
+    
     User.findById(request.session.userId)
         .exec(afterQuery);
     
@@ -20,6 +25,14 @@ exports.post = function(request, response) {
 };
 
 exports.delete = function(request, response) {
+    var mongoose,
+        User;
+    
+    mongoose = require('mongoose');
+
+    require('../models/User');
+    User = mongoose.model('User');
+    
     User.findById(request.session.userId)
         .exec(afterQuery);
     
