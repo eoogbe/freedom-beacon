@@ -25,6 +25,23 @@ h1 > small {
 	margin: 0;
 }
 
+.favorite-btn, 
+.unfavorite-btn{
+	color: #FF0F53;
+	background: none;
+	border: none;
+}
+
+.favorite-btn:active, 
+.favorite-btn:hover,
+.unfavorite-btn:active,
+.unfavorite-btn:hover{
+	background: none;
+	border: none;
+}
+
+
+
 .flash {
 	display: none;
 	position: absolute;
