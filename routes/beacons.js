@@ -136,18 +136,22 @@ exports.post = function(request, response) {
   }
   
   function afterQuery(err, user) {
-    user.beacon =
-    {
-      'duration': request.body['main-beacon'],
-      'timeSet': new Date(Date.now())
-    };
-    
-    if (isIlluminatedBeacon(user.beacon)) {
-      zeroDuration(user.beacon);
+    if (user) {
+      user.beacon =
+      {
+        'duration': request.body['main-beacon'],
+        'timeSet': new Date(Date.now())
+      };
+      
+      if (isIlluminatedBeacon(user.beacon)) {
+        zeroDuration(user.beacon);
+      }
+      
+      user.markModified('beacon');
+      user.save(afterSave);
+    } else {
+      response.render('beacons-create', getBeaconData());
     }
-    
-    user.markModified('beacon');
-    user.save(afterSave);
   }
 };
 
