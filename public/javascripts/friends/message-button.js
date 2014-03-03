@@ -62,7 +62,12 @@ FREE.MessageButton = (function(){
     }
     
     function messageClicked() {
-        var friendId = $(this).parents('li').data('fb-id');
+        var $parent,
+            friendId;
+        
+        $parent = $($(this).parents('li')[0]);
+        console.log($parent);
+        friendId = $parent.data('fb-id');
         
         FB.login(function(response){
             showFlash();

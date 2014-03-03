@@ -40,8 +40,6 @@ h1 > small {
 	border: none;
 }
 
-
-
 .flash {
 	display: none;
 	position: absolute;
@@ -108,7 +106,6 @@ h1 > small {
 }
 
 button[name="login"] {
-	margin: auto auto;
 	background-color: #4c66a4;
 	color: #fff;
 	border: 0.1em solid #ccc;
