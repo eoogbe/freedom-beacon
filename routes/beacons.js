@@ -29,7 +29,8 @@ function getBeaconData(user) {
       : getDeactivatedBeaconData();
   } else {
     data = getDeactivatedBeaconData();
-    data.error = 'You have not logged in';
+    data.error = 'You have not';
+    data.errorLink = 'logged in'
   }
   
   data.isExperiment = true;

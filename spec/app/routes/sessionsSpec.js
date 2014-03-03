@@ -11,7 +11,8 @@ describe('sessions', function(){
     
     describe('post()', function(){
         var mongoose,
-            User;
+            User,
+            user;
         
         mongoose = require('mongoose');
         
@@ -20,6 +21,7 @@ describe('sessions', function(){
         
         beforeEach(function(){
             response = copy(helper.response);
+            
             request =
             {
                 'session': {},
@@ -30,13 +32,19 @@ describe('sessions', function(){
                     'coords': {'latitude': 1.0, 'longitude': 2.5}
                 }
             };
+            
+            user = jasmine.createSpyObj('user', ['markModified', 'save']);
+            user._id = helper.ids.user0;
+            user.save.andCallFake(function(done){
+                done();
+            });
         });
         
         describe('with an existing user', function(){
             beforeEach(function(){
-                spyOn(User, 'find').andReturn({
+                spyOn(User, 'findOne').andReturn({
                     'exec': function(done){
-                        done(null, [{'_id': helper.ids.user0}]);
+                        done(null, user);
                     }
                 });
                 
@@ -44,7 +52,7 @@ describe('sessions', function(){
             });
             
             it('should find the user with the Facebook id from the request body', function(){
-                expect(User.find).toHaveBeenCalledWith({'fbId': '0'});
+                expect(User.findOne).toHaveBeenCalledWith({'fbId': '0'});
             });
             
             it('should set request.session.userId to the user\'s id', function(){
@@ -58,15 +66,19 @@ describe('sessions', function(){
         
         describe('with a new user', function(){
             beforeEach(function(){
-                spyOn(User, 'find').andReturn({
+                spyOn(User, 'findOne').andReturn({
                     'exec': function(done){
-                        done(null, []);
+                        done();
                     }
+                });
+                
+                spyOn(User, 'create').andCallFake(function(data, done){
+                    done(null, user);
                 });
             });
             
             it('should create a new user in the database', function(){
-                spyOn(User, 'create').andCallFake(function(data, done){
+                User.create.andCallFake(function(data, done){
                     expect(data.fbId).toBe('0');
                     expect(data.name).toBe('thename');
                     
@@ -76,7 +88,7 @@ describe('sessions', function(){
                     expect(data.position.latitude).toBe(1.0);
                     expect(data.position.longitude).toBe(2.5);
                     
-                    done(null, {'_id': helper.ids.user0});
+                    done(null, user);
                 }); 
                 
                 sessions.post(request, response);
@@ -84,19 +96,11 @@ describe('sessions', function(){
             });
             
             it('should set request.session.userId to the user\'s id', function(){
-                spyOn(User, 'create').andCallFake(function(data, done){
-                    done(null, {'_id': helper.ids.user0});
-                });
-                
                 sessions.post(request, response);
                 expect(request.session.userId).toBe(helper.ids.user0);
             });
             
             it('should send the ok status', function(){
-                spyOn(User, 'create').andCallFake(function(data, done){
-                    done(null, {'_id': helper.ids.user0});
-                });
-                
                 sessions.post(request, response);
                 expect(response.sent).toBe(200);
             });

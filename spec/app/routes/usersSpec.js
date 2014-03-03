@@ -40,7 +40,7 @@ describe('users', function(){
                             new ObjectId(helper.ids.user3)
                         ],
                         
-                        'distance': {'name': 'dist', 'description': 'desc'}
+                        'position': {'latitude': 1.0, 'longitude': 2.5}
                     };
                     
                     return done(null, user);
@@ -52,7 +52,7 @@ describe('users', function(){
                     '_id': helper.ids.user1,
                     'name': 'user1',
                     'fbId': 1,
-                    'distance': {'name': 'dist', 'description': 'desc'},
+                    'position': {'latitude': 1.0, 'longitude': 2.5},
                     'getTimeLeft': function() {return 8; },
                     'isFree': function() {return true;}
                 },
@@ -116,6 +116,7 @@ describe('users', function(){
             users.index(request, response);
             
             var usersJson = response.data.users;
+            expect(usersJson[0].userId).toBe(helper.ids.user1);
             expect(usersJson[0].name).toBe('user1');
             expect(usersJson[0].fbId).toBe(1);
             expect(usersJson[0].distance).toEqual({'name': 'dist', 'description': 'desc'});
@@ -123,6 +124,7 @@ describe('users', function(){
             expect(usersJson[0].isFree).toBe(true);
             expect(usersJson[0].isFavorite).toBe(false);
             
+            expect(usersJson[1].userId).toBe(helper.ids.user2);
             expect(usersJson[1].name).toBe('user2');
             expect(usersJson[1].fbId).toBe(2);
             expect(usersJson[1].distance).toBeNull();
@@ -135,11 +137,13 @@ describe('users', function(){
             users.index(request, response);
             
             var usersJson = response.data.users;
+            expect(usersJson[2].userId).toBe(helper.ids.user3);
             expect(usersJson[2].name).toBe('user3');
             expect(usersJson[2].fbId).toBe(3);
             expect(usersJson[2].isFree).toBe(false);
             expect(usersJson[2].isFavorite).toBe(true);
             
+            expect(usersJson[3].userId).toBe(helper.ids.user4);
             expect(usersJson[3].name).toBe('user4');
             expect(usersJson[3].fbId).toBe(4);
             expect(usersJson[3].isFree).toBe(false);

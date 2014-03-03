@@ -25,6 +25,7 @@ FREE.FriendsFinder = (function(){
     function getOfflineFriendData(friend) {
 		return {
 			'friendId': friend.userId,
+			'fbId': friend.fbId,
 			'name': friend.name,
 			'isFavorite': convertToHandlebarsFalse(friend.isFavorite)
 		};

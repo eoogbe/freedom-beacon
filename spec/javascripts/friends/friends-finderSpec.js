@@ -1,8 +1,7 @@
-describe('FriendData', function(){
+describe('FriendFinder', function(){
     describe('findFriends()', function(){
         beforeEach(function(){
             var fbFriends,
-                threads,
                 users,
                 friendsFinder;
             
@@ -14,25 +13,10 @@ describe('FriendData', function(){
                 {'id': 6, 'username': 'uname6'}
             ];
             
-            threads = [
-                {
-                    'id': 10,
-                    'participants': [{'id': 0}, {'id': 1}]
-                },
-                {
-                    'id': 11,
-                    'participants': [{'id': 0}, {'id': 5}]
-                },
-                {
-                    'id': 12,
-                    'participants': [{'id': 0}, {'id': 6}]
-                }
-            ];
-            
             users = getJSONFixture('users.json').users;
             
             friendsFinder = FREE.FriendsFinder;
-            friendsFinder.init(users, threads, fbFriends);
+            friendsFinder.init(users, fbFriends);
             
             this.friends = friendsFinder.findFriends();
         });
@@ -53,7 +37,11 @@ describe('FriendData', function(){
             });
             
             it('should have the user id', function(){
-                expect(this.friend.friendId).toBe(1);
+                expect(this.friend.friendId).toBe("000000000000000000000001");
+            });
+            
+            it('should have the Facebook id', function(){
+                expect(this.friend.fbId).toBe(1);
             });
             
             it('should have the name', function(){
@@ -70,26 +58,7 @@ describe('FriendData', function(){
             });
             
             it('should have isFavorite', function(){
-                expect(this.friend.isFavorite).toBe(false);
-            });
-            
-            describe('when has thread', function(){
-                it('should have a thread url', function(){
-                    var url = 'https://m.facebook.com/messages/read/?tid=10';
-                    expect(this.friend.url).toBe(url);
-                });
-            });
-            
-            describe('when doesn\'t have thread', function(){
-                it('should have the messages url', function(){
-                    var friend,
-                        url;
-                    
-                    friend = this.friends.freeFriends[0];
-                    url = 'https://facebook.com/messages/uname2';
-                    
-                    expect(friend.url).toBe(url);
-                });
+                expect(this.friend.isFavorite).toBe('');
             });
         });
         
@@ -99,7 +68,11 @@ describe('FriendData', function(){
             });
             
             it('should have the user id', function(){
-                expect(this.friend.friendId).toBe(5);
+                expect(this.friend.friendId).toBe("000000000000000000000005");
+            });
+            
+            it('should have the Facebook id', function(){
+                expect(this.friend.fbId).toBe(5);
             });
             
             it('should have the name', function(){

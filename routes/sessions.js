@@ -3,10 +3,13 @@
  */
 
 exports.post = function(request, response) {
-    var mongoose = require('mongoose');
+    var mongoose,
+        User;
+    
+    mongoose = require('mongoose');
     
     require('../models/User');
-    var User = mongoose.model('User');
+    User = mongoose.model('User');
     
     User.findOne({'fbId': request.body.fbId})
         .exec(afterQuery);

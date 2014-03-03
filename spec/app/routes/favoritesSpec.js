@@ -52,8 +52,16 @@ describe('favorites', function(){
             expect(user.save).toHaveBeenCalled();
         });
         
-        it('should send a 200 status', function(){
-            expect(response.sent).toBe(200);
+        it('should render the favorite-button partial', function(){
+            expect(response.view).toBe('partials/favorite-button');
+        });
+        
+        it('should not render the layout', function(){
+            expect(response.data.layout).toBe(false);
+        });
+        
+        it('should set isFavorite to be true', function(){
+            expect(response.data.isFavorite).toBe(true);
         });
     });
     
@@ -76,8 +84,16 @@ describe('favorites', function(){
             expect(user.save).toHaveBeenCalled();
         });
         
-        it('should send a 200 status code', function(){
-            expect(response.sent).toBe(200);
+        it('should render the favorite-button partial', function(){
+            expect(response.view).toBe('partials/favorite-button');
+        });
+        
+        it('should not render the layout', function(){
+            expect(response.data.layout).toBe(false);
+        });
+        
+        it('should set isFavorite to be false', function(){
+            expect(response.data.isFavorite).toBe(false);
         });
     });
 });
