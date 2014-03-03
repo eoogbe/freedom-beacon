@@ -40,7 +40,7 @@ exports.index = function(request, response) {
         var distance,
             typeIdx;
         
-        if (curUser.distance && user.distance) {
+        if (curUser.position && user.position) {
             distance = Distance.calculate(user, curUser);
             typeIdx = getDistanceType(distance);
             

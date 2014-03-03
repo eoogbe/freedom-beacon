@@ -8,7 +8,7 @@ exports.index = function(request, response) {
   
   copy = require('../lib/copy').copy;
   
-  if (!request.query.hasFriends) {
+  if (typeof request.query.hasFriends === 'undefined') {
     response.redirect('/');
   } else {
     data = copy(request.query);

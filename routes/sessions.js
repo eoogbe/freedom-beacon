@@ -16,14 +16,21 @@ exports.post = function(request, response) {
         response.send(200);
     }
     
-    function savePosition(user) {
+    function getPosition() {
         var coords = request.body.coords;
-        user.position =
-        {
-            'latitude': coords.latitude,
-            'longitude': coords.longitude
-        };
         
+        if (coords) {
+            return {
+                'latitude': coords.latitude,
+                'longitude': coords.longitude
+            };
+        } else {
+            return null;
+        }
+    }
+    
+    function savePosition(user) {
+        user.position = getPosition();
         user.markModified('position');
         user.save(function(){
             setUserId(user);
@@ -36,21 +43,12 @@ exports.post = function(request, response) {
     }
     
     function createUser() {
-        var userData,
-            coords;
-        
-        coords = request.body.coords;
-        
-        userData =
+        var userData =
         {
             'fbId': request.body.fbId,
             'name': request.body.name,
             'beacon': {'duration': 1, 'timeSet': getOneMinuteAgo()},
-            'position':
-            {
-                'latitude': coords.latitude,
-                'longitude': coords.longitude
-            }
+            'position': getPosition()
         };
         
         User.create(userData, function(err, user){
