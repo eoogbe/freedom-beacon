@@ -5,7 +5,9 @@
             {{#each freeFriends}}
             <li data-friend-id="{{friendId}}" data-fb-id="{{fbId}}">
                 <div class="row">
-                    {{> favorite-button this}}
+                    <span class="col-xs-3">
+                        {{> favorite-button this}}
+                    </span>
                     <span class="friend-name col-xs-5">{{name}}</span>
                     <span class="col-xs-4">
                         <button type="button" class="btn btn-default msg-btn">Message</button>
@@ -75,7 +77,9 @@
         <ul class="offline list-unstyled">
             {{#each offlineFriends}}
             <li class="row" data-friend-id="{{friendId}}" data-fb-id="{{fbId}}">
-                {{> favorite-button this}}
+                <span class="col-xs-3">
+                    {{> favorite-button this}}
+                </span>
                 <span class="col-xs-5 friend-name">{{name}}</span>
             </li>
             {{/each}}
