@@ -29,7 +29,7 @@ FREE.MainBeacon = (function(){
                 timeSpent = data.duration - min;
                 if (sec > 0) --timeSpent;
                 
-                ga('send', 'timing', 'beacon', 'duration', timeSpent);
+                ga('send', 'timing', 'beacon', 'duration', timeSpent * 60000);
             }
             
             ga('send', 'event', 'beacon', 'deactivate');
@@ -47,7 +47,7 @@ FREE.MainBeacon = (function(){
         
         timeSet = $('input[name="main-beacon"]').val();
         ga('send', 'event', 'beacon', 'illuminate');
-        ga('send', 'timing', 'beacon', 'time set', timeSet);
+        ga('send', 'timing', 'beacon', 'time set', timeSet * 60000);
         
         form.submit();
     }

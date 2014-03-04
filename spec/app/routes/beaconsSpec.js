@@ -61,6 +61,10 @@ describe('beacons', function(){
                 expect(response.data.isDeactivated).toBe(true);
             });
             
+            it('should set the userTime to 30', function(){
+                expect(response.data.userTime).toBe('30');
+            });
+            
             it('should set the timer value to 30', function(){
                 expect(response.data.timerValue).toBe('30');
             });

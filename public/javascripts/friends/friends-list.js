@@ -6,9 +6,9 @@ FREE.FriendsList = (function(){
 		$('.flash').show();
 	}
 	
-	function findFriends(users, threads, fbFriends) {
+	function findFriends(users, fbFriends) {
 		var friendsFinder = FREE.FriendsFinder;
-		friendsFinder.init(users, threads, fbFriends);
+		friendsFinder.init(users, fbFriends);
 		return friendsFinder.findFriends();
 	}
 	

@@ -23,18 +23,6 @@ describe('FavoriteButton', function(){
                 
                 expect(jQuery.post).toHaveBeenCalled();
             });
-            
-            it('should replace the buton with an unfavorite button', function(){
-                spyOn(jQuery, 'post').and.callFake(function(url, data, done){
-                    done();
-                });
-                
-                this.favoriteButton.registerEventHandlers();
-                $('.favorite-btn').click();
-                
-                expect($('.favorite-btn')).not.toExist();
-                expect($('.unfavorite-btn')).toExist();
-            });
         });
         
         describe('when unfavoriting', function(){
@@ -54,18 +42,6 @@ describe('FavoriteButton', function(){
                 $('.unfavorite-btn').click();
                 
                 expect(jQuery.post).toHaveBeenCalled();
-            });
-            
-            it('should replace the buton with a favorite button', function(){
-                spyOn(jQuery, 'post').and.callFake(function(url, data, done){
-                    done();
-                });
-                
-                this.favoriteButton.registerEventHandlers();
-                $('.unfavorite-btn').click();
-                
-                expect($('.unfavorite-btn')).not.toExist();
-                expect($('.favorite-btn')).toExist();
             });
         });
     });

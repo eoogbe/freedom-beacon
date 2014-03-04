@@ -1,6 +1,7 @@
 {
     "users": [
         {
+            "userId": "000000000000000000000001",
             "name": "user1",
             "fbId": 1,
             "distance": {"name": "dist", "description": "desc"},
@@ -9,6 +10,7 @@
             "isFavorite": false
         },
         {
+            "userId": "000000000000000000000002",
             "name": "user2",
             "fbId": 2,
             "distance": {"name": "dist2", "description": "desc2"},
@@ -17,18 +19,21 @@
             "isFavorite": true
         },
         {
+            "userId": "000000000000000000000003",
             "name": "user3",
             "fbId": 3,
             "isFree": false,
             "isFavorite": false
         },
         {
+            "userId": "000000000000000000000004",
             "name": "user4",
             "fbId": 4,
             "isFree": false,
             "isFavorite": false
         },
         {
+            "userId": "000000000000000000000005",
             "name": "user5",
             "fbId": 5,
             "isFree": false,

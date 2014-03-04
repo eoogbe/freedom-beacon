@@ -38,6 +38,13 @@ describe('LoginButton', function(){
             this.loginButton.init();
         });
         
+        it('should check the login status', function(){
+            this.loginButton.registerEventHandlers();
+            $('button[name="login"]').click();
+            
+            expect(FB.getLoginStatus).toHaveBeenCalled();
+        });
+        
         it('should watch the position', function(){
             this.loginButton.registerEventHandlers();
             $('button[name="login"]').click();
@@ -110,11 +117,6 @@ describe('LoginButton', function(){
             });
             
             it('should log in', function(){
-                FB.login.and.callFake(function(fn, permissions){
-                    expect(permissions).toEqual({'scope': 'read_mailbox'});
-                    fn({'authResponse': true});
-                });
-                
                 this.loginButton.registerEventHandlers();
                 $('button[name="login"]').click();
                 

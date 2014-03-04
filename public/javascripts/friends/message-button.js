@@ -12,6 +12,19 @@ FREE.MessageButton = (function(){
         urlNav.redirect(msgUrl);
     }
     
+    function getUsername(fbId) {
+        FB.api('/' + fbId, function(response){
+            var msgUrl;
+            
+            if (response.error) {
+                console.log(response.error);
+            } else {
+                msgUrl = 'https://facebook.com/messages/' + response.username;
+                goToMessage(msgUrl);
+            }
+        });
+    }
+    
 	function hasFriendParticipant(participants, friendId) {
 		for (var i = 0; i < participants.length; ++i) {
 			if (participants[i].id === friendId) return true;
@@ -48,25 +61,16 @@ FREE.MessageButton = (function(){
         });
     }
     
-    function getUsername(fbId) {
-        FB.api('/' + fbId, function(response){
-            var msgUrl;
-            
-            if (response.error) {
-                console.log(response.error);
-            } else {
-                msgUrl = 'https://facebook.com/messages/' + response.username;
-                goToMessage(msgUrl);
-            }
-        });
-    }
-    
     function messageClicked() {
-        var friendId = $(this).parents('li').data('fb-id');
+        var $parent,
+            friendId;
+        
+        showFlash();
+        
+        $parent = $($(this).parents('li')[0]);
+        friendId = $parent.data('fb-id');
         
         FB.login(function(response){
-            showFlash();
-            
             if (response.authResponse) {
                 loadThreads(friendId);
             } else {

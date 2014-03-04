@@ -17,7 +17,10 @@ exports.post = function(request, response) {
     function afterQuery(err, user) {
         user.favorites.push(request.body.friendId);
         user.save(function(){
-            response.send(200);
+            response.render('partials/favorite-button', {
+                'layout': false,
+                'isFavorite': true
+            });
         });
     }
 };
@@ -39,7 +42,10 @@ exports.delete = function(request, response) {
         user.favorites.splice(index, 1);
         
         user.save(function(){
-            response.send(200);
+            response.render('partials/favorite-button', {
+                'layout': false,
+                'isFavorite': false
+            });
         });
     }
 };

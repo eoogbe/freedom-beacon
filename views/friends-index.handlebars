@@ -5,7 +5,9 @@
             {{#each freeFriends}}
             <li data-friend-id="{{friendId}}" data-fb-id="{{fbId}}">
                 <div class="row">
-                    {{> favorite-button this}}
+                    <span class="col-xs-3">
+                        {{> favorite-button this}}
+                    </span>
                     <span class="friend-name col-xs-5">{{name}}</span>
                     <span class="col-xs-4">
                         <button type="button" class="btn btn-default msg-btn">Message</button>
@@ -15,10 +17,20 @@
                     {{#if distance}}
                         {{#with distance}}
                         <div class="col-xs-5 col-xs-offset-3">
-                            <button class="distance-link btn btn-link" type="button">{{name}} distance</button>
-                            <div class="flyout distance-flyout">
+                            <button
+                                    class="distance-link btn btn-link"
+                                    type="button"
+                                    aria-haspopup="true"
+                                    aria-controls="dist_{{friendId}}"
+                            >
+                                {{name}} distance
+                            </button>
+                            <div class="flyout distance-flyout" id="dist_{{friendId}}">
                                 <div class="clearfix">
-                                    <button class="close-btn pull-right" type="button"><span class="glyphicon glyphicon-remove"></span> close</button>
+                                    <button class="close-btn pull-right" type="button">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        close
+                                    </button>
                                 </div>
                                 {{description}}
                             </div>
@@ -32,12 +44,32 @@
             </li>
             {{/each}}
         </ul>
-        <div><button class="invite-link btn btn-link" type="button">Invite more friends</button></div>
-        <div class="invite-flyout flyout"></div>
+        <div class="js-invite-link-holder">
+            <button
+                    class="invite-link btn btn-link"
+                    type="button"
+                    aria-haspopup="true"
+                    aria-controls="more-invite"
+            >
+                Invite more friends
+            </button>
+        </div>
+        <div class="invite-flyout flyout" id="more-invite"></div>
     {{else}}
         <p>None of your Facebook friends are free.</p>
-        <p>Would you like to <button class="invite-link btn btn-link" type="button">invite more friends</button>?</p>
-        <div class="invite-flyout flyout"></div>
+        <p>
+            Would you like to
+            <button
+                    class="invite-link btn btn-link"
+                    type="button"
+                    aria-haspopup="true"
+                    aria-controls="free-invite"
+            >
+                invite more friends
+            </button>
+            ?
+        </p>
+        <div class="invite-flyout flyout" id="free-invite"></div>
     {{/if}}
     
     <h2>Offline friends</h2>
@@ -45,7 +77,9 @@
         <ul class="offline list-unstyled">
             {{#each offlineFriends}}
             <li class="row" data-friend-id="{{friendId}}" data-fb-id="{{fbId}}">
-                {{> favorite-button this}}
+                <span class="col-xs-3">
+                    {{> favorite-button this}}
+                </span>
                 <span class="col-xs-5 friend-name">{{name}}</span>
             </li>
             {{/each}}
@@ -55,6 +89,17 @@
     {{/if}}
 {{else}}
     <p>None of your Facebook friends are on Freedom Beacon.</p>
-    <p>Would you like to <button class="invite-link btn btn-link" type="button">invite them</button>?</p>
-    <div class="invite-flyout flyout"></div>
+    <p>
+        Would you like to
+        <button
+                class="invite-link btn btn-link"
+                type="button"
+                aria-haspopup="true"
+                aria-controls="none-invite"
+        >
+            invite them
+        </button>
+        ?
+    </p>
+    <div class="invite-flyout flyout" id="none-invite"></div>
 {{/if}}

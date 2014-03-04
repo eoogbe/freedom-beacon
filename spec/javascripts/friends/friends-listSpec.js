@@ -8,27 +8,11 @@ describe('FriendsList', function(){
             
             FB = jasmine.createSpyObj('FB', ['api']);
             FB.api.and.callFake(function(path, done){
-                if (path === '/me/friends?fields=id,name,username') {
-                    done({'data': 'fbFriends'});
-                } else if (path === '/me/inbox') {
-                    done({'data': 'threads'});
-                }
+                done({'data': 'fbFriends'});
             });
             
             spyOn(jQuery, 'getJSON').and.callFake(function(url, data, done){
-                var fbFriendData;
-                
-                if (url === '/fbFriends') {
-                    fbFriendsData =
-                    {
-                        'fbFriends': 'fbFriends',
-                        'threads': 'threads'
-                    };
-                    
-                    done(fbFriendsData);
-                } else if (url === '/users') {
-                    done({'users': 'users'});
-                }
+                done({'users': 'users'});
             });
             
             spyOn(FREE.FriendsFinder, 'init');
@@ -37,7 +21,7 @@ describe('FriendsList', function(){
                 'offlineFriends': ['friend2']
             });
             
-            friendsHtml = '<table class="free"><tr><td>user1</td></tr></table>'+
+            friendsHtml = '<ul class="free"><li>user1</li></ul>'+
                 '<ul class="offline"><li>user2</li></ul>';
             
             spyOn(jQuery, 'get').and.callFake(function(url, data, done){
@@ -50,6 +34,7 @@ describe('FriendsList', function(){
             
             spyOn(FREE.DistanceFlyout, 'registerEventHandlers');
             spyOn(FREE.FavoriteButton, 'registerEventHandlers');
+            spyOn(FREE.MessageButton, 'registerEventHandlers');
             spyOn(FREE.InviteLink, 'registerEventHandlers');
             
             this.friendsList = FREE.FriendsList;
@@ -58,30 +43,20 @@ describe('FriendsList', function(){
         
         it('should get all the users', function(){
             jQuery.getJSON.and.callFake(function(url, data, done){
-                var fbFriendData;
-                
-                if (url === '/fbFriends') {
-                    fbFriendsData =
-                    {
-                        'fbFriends': 'fbFriends',
-                        'threads': 'threads'
-                    };
-                    
-                    done(fbFriendsData);
-                } else if (url === '/users') {
-                    expect(data).toEqual({'requestor': 'jquery'});
-                    done({'users': 'users'});
-                }
+                expect(data).toEqual({'requestor': 'jquery'});
+                done({'users': 'users'});
             });
             
             this.friendsList.loadFriends();
             
-            expect(jQuery.getJSON.calls.count()).toBe(2);
+            expect(jQuery.getJSON).toHaveBeenCalled();
         });
         
         it('should get the friend html from /friends', function(){
             jQuery.get.and.callFake(function(url, data, done){
                 expect(url).toBe('/friends');
+                expect(data.hasFriends).toBe(true);
+                
                 done(friendsHtml);
             });
             
@@ -94,7 +69,7 @@ describe('FriendsList', function(){
             this.friendsList.loadFriends();
             
             expect(FREE.FriendsFinder.init)
-                .toHaveBeenCalledWith('users', 'threads', 'fbFriends');
+                .toHaveBeenCalledWith('users', 'fbFriends');
             expect(FREE.FriendsFinder.findFriends).toHaveBeenCalled();
         });
         
@@ -115,6 +90,16 @@ describe('FriendsList', function(){
             
             expect(FREE.FavoriteButton.init).toHaveBeenCalled();
             expect(FREE.FavoriteButton.registerEventHandlers)
+                .toHaveBeenCalled();
+        });
+        
+        it('should register the message button handler', function(){
+            spyOn(FREE.MessageButton, 'init');
+            
+            this.friendsList.loadFriends();
+            
+            expect(FREE.MessageButton.init).toHaveBeenCalled();
+            expect(FREE.MessageButton.registerEventHandlers)
                 .toHaveBeenCalled();
         });
         
@@ -139,77 +124,10 @@ describe('FriendsList', function(){
             expect($('.flash')).toBeHidden();
         });
         
-        describe('when Facebook friends are stored', function(){
-            it('should get friends from the database', function(){
-                jQuery.getJSON.and.callFake(function(url, data, done){
-                    var fbFriendData;
-                    
-                    if (url === '/fbFriends') {
-                        fbFriendsData =
-                        {
-                            'fbFriends': 'fbFriends',
-                            'threads': 'threads'
-                        };
-                        
-                        expect(data).toEqual({'format': 'json'});
-                        
-                        done(fbFriendsData);
-                    } else if (url === '/users') {
-                        done({'users': 'users'});
-                    }
-                });
-                
-                this.friendsList.loadFriends();
-                
-                expect(jQuery.getJSON.calls.count()).toBe(2);
-            });
-            
-            it('should not get the Facebook friends or threads again', function(){
-                this.friendsList.loadFriends();
-                expect(FB.api).not.toHaveBeenCalled();
-            });
-        });
-        
-        describe('when Facebook friends are not stored', function(){
-            beforeEach(function(){
-                jQuery.getJSON.and.callFake(function(url, data, done){
-                    if (url === '/fbFriends') {
-                        done({});
-                    } else if (url === '/users') {
-                        done({'users': 'users'});
-                    }
-                });
-            });
-            
-            it('should get the Facebook friends', function(){
-                this.friendsList.loadFriends();
-                expect(FB.api.calls.argsFor(0)[0])
-                    .toBe('/me/friends?fields=id,name,username');
-            });
-            
-            it('should get the threads', function(){
-                this.friendsList.loadFriends();
-                expect(FB.api.calls.argsFor(1)[0]).toBe('/me/inbox');
-            });
-            
-            it('should post the Facebook friends', function(){
-                jQuery.post.and.callFake(function(url, data, done){
-                    var expectedData =
-                    {
-                        'fbFriends': 'fbFriends',
-                        'threads': 'threads'
-                    };
-                    
-                    expect(url).toBe('/fbFriends');
-                    expect(data).toEqual(expectedData);
-                    
-                    done();
-                });
-                
-                this.friendsList.loadFriends();
-                
-                expect(jQuery.post).toHaveBeenCalled();
-            });
+        it('should get the Facebook friends', function(){
+            this.friendsList.loadFriends();
+            expect(FB.api.calls.argsFor(0)[0])
+                .toBe('/me/friends?fields=id,name,username');
         });
     });
 });

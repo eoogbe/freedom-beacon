@@ -35,7 +35,7 @@ describe('friends', function(){
             expect(response.data.layout).toBe(false);
         });
         
-        describe('when friends', function(){
+        describe('when friends defined', function(){
             it('should send the freeFriends to the view', function(){
                 friends.index(request, response);
                 expect(response.data.freeFriends).toBeDefined();
@@ -45,29 +45,6 @@ describe('friends', function(){
             it('should send the offlineFriends to the view', function(){
                 friends.index(request, response);
                 expect(response.data.offlineFriends).toBeDefined();
-            });
-            
-            it('should set hasFriends to true', function(){
-                friends.index(request, response);
-                expect(response.data.hasFriends).toBe(true);
-            });
-        });
-        
-        describe('when no friends', function(){
-            it('should set hasFriends to false', function(){
-                request =
-                {
-                    'query':
-                    {
-                        'freeFriends': [],
-                        'offlineFriends': [],
-                        'hasFriends': 'false'
-                    }
-                };
-                
-                friends.index(request, response);
-                
-                expect(response.data.hasFriends).toBe(false);
             });
         });
         

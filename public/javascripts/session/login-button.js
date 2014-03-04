@@ -36,12 +36,10 @@ FREE.LoginButton = (function(){
     }
     
     function afterWatching(pos) {
-        showFlash();
         loadFbData(pos.coords);
     }
     
     function loginWithoutLocation() {
-        showFlash();
         loadFbData(null);
     }
     
@@ -54,6 +52,8 @@ FREE.LoginButton = (function(){
     }
     
     function loginClicked() {
+        showFlash();
+        
         FB.getLoginStatus(function(response){
             if (response.status === 'connected') {
                 addSessionData();
