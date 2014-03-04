@@ -1,6 +1,18 @@
+h1 {
+	font-family: 'Oleo Script Swash Caps', cursive;
+	text-align: center;
+}
+
 h2 {
-	font-size: 1.3em;
-	color: #888;
+	font-family: "Gafata";
+	font-size: 2em;
+	color: #bababa;
+}
+
+p {
+	font-family: "Gafata";
+	font-size: 1.1em;
+	color: #bababa;
 }
 
 h3 {
@@ -9,10 +21,12 @@ h3 {
 
 h1 > small {
 	display: block;
+	font-family: 'Gafata', sans-serif;
+	font-size: .57em;
 }
 
 .index > h2 {
-	color: #000005;
+	color: #bababa;
 }
 
 .group-end {
@@ -91,10 +105,15 @@ h1 > small {
 }
 
 button[name="login"] {
-	margin: auto auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	width: 100%;
 	background-color: #4c66a4;
 	color: #fff;
 	border: 0.1em solid #ccc;
+	font-family: 'Varela Round', sans-serif;
 	font-weight: bold;
 }
 
