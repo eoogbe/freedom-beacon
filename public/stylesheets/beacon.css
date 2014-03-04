@@ -129,7 +129,9 @@ input[name="main-timer"] {
 }
 
 .illuminate {
-	background-color: #3E82BD;
+	background-color: #3e82bd;
+	color: #472d03;
+	font-size: 1.5em;
 }
 
 .illuminate:hover,

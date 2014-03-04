@@ -151,7 +151,7 @@ exports.post = function(request, response) {
       user.markModified('beacon');
       user.save(afterSave);
     } else {
-      response.render('beacons-create', getBeaconData());
+      response.redirect('/beacons/create');
     }
   }
 };
