@@ -1,42 +1,58 @@
 h1 {
 	font-family: 'Oleo Script Swash Caps', cursive;
 	text-align: center;
+	font-size: 3em;
 }
 
 h2 {
-	font-family: "Gafata";
-	font-size: 2em;
-	color: #bababa;
+	/*font-family: 'Advent Pro', sans-serif;*/
+	font-size: 1.8em;
+	/*color: #bababa;*/
+	color: #8b8b8b;
 }
 
 p {
-	font-family: "Gafata";
-	font-size: 1.1em;
-	color: #bababa;
+	font-size: 1.4em;
+	color: #8b8b8b;
+	font-weight: 200;
+	/*font-family: 'Helvetic Neue', sans-serif;*/
 }
 
 h3 {
 	font-size: 1.1em;
 }
 
+h4 {
+	/*font-family: 'Advent Pro', sans-serif;*/
+	font-size: 2em;
+	color: #8b8b8b;
+	font-weight: 200;
+}
+
 h1 > small {
 	display: block;
-	font-family: 'Gafata', sans-serif;
+	font-family: 'Advent Pro', sans-serif;
 	font-size: .57em;
 }
 
 .index > h2 {
-	color: #bababa;
+	/*color: #bababa;*/
+	color: #8b8b8b;
 }
 
+/* Words Around the Timer*/
 .group-end {
-	margin-bottom: 0.3em;
+	margin-bottom: 1em;
+	font-size: .55em;
+	font-weight: 200;
+	/*font-family: 'Helvetic Neue', sans-serif;*/
 }
 
+/* The Freedom Beacon Title */
 .header-text {
 	display: inline;
-	font-size: 1.5em;
-	margin: 0;
+	font-size: 3em;
+	margin-left: .6em;
 }
 
 .favorite-btn, 
@@ -61,10 +77,10 @@ h1 > small {
 	top: 0;
 	width: 9em;
 	margin-left: -4.5em;
-	background-color: #ff0;
+	background-color: #ffffb2;
 	padding: 0.3em 0.4em;
-	color: #000005;
-	border: 0.1em solid #ccc;
+	color: #4c4c00;
+	border: 0.1em solid #ffff66;
 	
 			border-radius: 0.1em 0.1em 0.2em 0.2em;
 	   -moz-border-radius: 0.1em 0.1em 0.2em 0.2em;
@@ -77,6 +93,7 @@ h1 > small {
 
 .beacon-btn {
 	width: 100%;
+	margin-bottom: 2em;
 }
 
 .error {
@@ -119,16 +136,18 @@ h1 > small {
 	padding: 0.7em;
 }
 
+/* Login Button */
 button[name="login"] {
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 2em;
+	margin-top: 3em;
 	margin-bottom: 2em;
 	width: 100%;
 	background-color: #4c66a4;
 	color: #fff;
 	border: 0.1em solid #ccc;
 	font-family: 'Varela Round', sans-serif;
+	font-size: 1.2em;
 	font-weight: bold;
 }
 
@@ -136,6 +155,12 @@ button[name="login"]:hover,
 button[name="login"]:active {
 	color: #fff;
 	background-color: #5471b5;
+}
+
+/* Logout Link*/
+.pull-right {
+	padding-right: 1.3em;
+	padding-bottom: 2em;
 }
 
 input[name="main-timer"] {
@@ -150,8 +175,9 @@ input[name="main-timer"] {
 
 .illuminate {
 	background-color: #3e82bd;
-	color: #472d03;
-	font-size: 1.5em;
+	color: #ececec;
+	font-size: 2.5em;
+	font-weight: bold;
 }
 
 .illuminate:hover,
@@ -168,22 +194,25 @@ input[name="main-timer"] {
 	background: none;
 	color: #444;
 	border: none;
+	margin-right: -.55em;
 }
 
 .invite-link {
+	font-size: 1em;
 	padding: 0;
 }
 
 .invite-flyout {
 	width: 15em;
-	height: 32.5em;
+	height: 32em;
 	top: 0.3em;
 	margin-left: -7.5em;
+	margin-top: 4em;
 }
 
 input[name="fbFriends-search"] {
-	margin: 0.3em 0.3em 0.5em;
-	width: 75%;
+	margin: 0.3em 0.3em 0em;
+	width: 82%;
 }
 
 .fbFriends-list {
