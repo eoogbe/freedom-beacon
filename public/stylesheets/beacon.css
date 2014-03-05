@@ -182,7 +182,7 @@ input[name="main-timer"] {
 
 .illuminate:hover,
 .illuminate:active {
-	color: #704705;
+	color: #444;
 }
 
 .deactivate {
