@@ -68,6 +68,14 @@ h4 {
 	border: none;
 }
 
+/*msg your active friends*/
+.msg-btn,
+.msg-btn:active,
+.msg-btn:hover{
+	color: #5f78ad;
+	font-family: 'Helvetic Neue', sans-serif;
+}
+
 /* Yellow Box at the Top */
 .flash {
 	display: none;
@@ -93,6 +101,7 @@ h4 {
 .beacon-btn {
 	width: 100%;
 	margin-bottom: 2em;
+	color: #4b64a6;
 }
 
 .error {
@@ -173,7 +182,7 @@ input[name="main-timer"] {
 }
 
 .illuminate {
-	background-color: #3e82bd;
+	background-color: #4b64a6;
 	color: #ececec;
 	font-size: 2.5em;
 	font-weight: bold;
