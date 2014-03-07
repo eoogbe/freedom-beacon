@@ -47,10 +47,6 @@ body{
   	-moz-background-size: cover;
   	-o-background-size: cover;
   	background-size: cover;
-	}
-
-.index > h2 {
-	color: #8b8b8b;
 }
 
 /* Words Around the Timer */
