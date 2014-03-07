@@ -3,6 +3,7 @@ h1 {
 	font-family: 'Oleo Script Swash Caps', cursive;
 	text-align: center;
 	font-size: 3em;
+	color: #FEFEFE;
 }
 
 /* Freedom Beacon Subtitle */
@@ -10,11 +11,13 @@ h1 > small {
 	display: block;
 	font-family: 'Advent Pro', sans-serif;
 	font-size: .57em;
+	color: #BBBBBB;
 }
 
 h2 {
 	font-size: 1.8em;
 	color: #8b8b8b;
+}
 
 /* Paragraph Text */
 p {
@@ -30,9 +33,22 @@ h3 {
 
 h4 {
 	font-size: 2em;
-	color: #8b8b8b;
+	color: #e7e7e7;
 	font-weight: 200;
 }
+
+body{
+	background-color:transparent;
+}
+
+/*add splash page background*/
+.splash-background { 
+	background: url(../images/logo1.png) no-repeat center center fixed;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+	}
 
 .index > h2 {
 	color: #8b8b8b;
