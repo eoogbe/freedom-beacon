@@ -3,7 +3,7 @@ h1 {
 	font-family: 'Oleo Script Swash Caps', cursive;
 	text-align: center;
 	font-size: 3em;
-	color: #FEFEFE;
+	color: #386FAA;
 }
 
 /* Freedom Beacon Subtitle */
@@ -20,7 +20,7 @@ h2 {
 }
 
 /* Paragraph Text */
-p {
+p, noscript {
 	font-size: 1.4em;
 	color: #8b8b8b;
 	font-weight: 200;
@@ -31,14 +31,14 @@ h3 {
 	font-size: 1.1em;
 }
 
-h4 {
-	font-size: 2em;
-	color: #e7e7e7;
-	font-weight: 200;
-}
-
 body{
 	background-color:transparent;
+}
+
+.front-p {
+	font-size: 2em;
+	color: #e7e7e7;
+	font-weight: 100;
 }
 
 /*add splash page background*/
@@ -67,6 +67,7 @@ body{
 	display: inline;
 	font-size: 3em;
 	margin-left: .6em;
+	color: #386FAA;
 }
 
 .favorite-btn, 
@@ -166,8 +167,8 @@ body{
 button[name="login"] {
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 16em;
-	margin-bottom: 2em;
+	margin-top: 13em;
+	margin-bottom: 1em;
 	width: 100%;
 	background-color: #4c66a4;
 	color: #fff;
