@@ -16,7 +16,7 @@
                     value="{{timerValue}}"
                     data-min="{{userTime}}"
                     data-sec="0"
-                    class="disabled-timer {{altC}}"
+                    class="disabled-timer"
                     role="timer"
                     aria-live="off"
                     aria-readonly="true"
@@ -28,11 +28,5 @@
       {{/if}}
   </form>
   
-  {{#unless isB}}
-    <div class="friends"></div>
-  {{else}}
-    {{#unless isDeactivated}}
-    <div class="friends"></div>
-    {{/unless}}
-  {{/unless}}
+  <div class="friends"></div>
 </main>

@@ -40,30 +40,10 @@ FREE.Countdowner = (function(){
         }
     };
     
-    function tickC() {
-        var min = parseInt($timer.data('min'));
-        
-        if (min <= 0) {
-            done();
-        } else {
-            --min;
-            $timer.data('min', min);
-            $timer.val(min);
-        }
-    }
-    
-    function countdownImpl(delay, tickFn) {
-        interval = new FREE.Interval(tickFn, delay);
+    function countdown() {
+        interval = new FREE.Interval(tick, DELAY);
         interval.start();
     };
-    
-    function countdown() {
-        countdownImpl(DELAY, tick);
-    }
-    
-    function countdownC() {
-        countdownImpl(DELAY_C, tickC);
-    }
     
     function stop() {
         interval.stop();
@@ -72,7 +52,6 @@ FREE.Countdowner = (function(){
     return {
         'init': init,
         'countdown': countdown,
-        'countdownC': countdownC,
         'stop': stop
     };
 })();
