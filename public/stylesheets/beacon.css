@@ -59,6 +59,7 @@ body{
 	margin-bottom: 1em;
 	font-size: .55em;
 	font-weight: 200;
+	color: #5f78ad;
 }
 
 /* The Freedom Beacon Title */
@@ -71,7 +72,7 @@ body{
 .favorite-btn, 
 .unfavorite-btn{
 	/*color: #FF0F53;*/
-	color: #FCE135;
+	color: #ff5555;
 	background: none;
 	border: none;
 }
@@ -88,7 +89,7 @@ body{
 .msg-btn,
 .msg-btn:active,
 .msg-btn:hover{
-	color: #5f78ad;
+	color: #ff5555; /*5f78ad*/
 	font-family: 'Helvetic Neue', sans-serif;
 }
 
@@ -194,7 +195,10 @@ input[name="main-timer"] {
 
 .disabled-timer {
 	background-color: #fff;
+	color: #1a41a4;
+	font-size: 1.5em;
 	border: none;
+	font-family: 'Advent Pro';
 }
 
 .illuminate {
