@@ -29,11 +29,9 @@ function getBeaconData(user) {
       : getDeactivatedBeaconData();
   } else {
     data = getDeactivatedBeaconData();
-    data.error = 'You have not';
-    data.errorLink = 'logged in'
+    data.error = 'You have not logged in';
   }
   
-  data.isExperiment = true;
   return data;
 }
 
@@ -51,46 +49,6 @@ exports.create = function(request, response) {
   
   function afterQuery(err, user) {
     response.render('beacons-create', getBeaconData(user));
-  }
-};
-
-exports.createB = function(request, response) {
-  var mongoose
-    , User;
-  
-  mongoose = require('mongoose');
-
-  require('../models/User');
-  User = mongoose.model('User');
-  
-  User.findById(request.session.userId)
-    .exec(afterQuery);
-  
-  function afterQuery(err, user) {
-    var data = getBeaconData(user);
-    data.isB = true;
-    response.render('beacons-create', data);
-  }
-};
-
-exports.createC = function(request, response) {
-  var mongoose
-    , User;
-  
-  mongoose = require('mongoose');
-
-  require('../models/User');
-  User = mongoose.model('User');
-  
-  User.findById(request.session.userId)
-    .exec(afterQuery);
-  
-  function afterQuery(err, user) {
-    var data = getBeaconData(user);
-    data.altC = 'alt-c';
-    data.timerValue = data.userTime;
-    
-    response.render('beacons-create', data);
   }
 };
 
@@ -161,22 +119,4 @@ exports.delete = function(request, response) {
     'layout': false,
     'timerValue': '0'
   });
-};
-
-exports.show = function(request, response) {
-  var mongoose
-    , User;
-  
-  mongoose = require('mongoose');
-
-  require('../models/User');
-  User = mongoose.model('User');
-  
-  User.findById(request.session.userId)
-    .exec(afterQuery);
-  
-  function afterQuery(err, user) {
-    var data = user ? user.beacon : {};
-    response.json(data);
-  }
 };
