@@ -38,6 +38,7 @@ body{
 .front-p {
 	color: #e7e7e7;
 	font-weight: 100;
+	margin-bottom: 0;
 }
 
 /*add splash page background*/
@@ -47,10 +48,6 @@ body{
   	-moz-background-size: cover;
   	-o-background-size: cover;
   	background-size: cover;
-	}
-
-.index > h2 {
-	color: #8b8b8b;
 }
 
 /* Words Around the Timer */
@@ -173,9 +170,9 @@ button[name="login"] {
 	font-weight: bold;
 }
 
-.front-text-outer {
-	position:relative;
-	margin-top:80%;
+.front-text {
+	position: absolute;
+	bottom: 0;
 }
 
 button[name="login"]:hover,
