@@ -115,7 +115,12 @@ body{
 .beacon-btn {
 	width: 100%;
 	margin-bottom: 2em;
-	color: #4b64a6;
+	background-color: #4c66a4;
+	color: #fff;
+	border: 0.1em solid #ccc;
+	font-family: 'Varela Round', sans-serif;
+	font-size: 1.2em;
+	font-weight: bold;
 }
 
 .error {
