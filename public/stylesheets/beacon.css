@@ -1,22 +1,27 @@
+/* Freedom Beacon Title */
 h1 {
 	font-family: 'Oleo Script Swash Caps', cursive;
 	text-align: center;
 	font-size: 3em;
 }
 
-h2 {
-	/*font-family: 'Advent Pro', sans-serif;*/
-	font-size: 1.8em;
-	/*color: #bababa;*/
-	color: #8b8b8b;
+/* Freedom Beacon Subtitle */
+h1 > small {
+	display: block;
+	font-family: 'Advent Pro', sans-serif;
+	font-size: .57em;
 }
 
+h2 {
+	font-size: 1.8em;
+	color: #8b8b8b;
+
+/* Paragraph Text */
 p {
 	font-size: 1.4em;
 	color: #8b8b8b;
 	font-weight: 200;
-	/*font-family: 'Helvetic Neue', sans-serif;*/
-	/*One glance to find free friends*/
+	font-family: 'Helvetic Neue', sans-serif;
 }
 
 h3 {
@@ -24,29 +29,20 @@ h3 {
 }
 
 h4 {
-	/*font-family: 'Advent Pro', sans-serif;*/
 	font-size: 2em;
 	color: #8b8b8b;
 	font-weight: 200;
 }
 
-h1 > small {
-	display: block;
-	font-family: 'Advent Pro', sans-serif;
-	font-size: .57em;
-}
-
 .index > h2 {
-	/*color: #bababa;*/
 	color: #8b8b8b;
 }
 
-/* Words Around the Timer*/
+/* Words Around the Timer */
 .group-end {
 	margin-bottom: 1em;
 	font-size: .55em;
 	font-weight: 200;
-	/*font-family: 'Helvetic Neue', sans-serif;*/
 }
 
 /* The Freedom Beacon Title */
@@ -58,7 +54,8 @@ h1 > small {
 
 .favorite-btn, 
 .unfavorite-btn{
-	color: #FF0F53;
+	/*color: #FF0F53;*/
+	color: #FCE135;
 	background: none;
 	border: none;
 }
@@ -71,6 +68,7 @@ h1 > small {
 	border: none;
 }
 
+/* Yellow Box at the Top */
 .flash {
 	display: none;
 	position: absolute;
