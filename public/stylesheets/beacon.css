@@ -175,7 +175,7 @@ button[name="login"] {
 
 .front-text-outer {
 	position:relative;
-	margin-top:100%;
+	margin-top:80%;
 }
 
 button[name="login"]:hover,
