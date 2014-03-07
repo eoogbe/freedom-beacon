@@ -3,7 +3,7 @@ h1 {
 	font-family: 'Oleo Script Swash Caps', cursive;
 	text-align: center;
 	font-size: 3em;
-	color: #386FAA;
+	color: #FEFEFE;
 }
 
 /* Freedom Beacon Subtitle */
@@ -36,7 +36,6 @@ body{
 }
 
 .front-p {
-	font-size: 2em;
 	color: #e7e7e7;
 	font-weight: 100;
 }
@@ -165,10 +164,6 @@ body{
 
 /* Login Button */
 button[name="login"] {
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 13em;
-	margin-bottom: 1em;
 	width: 100%;
 	background-color: #4c66a4;
 	color: #fff;
@@ -176,6 +171,11 @@ button[name="login"] {
 	font-family: 'Varela Round', sans-serif;
 	font-size: 1.2em;
 	font-weight: bold;
+}
+
+.front-text-outer {
+	position:relative;
+	margin-top:100%;
 }
 
 button[name="login"]:hover,
