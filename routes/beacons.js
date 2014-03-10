@@ -4,15 +4,13 @@
 function getIlluminatedBeaconData(timeLeft) {
   return {
     'isDeactivated': false,
-    'userTime': timeLeft,
-    'timerValue': timeLeft + ':00'
+    'userTime': timeLeft
   };
 }
 
 function getDeactivatedBeaconData() {
   return {
     'isDeactivated': true,
-    'userTime': '30',
     'timerValue': '30'
   };
 }
