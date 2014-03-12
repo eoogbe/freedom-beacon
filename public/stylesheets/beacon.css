@@ -196,7 +196,7 @@ button[name="login"]:active {
 }
 
 input[name="main-timer"] {
-	width: 1em;
+	width: 2em;
 	text-align: center;
 }
 
