@@ -35,12 +35,6 @@ body{
 	background-color:transparent;
 }
 
-.front-p {
-	color: #e7e7e7;
-	font-weight: 100;
-	margin-bottom: 0;
-}
-
 /*add splash page background*/
 .splash-background { 
 	background: url(../images/logo1.jpg) no-repeat center center fixed;
@@ -52,7 +46,8 @@ body{
 
 /* Words Around the Timer */
 .group-end {
-	margin-bottom: 1em;
+	margin-bottom: .4em;
+	text-align: center;
 	font-size: .55em;
 	font-weight: 200;
 	color: #5f78ad;
@@ -68,7 +63,6 @@ body{
 
 .favorite-btn, 
 .unfavorite-btn{
-	/*color: #FF0F53;*/
 	color: #ff5555;
 	background: none;
 	border: none;
@@ -86,7 +80,7 @@ body{
 .msg-btn,
 .msg-btn:active,
 .msg-btn:hover{
-	color: #ff5555; /*5f78ad*/
+	color: #ff5555;
 	font-family: 'Helvetic Neue', sans-serif;
 }
 
@@ -96,7 +90,7 @@ body{
 	position: absolute;
 	left: 50%;
 	top: 0;
-	width: 9em;
+	width: 11em;
 	margin-left: -4.5em;
 	background-color: #ffffb2;
 	padding: 0.3em 0.4em;
@@ -110,11 +104,12 @@ body{
 
 .timer-label {
 	font-size: 3em;
+	text-align: center;
 }
 
 .beacon-btn {
 	width: 100%;
-	margin-bottom: 2em;
+	margin-bottom: 1.5em;
 	color: #4b64a6;
 }
 
@@ -171,8 +166,21 @@ button[name="login"] {
 }
 
 .front-text {
-	position: absolute;
-	bottom: 0;
+	/*position: absolute;*/
+	margin-top: 13em;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.front-p {
+	color: #e7e7e7;
+	font-weight: 200;
+	font-size: 1.7em;
+	text-align: center;
+	margin-top: 1em;
+	margin-bottom: 1.4em;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 button[name="login"]:hover,
@@ -188,7 +196,7 @@ button[name="login"]:active {
 }
 
 input[name="main-timer"] {
-	width: 3.5em;
+	width: 1em;
 	text-align: center;
 }
 
@@ -216,7 +224,7 @@ input[name="main-timer"] {
 .deactivate {
 	border: 0.1em solid #ccc;
 	background-color: #ddd;
-	margin-bottom: 6em;
+	margin-bottom: 1.5em;
 }
 
 .close-btn {
